@@ -1,0 +1,13 @@
+{
+  "name": "@onepage/templates-core",
+  "version": "0.1.0",
+  "type": "module",
+  "main": "src/index.js",
+  "exports": {
+    ".": "./src/index.js"
+  },
+  "scripts": {
+    "build": "echo \"TODO: build templates-core\"",
+    "check": "echo \"TODO: check templates-core\""
+  }
+}

@@ -1,0 +1,7 @@
+node_modules/
+.pnpm-store/
+dist/
+.astro/
+coverage/
+.env
+.DS_Store

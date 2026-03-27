@@ -1,0 +1,7 @@
+# Global owners
+* @kfazon
+
+# App ownership
+/apps/web/ @kfazon
+/packages/ @kfazon
+/docs/ @kfazon
