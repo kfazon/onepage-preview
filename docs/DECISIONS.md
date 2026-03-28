@@ -1,6 +1,16 @@
 # DECISIONS.md — OnePage Preview Platform
 
-## 2026-03-28 — Generator architecture: embedded template strings in JS
+## 2026-03-28 — EU-first market strategy, not Croatia-first
+- Decision: Lead with DE + ES + PL markets, not HR. Croatia is secondary due to low purchasing power.
+- Rationale: Njemačka platežna moć 3-4x HR, tržište 25x veće. Cijena od €149/mj u DE = "jeftino", u HR = "skupo".
+- Kristijan's company handles billing/infrastructure.
+
+## 2026-03-28 — Language-first product rule
+- Decision: ALL text must be in the language of the target market. Generator has `lang` parameter.
+- Languages: DE, ES, PL, IT, FR, HR, EN. Each market gets its own landing page and email copy.
+- Generator: auto-sets `<html lang="de">`, translates UI (Claim, Remove, Footer) to local language.
+- Outreach emails: always in target market language.
+- Source of truth: BUSINESS_PLAN.md v2.0
 - Decision: Templates are embedded as JS functions in `packages/generator`, not separate files.
 - Rationale: Single npm package = easier to deploy as Cloudflare Worker. No file I/O needed.
 - Swap path: if template files needed later, extract to `packages/templates-core`.
