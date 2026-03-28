@@ -1,0 +1,152 @@
+---
+/**
+ * Demo page — showcases all three template types.
+ * Shows how to call the generator and what the output looks like.
+ */
+import { generatePreview } from '@onepage/generator';
+
+export const prerender = false;
+
+const DEMOS = [
+  {
+    name: 'Nova Bistro Zagreb',
+    tagline: 'Seasonal kitchen in the heart of the city',
+    description: 'Modern European cuisine with local ingredients. Lunch menu changes weekly, dinner a la carte.',
+    address: 'Trg bana Josipa Jelačića 12, Zagreb',
+    phone: '+385 1 123 4567',
+    email: 'info@novabistro.hr',
+    hours: 'Mon–Fri 11:00–23:00 · Sat 12:00–24:00 · Closed Sunday',
+    mapUrl: 'https://maps.google.com/?q=Zagreb+Trg+Josipa+Jelacica',
+    template: 'launch-teaser',
+    images: ['https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=800'],
+  },
+  {
+    name: 'Studio Mint — Web Design',
+    tagline: 'We build websites that actually convert',
+    description: 'Boutique web studio specializing in conversion-focused landing pages and small business websites.',
+    address: 'Remote / Zagreb, Croatia',
+    phone: '+385 91 234 5678',
+    email: 'hello@studiomint.hr',
+    website: 'studiomint.hr',
+    hours: 'Mon–Fri 09:00–18:00',
+    template: 'product-spotlight',
+    images: ['https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=800'],
+    services: [
+      { name: 'Landing Pages', description: 'High-conversion single pages for campaigns and launches.' },
+      { name: 'Business Sites', description: 'Multi-page websites with CMS for easy updates.' },
+      { name: 'E-commerce', description: 'Online stores with integrated payments and shipping.' },
+    ],
+  },
+  {
+    name: 'Zagreb Product Meetup #12',
+    tagline: 'Monthly meetup for product people',
+    description: 'An evening of talks, networking, and good conversations about product management, design, and growth.',
+    address: 'Impact Hub Zagreb, Radnička cesta 54',
+    hours: 'April 15, 2026 · 18:00–21:00',
+    mapUrl: 'https://maps.google.com/?q=Impact+Hub+Zagreb',
+    template: 'event-waitlist',
+    images: ['https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=800'],
+    speakers: [
+      { name: 'Ana Kovač', role: 'Head of Product, Farmeron' },
+      { name: 'Marko Horvat', role: 'UX Lead, Infobip' },
+      { name: 'Petra STJEPAN', role: 'Founder, Sprintful' },
+    ],
+    agenda: [
+      { time: '18:00', title: 'Doors open & networking' },
+      { time: '18:30', title: 'Talk: "From 0 to PM" — Ana Kovač' },
+      { time: '19:15', title: 'Talk: "Design systems at scale" — Marko Horvat' },
+      { time: '20:00', title: 'Panel: "Product led growth in CRO"' },
+      { time: '20:45', title: 'Networking & drinks' },
+    ],
+  },
+];
+
+const results = DEMOS.map((d) => ({
+  ...d,
+  result: generatePreview({ ...d }),
+}));
+---
+
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Peek — Template Demos</title>
+  <style>
+    :root { --bg: #0b1020; --text: #eef2ff; --muted: #a6b0cf; --accent: #7c9cff; --accent2: #67e8f9; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: Inter, system-ui, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
+    .container { width: min(960px, calc(100% - 32px)); margin: 0 auto; }
+    header { padding: 40px 0 32px; text-align: center; background: radial-gradient(circle at top, rgba(124,156,255,0.15), transparent 60%); }
+    h1 { font-size: 2.4rem; letter-spacing: -0.03em; margin-bottom: 8px; }
+    header p { color: var(--muted); }
+    .demo { margin: 48px 0; border: 1px solid rgba(255,255,255,0.08); border-radius: 24px; overflow: hidden; }
+    .demo-header { padding: 20px 24px; background: rgba(255,255,255,0.03); border-bottom: 1px solid rgba(255,255,255,0.07); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+    .demo-meta h2 { font-size: 1.3rem; margin-bottom: 4px; }
+    .demo-meta span { font-size: 0.85rem; color: var(--muted); }
+    .badge { display: inline-block; padding: 4px 12px; border-radius: 999px; font-size: 0.8rem; font-weight: 600; background: rgba(124,156,255,0.15); color: var(--accent); border: 1px solid rgba(124,156,255,0.25); }
+    .api-demo { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06); border-radius: 16px; padding: 20px; margin-top: 16px; }
+    .api-demo h3 { font-size: 1rem; margin-bottom: 10px; color: var(--accent2); }
+    pre { background: rgba(0,0,0,0.4); border-radius: 10px; padding: 14px; font-size: 0.82rem; overflow-x: auto; color: #d4e5ff; white-space: pre-wrap; word-break: break-all; max-height: 200px; overflow-y: auto; }
+    .json-key { color: #7ee8fa; }
+    .json-str { color: #a8ff78; }
+    .json-num { color: #ffd59e; }
+    iframe { width: 100%; height: 600px; border: none; border-top: 1px solid rgba(255,255,255,0.07); background: #fff; }
+    footer { text-align: center; padding: 40px 0; color: var(--muted); font-size: 0.9rem; }
+    a { color: var(--accent); }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <h1>Template Previews</h1>
+      <p>Three live examples — hover to peek the raw HTML, or expand for full render</p>
+    </div>
+  </header>
+
+  <main class="container">
+    {results.map((demo, i) => (
+      <div class="demo">
+        <div class="demo-header">
+          <div class="demo-meta">
+            <h2>{demo.name}</h2>
+            <span>{demo.template}</span>
+          </div>
+          <span class="badge">{demo.template}</span>
+        </div>
+        <iframe
+          srcdoc={demo.result.html}
+          title={`Preview: ${demo.name}`}
+          loading="lazy"
+        />
+        <div class="api-demo">
+          <h3>// How to generate this</h3>
+          <pre>{`POST /api/preview
+Content-Type: application/json
+
+${JSON.stringify({
+  name: demo.name,
+  tagline: demo.tagline,
+  description: demo.description,
+  address: demo.address,
+  phone: demo.phone,
+  email: demo.email,
+  hours: demo.hours,
+  template: demo.template,
+  images: demo.images,
+  ...(demo.services ? { services: demo.services } : {}),
+  ...(demo.agenda ? { agenda: demo.agenda } : {}),
+  ...(demo.speakers ? { speakers: demo.speakers } : {}),
+}, null, 2)}`}</pre>
+        </div>
+      </div>
+    ))}
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>Generated by <a href="/">Peek</a> · <a href="/api/preview?name=Demo">Live API demo</a></p>
+    </div>
+  </footer>
+</body>
+</html>
