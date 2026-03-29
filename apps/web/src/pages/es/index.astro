@@ -1,0 +1,269 @@
+---
+const title = 'Peek — Vistas previas de una página gratis para negocios';
+const stats = [
+  { value: '60 seg.', label: 'para reclamar una vista previa' },
+  { value: '1 página', label: 'diseñada para conversión móvil' },
+  { value: '0 €', label: 'para ver tu primera vista previa' }
+];
+
+const steps = [
+  {
+    title: 'Encontramos información pública de tu negocio',
+    body: 'Nombre, horarios, ubicación, fotos y datos de contacto de fuentes públicas — nunca datos privados.'
+  },
+  {
+    title: 'Generamos una vista previa profesional',
+    body: 'Una página limpia con hero, servicios, mapa, prueba social y un CTA de contacto claro.'
+  },
+  {
+    title: 'La reclamas, editas o publicas',
+    body: 'Primero ves la vista previa gratis, luego conectas tu dominio o la publicas con hosting y soporte.'
+  }
+];
+
+const templates = [
+  {
+    name: 'Launch Teaser',
+    useCase: 'Nuevos negocios, consultorías, pequeñas marcas',
+    features: ['Hero + CTA', 'Grid de ventajas', 'Prueba social', 'CTA fijo']
+  },
+  {
+    name: 'Product Spotlight',
+    useCase: 'Páginas de oferta para servicios y paquetes',
+    features: ['Grid de características', 'Sección comparativa', 'FAQ', 'Captación de leads']
+  },
+  {
+    name: 'Event Waitlist',
+    useCase: 'Eventos, talleres, aperturas, pop-ups',
+    features: ['Agenda', 'Tarjetas de ponentes', 'Mapa', 'Formulario de lista de espera']
+  }
+];
+
+const pricing = [
+  {
+    tier: 'Preview',
+    price: '0 €',
+    description: 'Vista previa gratuita como prueba de valor',
+    points: ['URL de preview', 'Info del negocio + CTA', '1 revisión', 'Opt-out en cualquier momento']
+  },
+  {
+    tier: 'Go Live',
+    price: '99 €/mes',
+    description: 'El camino más simple hacia una web real',
+    points: ['Dominio propio', 'Sin branding de preview', 'Analytics', 'Formulario de contacto gestionado']
+  },
+  {
+    tier: 'Growth',
+    price: '199 €/mes',
+    description: 'Para negocios que necesitan más visibilidad',
+    points: ['SEO básico', 'Sincronización con Google Business', 'Enlaces sociales', 'Cambios con prioridad']
+  }
+];
+---
+
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Peek genera automáticamente vistas previas de una página para negocios sin web. Primero míralas gratis, luego reclama y publica." />
+    <title>{title}</title>
+    <style>
+      :root {
+        --bg: #0b1020;
+        --panel: rgba(16, 24, 48, 0.8);
+        --panel-strong: #121a33;
+        --text: #eef2ff;
+        --muted: #a6b0cf;
+        --line: rgba(255,255,255,0.1);
+        --accent: #7c9cff;
+        --accent-2: #67e8f9;
+        --success: #86efac;
+        --shadow: 0 20px 60px rgba(0,0,0,0.35);
+      }
+      * { box-sizing: border-box; }
+      html { scroll-behavior: smooth; }
+      body {
+        margin: 0;
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        background: radial-gradient(circle at top, rgba(124,156,255,0.18), transparent 25%), radial-gradient(circle at right, rgba(103,232,249,0.12), transparent 20%), var(--bg);
+        color: var(--text);
+      }
+      a { color: inherit; text-decoration: none; }
+      .container { width: min(1120px, calc(100% - 32px)); margin: 0 auto; }
+      .nav { position: sticky; top: 0; backdrop-filter: blur(16px); background: rgba(11,16,32,0.7); border-bottom: 1px solid var(--line); z-index: 10; }
+      .nav-inner { display: flex; align-items: center; justify-content: space-between; padding: 16px 0; gap: 16px; }
+      .brand { font-weight: 800; letter-spacing: 0.02em; }
+      .brand span { color: var(--accent-2); }
+      .nav-links { display: flex; gap: 18px; color: var(--muted); font-size: 0.95rem; }
+      .btn { display: inline-flex; align-items: center; justify-content: center; padding: 14px 20px; border-radius: 999px; border: 1px solid transparent; font-weight: 700; transition: 180ms ease; }
+      .btn-primary { background: linear-gradient(135deg, var(--accent), var(--accent-2)); color: #07111f; box-shadow: var(--shadow); }
+      .btn-primary:hover { transform: translateY(-1px); }
+      .btn-secondary { border-color: var(--line); background: rgba(255,255,255,0.02); }
+      .hero { padding: 72px 0 40px; display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 32px; align-items: center; }
+      .eyebrow { display: inline-flex; gap: 8px; align-items: center; padding: 8px 12px; border: 1px solid rgba(134,239,172,0.25); border-radius: 999px; color: var(--success); background: rgba(134,239,172,0.08); font-size: 0.9rem; margin-bottom: 20px; }
+      h1 { margin: 0 0 16px; font-size: clamp(2.6rem, 5vw, 4.8rem); line-height: 0.98; letter-spacing: -0.04em; }
+      .hero p { margin: 0 0 28px; color: var(--muted); font-size: 1.1rem; line-height: 1.7; max-width: 62ch; }
+      .cta-row { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 28px; }
+      .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+      .stat, .card { background: var(--panel); border: 1px solid var(--line); border-radius: 24px; box-shadow: var(--shadow); }
+      .stat { padding: 18px; }
+      .stat strong { display: block; font-size: 1.2rem; margin-bottom: 6px; }
+      .stat span { color: var(--muted); font-size: 0.92rem; }
+      .preview-shell { padding: 18px; }
+      .browser-bar { display: flex; align-items: center; gap: 8px; margin-bottom: 16px; }
+      .dot { width: 10px; height: 10px; border-radius: 50%; background: rgba(255,255,255,0.25); }
+      .preview-body { border-radius: 20px; background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02)); border: 1px solid rgba(255,255,255,0.08); overflow: hidden; }
+      .preview-hero { padding: 22px; background: linear-gradient(135deg, rgba(124,156,255,0.24), rgba(103,232,249,0.14)); }
+      .preview-hero small { color: var(--muted); }
+      .preview-hero h3 { margin: 8px 0; font-size: 1.6rem; }
+      .preview-hero p { margin: 0; color: #dce4ff; }
+      .preview-grid { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 12px; padding: 16px; }
+      .mini-card { padding: 14px; border-radius: 16px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.06); }
+      section { padding: 36px 0; }
+      .section-head { margin-bottom: 20px; }
+      .section-head h2 { margin: 0 0 8px; font-size: clamp(1.8rem, 3vw, 2.6rem); }
+      .section-head p { margin: 0; color: var(--muted); max-width: 70ch; }
+      .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+      .grid-3 .card, .grid-pricing .card { padding: 22px; }
+      .card h3 { margin: 0 0 10px; }
+      .card p, .card li { color: var(--muted); line-height: 1.65; }
+      .card ul { padding-left: 18px; margin: 12px 0 0; }
+      .grid-pricing { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+      .price { font-size: 2rem; font-weight: 800; margin: 10px 0; }
+      .highlight { position: relative; overflow: hidden; }
+      .highlight::after { content: 'Recomendado'; position: absolute; top: 14px; right: -44px; background: var(--accent-2); color: #041018; padding: 6px 42px; transform: rotate(35deg); font-size: 0.8rem; font-weight: 800; }
+      .banner { padding: 22px; border-radius: 24px; border: 1px solid var(--line); background: linear-gradient(135deg, rgba(124,156,255,0.16), rgba(103,232,249,0.12)); display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+      footer { padding: 28px 0 48px; color: var(--muted); font-size: 0.95rem; }
+      @media (max-width: 920px) {
+        .hero, .preview-grid, .grid-3, .grid-pricing, .stats { grid-template-columns: 1fr; }
+        .nav-inner, .banner { flex-direction: column; align-items: flex-start; }
+        .nav-links { flex-wrap: wrap; }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="nav">
+      <div class="container nav-inner">
+        <a class="brand" href="#top">Peek<span>.</span></a>
+        <nav class="nav-links">
+          <a href="#how-it-works">Cómo funciona</a>
+          <a href="#templates">Templates</a>
+          <a href="#pricing">Precios</a>
+        </nav>
+      </div>
+    </header>
+
+    <main id="top" class="container">
+      <section class="hero">
+        <div>
+          <div class="eyebrow">Vista previa gratis • Creada con datos públicos del negocio • Reclámala en 60 segundos</div>
+          <h1>Construimos la primera versión de tu web antes de que nos contrates.</h1>
+          <p>
+            Peek genera automáticamente vistas previas de una página para negocios que todavía dependen de Instagram,
+            Google Maps o el boca a boca. Primero míralas, luego decide: reclamar, editar o publicar.
+          </p>
+          <div class="cta-row">
+            <a class="btn btn-primary" href="#pricing">Ver precios</a>
+            <a class="btn btn-secondary" href="#templates">Ver templates</a>
+          </div>
+          <div class="stats">
+            {stats.map((item) => (
+              <div class="stat">
+                <strong>{item.value}</strong>
+                <span>{item.label}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <aside class="card preview-shell" aria-label="Ejemplo de vista previa">
+          <div class="browser-bar">
+            <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+          </div>
+          <div class="preview-body">
+            <div class="preview-hero">
+              <small>Preview URL • móvil • carga rápida</small>
+              <h3>Tapas & Vinos Madrid</h3>
+              <p>Tapas tradicionales, selección de vinos y horarios — todo visible de entrada.</p>
+            </div>
+            <div class="preview-grid">
+              <div class="mini-card">
+                <strong>Lo que ven los visitantes</strong>
+                <p>Hero, servicios, mapa, prueba social y un CTA de contacto claro.</p>
+              </div>
+              <div class="mini-card">
+                <strong>Lo que получаеt el propietario</strong>
+                <p>Enlace para reclamar, contenido editable y vía de mejora.</p>
+              </div>
+            </div>
+          </div>
+        </aside>
+      </section>
+
+      <section id="how-it-works">
+        <div class="section-head">
+          <h2>Cómo funciona Peek</h2>
+          <p>El proceso es simple a propósito: primero crear valor visible, luego convertir los negocios adecuados en hosting de pago y soporte.</p>
+        </div>
+        <div class="grid-3">
+          {steps.map((step, index) => (
+            <article class="card">
+              <small>Paso {index + 1}</small>
+              <h3>{step.title}</h3>
+              <p>{step.body}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section id="templates">
+        <div class="section-head">
+          <h2>Sistema de templates para generación rápida de vistas previas</h2>
+          <p>Empezamos enfocados: templates reutilizables que se adaptan a varios nichos sin reconstruir desde cero cada vez.</p>
+        </div>
+        <div class="grid-3">
+          {templates.map((template) => (
+            <article class="card">
+              <h3>{template.name}</h3>
+              <p><strong>Ideal para:</strong> {template.useCase}</p>
+              <ul>{template.features.map((feature) => <li>{feature}</li>)}</ul>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section id="pricing">
+        <div class="section-head">
+          <h2>Ruta de precios simple</h2>
+          <p>Vista previa gratuita como imán de leads. Después, un plan claro de Go Live para dominio real, hosting y soporte.</p>
+        </div>
+        <div class="grid-pricing">
+          {pricing.map((plan, index) => (
+            <article class:list={["card", index === 1 && "highlight"]}>
+              <small>{plan.tier}</small>
+              <div class="price">{plan.price}</div>
+              <p>{plan.description}</p>
+              <ul>{plan.points.map((point) => <li>{point}</li>)}</ul>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section>
+        <div class="banner">
+          <div>
+            <h2 style="margin:0 0 8px;">Construido para outreach transparente</h2>
+            <p style="margin:0; color:var(--muted); max-width:64ch;">
+              Cada vista previa incluye un flujo de claim claro, opción de opt-out e información transparente sobre el uso de datos públicos.
+            </p>
+          </div>
+          <a class="btn btn-primary" href="mailto:hallo@peek.example">Solicitar primera prueba de nicho</a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="container">
+      Peek • Plataforma de vistas previas de una página para pequeños negocios • Primero preview, luego Go Live.
+    </footer>
+  </body>
+</html>

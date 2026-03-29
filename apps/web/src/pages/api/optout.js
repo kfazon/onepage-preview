@@ -2,12 +2,15 @@
  * POST /api/optout
  * Body: { businessName }
  * Returns: { ok }
+ *
+ * Cloudflare: reads PREVIEWS KV from platform.env
+ * Local dev: uses in-memory fallback
  */
-import { addOptout } from '@onepage/generator/store';
+import { createStore } from '@onepage/generator/store';
 
 export const prerender = false;
 
-export async function POST({ request }) {
+export async function POST({ request, platform }) {
   let body;
   try {
     body = await request.json();
@@ -20,7 +23,8 @@ export async function POST({ request }) {
     return json({ ok: false, error: 'businessName is required' }, 400);
   }
 
-  const result = addOptout(businessName);
+  const store = createStore(platform?.env?.PREVIEWS);
+  await store.addOptout(businessName);
   return json({ ok: true, message: 'Page removed. You will no longer receive outreach for this business.' });
 }
 

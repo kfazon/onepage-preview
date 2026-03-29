@@ -4,7 +4,8 @@
  * Returns: { ok, template, html, meta }
  *
  * GET /api/preview?name=...&template=...&...
- * Returns: rendered HTML page
+ * Default: returns rendered HTML page
+ * Add ?format=json to get JSON payload
  */
 import { generatePreview } from '@onepage/generator';
 
@@ -13,6 +14,7 @@ export const prerender = false;
 export async function GET({ request }) {
   const url = new URL(request.url);
   const data = Object.fromEntries(url.searchParams);
+  const format = (url.searchParams.get('format') || 'html').toLowerCase();
 
   // Support ?data=base64(json)
   if (url.searchParams.has('data')) {
@@ -23,15 +25,20 @@ export async function GET({ request }) {
   }
 
   if (!data.name) {
-    return new Response(JSON.stringify({ ok: false, error: 'name is required' }), {
-      status: 400,
-      headers: { 'Content-Type': 'application/json' },
-    });
+    return json({ ok: false, error: 'name is required' }, 400);
   }
 
   const result = generatePreview(data);
-  return new Response(JSON.stringify(result), {
-    headers: { 'Content-Type': 'application/json', 'Cache-Control': 'public, max-age=60' },
+
+  if (format === 'json') {
+    return json(result);
+  }
+
+  return new Response(result.html, {
+    headers: {
+      'Content-Type': 'text/html; charset=utf-8',
+      'Cache-Control': 'public, max-age=60',
+    },
   });
 }
 
@@ -40,21 +47,23 @@ export async function POST({ request }) {
   try {
     body = await request.json();
   } catch {
-    return new Response(JSON.stringify({ ok: false, error: 'invalid JSON body' }), {
-      status: 400,
-      headers: { 'Content-Type': 'application/json' },
-    });
+    return json({ ok: false, error: 'invalid JSON body' }, 400);
   }
 
   if (!body.name) {
-    return new Response(JSON.stringify({ ok: false, error: 'name is required' }), {
-      status: 400,
-      headers: { 'Content-Type': 'application/json' },
-    });
+    return json({ ok: false, error: 'name is required' }, 400);
   }
 
   const result = generatePreview(body);
-  return new Response(JSON.stringify(result), {
-    headers: { 'Content-Type': 'application/json', 'Cache-Control': 'public, max-age=60' },
+  return json(result);
+}
+
+function json(data, status = 200) {
+  return new Response(JSON.stringify(data), {
+    status,
+    headers: {
+      'Content-Type': 'application/json',
+      'Cache-Control': 'public, max-age=60',
+    },
   });
 }

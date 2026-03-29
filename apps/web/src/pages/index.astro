@@ -122,6 +122,10 @@ const pricing = [
         color: var(--muted);
         font-size: 0.95rem;
       }
+      .lang-switcher { display: flex; gap: 6px; margin-left: 16px; padding-left: 16px; border-left: 1px solid var(--line); }
+      .lang-btn { padding: 4px 10px; border-radius: 6px; font-size: 0.8rem; font-weight: 600; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); color: var(--muted); text-decoration: none; transition: 150ms; }
+      .lang-btn:hover { background: rgba(255,255,255,0.1); color: var(--text); }
+      .lang-btn.active { background: rgba(124,156,255,0.15); border-color: rgba(124,156,255,0.3); color: var(--accent); }
 
       .btn {
         display: inline-flex;
@@ -367,6 +371,12 @@ const pricing = [
           <a href="#templates">Templates</a>
           <a href="#pricing">Pricing</a>
         </nav>
+        <div class="lang-switcher">
+          <a class="lang-btn" href="/">EN</a>
+          <a class="lang-btn" href="/de/">DE</a>
+          <a class="lang-btn" href="/es/">ES</a>
+          <a class="lang-btn" href="/pl/">PL</a>
+        </div>
       </div>
     </header>
 

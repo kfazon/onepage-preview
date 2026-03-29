@@ -2,12 +2,15 @@
  * POST /api/claim
  * Body: { businessName, email }
  * Returns: { ok }
+ *
+ * Cloudflare: reads PREVIEWS KV from platform.env
+ * Local dev: uses in-memory fallback
  */
-import { addClaim } from '@onepage/generator/store';
+import { createStore } from '@onepage/generator/store';
 
 export const prerender = false;
 
-export async function POST({ request }) {
+export async function POST({ request, platform }) {
   let body;
   try {
     body = await request.json();
@@ -25,7 +28,8 @@ export async function POST({ request }) {
     return json({ ok: false, error: 'invalid email' }, 400);
   }
 
-  const result = addClaim(businessName, email);
+  const store = createStore(platform?.env?.PREVIEWS);
+  await store.addClaim(businessName, email);
   return json({ ok: true, message: 'Page claimed successfully' });
 }
 

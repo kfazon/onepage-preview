@@ -45,3 +45,11 @@
 ## 2026-03-27 — Governance: GitHub-first / PR-only + doc-kit
 - Decision: PR preview deploy required; merge on CI+preview pass; doc-kit required.
 - Owner: lead_engineer
+
+## 2026-03-29 — Cloudflare KV store replaces fs-based JSON file
+- Decision: store.js now uses Cloudflare KV API with in-memory fallback for local dev.
+- KV binding: PREVIEWS namespace. Claims and opt-outs stored as JSON strings under peek:claims and peek:optouts keys.
+- API routes updated to pass platform.env.PREVIEWS to createStore(kv).
+- wrangler.toml created with PREVIEWS KV namespace declaration. ID must be filled in after: wrangler kv:namespace create "PREVIEWS"
+- Local dev: works out-of-the-box with in-memory fallback. No KV needed.
+- Production: requires Cloudflare account with KV namespace ID set in wrangler.toml.

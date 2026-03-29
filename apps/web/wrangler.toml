@@ -1,0 +1,15 @@
+# Cloudflare Pages + Workers configuration for Peek
+# Docs: https://developers.cloudflare.com/pages/platform/build-configuration
+# KV: https://developers.cloudflare.com/kv/
+
+name = "peek-web"
+compatibility_date = "2024-01-01"
+compatibility_flags = ["nodejs_compat"]
+
+# KV Namespace for claims and opt-outs
+# Create with: wrangler kv:namespace create "PREVIEWS"
+# For preview/dev: use wrangler kv:namespace create "PREVIEWS" --env=preview
+[[kv_namespaces]]
+binding = "PREVIEWS"
+id = ""  # Fill in after running: wrangler kv:namespace create "PREVIEWS"
+# preview_id = ""  # Uncomment for preview environment
