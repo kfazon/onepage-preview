@@ -39,6 +39,8 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     if: vars.CLOUDFLARE_ACCOUNT_ID != ''
+    permissions:
+      contents: write
     env:
       CF_ACCOUNT_ID: ${{ vars.CLOUDFLARE_ACCOUNT_ID }}
     steps:
