@@ -1,5 +1,0 @@
-{
-  "build_command": "pnpm build",
-  "output_directory": "apps/web/dist",
-  "root_com_relative_path": "."
-}
