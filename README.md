@@ -33,11 +33,18 @@ pnpm --filter @onepage/web dev
 
 ### 2. KV Namespace setup
 
-```bash
-npx wrangler kv:namespace create "PREVIEWS"
-```
+Namespace je već kreiran: `7ca53bc967934ad582c53cbb4b2823b4`
+ID je upisan u `.wrangler-workspace.toml`.
 
-Zamijeni `id = ""` u `.wrangler-workspace.toml` s ID-om koji dobiješ.
+**Za produkciju — dodaj KV binding u Pages project:**
+
+1. Cloudflare Dashboard → Pages → `peek-preview` → **Settings** → **Functions**
+2. Pod **KV Namespaces** → **Add binding**:
+   - Variable name: `PREVIEWS`
+   - Namespace: `peek-previews`
+3. **Save** → redeploy
+
+Za local dev, KV nije potreban (in-memory fallback radi automatski).
 
 ### 3. GitHub Secrets (za CI/CD deploy)
 

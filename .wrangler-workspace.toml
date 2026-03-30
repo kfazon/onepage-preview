@@ -7,9 +7,7 @@ compatibility_date = "2024-01-01"
 compatibility_flags = ["nodejs_compat"]
 
 # KV Namespace for claims and opt-outs
-# Create with: wrangler kv:namespace create "PREVIEWS"
-# For preview/dev: use wrangler kv:namespace create "PREVIEWS" --env=preview
 [[kv_namespaces]]
 binding = "PREVIEWS"
-id = ""  # Fill in after running: wrangler kv:namespace create "PREVIEWS"
-# preview_id = ""  # Uncomment for preview environment
+id = "7ca53bc967934ad582c53cbb4b2823b4"
+# preview_id = ""  # For preview environment
