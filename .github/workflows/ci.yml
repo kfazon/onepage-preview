@@ -39,6 +39,8 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     if: vars.CLOUDFLARE_ACCOUNT_ID != ''
+    env:
+      CF_ACCOUNT_ID: ${{ vars.CLOUDFLARE_ACCOUNT_ID }}
     steps:
       - uses: actions/checkout@v4
 
@@ -52,7 +54,7 @@ jobs:
         uses: cloudflare/pages-action@v1
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          accountId: ${{ env.CF_ACCOUNT_ID }}
           projectName: peek-preview
           directory: apps/web/dist
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
