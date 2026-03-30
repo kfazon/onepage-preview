@@ -1,4 +1,4 @@
-name: CI
+name: CI + Deploy
 
 on:
   push:
@@ -34,3 +34,25 @@ jobs:
           name: dist
           path: apps/web/dist
           retention-days: 1
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    if: vars.CLOUDFLARE_ACCOUNT_ID != ''
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download build artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: apps/web/dist
+
+      - name: Deploy to Cloudflare Pages
+        uses: cloudflare/pages-action@v1
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          projectName: peek-preview
+          directory: apps/web/dist
+          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
