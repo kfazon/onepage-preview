@@ -37,7 +37,7 @@ pnpm --filter @onepage/web dev
 npx wrangler kv:namespace create "PREVIEWS"
 ```
 
-Zamijeni `id = ""` u `apps/web/wrangler.toml` s ID-om koji dobiješ.
+Zamijeni `id = ""` u `.wrangler-workspace.toml` s ID-om koji dobiješ.
 
 ### 3. GitHub Secrets (za CI/CD deploy)
 
