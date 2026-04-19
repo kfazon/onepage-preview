@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Tech Meetup Berlin" />
+  <title>Tech Meetup Berlin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fraunces:ital,wght@0,700;1,700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #0b1020;
+      --text: #eef2ff;
+      --muted: #a6b0cf;
+      --accent: #7dd3fc;
+      --accent-dark: #69bfe8;
+      --card-bg: rgba(255,255,255,0.05);
+      --card-border: rgba(255,255,255,0.10);
+      --wa-green: #25D366;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: Inter, system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+      min-height: 100vh;
+    }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* ── Layout ── */
+    .container { width: min(900px, calc(100% - 32px)); margin: 0 auto; }
+
+    /* ── Animations ── */
+    @keyframes fadeSlideUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(37,211,102,0.5); }
+      50%       { box-shadow: 0 0 0 14px rgba(37,211,102,0); }
+    }
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateX(20px); }
+      to   { opacity: 1; transform: translateX(0); }
+    }
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.55s ease, transform 0.55s ease;
+    }
+    .reveal.visible {
+      animation: fadeSlideUp 0.55s ease forwards;
+    }
+    .reveal-delay-1 { transition-delay: 0.08s; }
+    .reveal-delay-2 { transition-delay: 0.16s; }
+    .reveal-delay-3 { transition-delay: 0.24s; }
+    .reveal-delay-4 { transition-delay: 0.32s; }
+
+    /* ── Badge ── */
+    .badge {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      background: rgba(134,239,172,0.12);
+      color: #86efac;
+      border: 1px solid rgba(134,239,172,0.25);
+    }
+
+    /* ── Hero ── */
+    .hero {
+      padding: 40px 0 32px;
+      text-align: center;
+      background: radial-gradient(circle at top, #7dd3fc28, transparent 65%);
+    }
+    .hero-title {
+      font-family: Fraunces, Georgia, serif;
+      font-size: clamp(2.2rem, 6vw, 4rem);
+      letter-spacing: -0.03em;
+      line-height: 1.08;
+      margin: 12px 0;
+    }
+    .hero-desc {
+      max-width: 60ch;
+      margin: 0 auto 24px;
+      font-size: 1.05rem;
+      color: var(--muted);
+    }
+
+    /* ── Gallery ── */
+    .gallery {
+      position: relative;
+      width: 100%;
+      max-width: 540px;
+      margin: 0 auto 28px;
+      border-radius: 20px;
+      overflow: hidden;
+    }
+    .gallery-imgs { position: relative; }
+    .gallery-img {
+      width: 100%;
+      aspect-ratio: 16/9;
+      object-fit: cover;
+      display: block;
+      border-radius: 20px;
+    }
+    .gallery-dots {
+      position: absolute;
+      bottom: 14px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 7px;
+    }
+    .dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.4);
+      border: none;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.2s;
+      padding: 0;
+    }
+    .dot.active {
+      background: #fff;
+      transform: scale(1.3);
+    }
+    .hero-img {
+      width: 100%;
+      max-width: 540px;
+      border-radius: 20px;
+      margin-bottom: 28px;
+      aspect-ratio: 16/9;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* ── Open/Closed Badge ── */
+    .open-badge {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      background: rgba(34,197,94,0.15);
+      color: #22c55e;
+      border: 1px solid rgba(34,197,94,0.3);
+      margin-bottom: 8px;
+    }
+    .closed-badge {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      background: rgba(239,68,68,0.12);
+      color: #f87171;
+      border: 1px solid rgba(239,68,68,0.25);
+      margin-bottom: 8px;
+    }
+    .closed-next { opacity: 0.8; font-weight: 400; }
+
+    /* ── Quick Actions ── */
+    .quick-actions { padding: 0 0 8px; }
+    .qa-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+    }
+    @media (max-width: 500px) { .qa-grid { grid-template-columns: repeat(2, 1fr); } }
+    .qa-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      padding: 16px 8px;
+      border-radius: 16px;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      color: var(--text);
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.15s, border-color 0.2s;
+      text-decoration: none;
+      min-height: 72px;
+      justify-content: center;
+    }
+    .qa-btn:hover {
+      background: rgba(255,255,255,0.09);
+      transform: translateY(-2px);
+      text-decoration: none;
+    }
+    .qa-icon { font-size: 1.5rem; line-height: 1; }
+    .qa-whatsapp { border-color: rgba(37,211,102,0.3); }
+    .qa-whatsapp:hover { background: rgba(37,211,102,0.1); }
+    .qa-book { border-color: rgba(124,156,255,0.3); }
+
+    /* ── Main content ── */
+    main { padding: 40px 0; }
+
+    /* ── Sections ── */
+    .section-title {
+      font-family: Fraunces, Georgia, serif;
+      font-size: clamp(1.4rem, 4vw, 1.8rem);
+      letter-spacing: -0.02em;
+      margin-bottom: 18px;
+    }
+
+    /* ── About ── */
+    .about-section {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 20px;
+      padding: 28px;
+      margin-bottom: 32px;
+    }
+    .about-section h2 { font-size: 1.3rem; margin-bottom: 10px; }
+    .about-section p { color: var(--muted); line-height: 1.75; }
+
+    /* ── Map ── */
+    .map-section {
+      margin-bottom: 32px;
+    }
+    .map-section h2 { font-size: 1.3rem; margin-bottom: 12px; }
+    .map-embed {
+      width: 100%;
+      height: 280px;
+      border-radius: 16px;
+      border: 1px solid var(--card-border);
+      overflow: hidden;
+    }
+    .map-embed iframe { width: 100%; height: 100%; border: none; display: block; }
+
+    /* ── Reviews ── */
+    .reviews-section { margin-bottom: 36px; }
+    .reviews-scroll {
+      display: flex;
+      gap: 16px;
+      overflow-x: auto;
+      padding-bottom: 12px;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(255,255,255,0.15) transparent;
+    }
+    .reviews-scroll::-webkit-scrollbar { height: 4px; }
+    .reviews-scroll::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 2px; }
+    .review-card {
+      flex: 0 0 260px;
+      scroll-snap-align: start;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .review-source {
+      font-size: 0.72rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--accent);
+    }
+    .review-stars { font-size: 0.9rem; color: #fbbf24; letter-spacing: 1px; }
+    .review-text { font-size: 0.88rem; color: var(--text); line-height: 1.55; font-style: italic; }
+    .review-author { font-size: 0.8rem; color: var(--muted); margin-top: auto; }
+    .review-author em { opacity: 0.6; }
+
+    /* ── Contact card ── */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+    @media (max-width: 500px) { .contact-grid { grid-template-columns: 1fr; } }
+    .contact-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 18px;
+    }
+    .contact-card h3 { font-size: 0.95rem; margin-bottom: 6px; display: flex; align-items: center; gap: 6px; }
+    .contact-card p, .contact-card a { color: var(--muted); font-size: 0.88rem; }
+    .contact-card a:hover { color: var(--text); }
+
+    /* ── QR + Share row ── */
+    .qr-share-row {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 18px 22px;
+      margin-bottom: 32px;
+      flex-wrap: wrap;
+    }
+    .qr-section { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+    .qr-label { font-size: 0.75rem; color: var(--muted); }
+    .qr-img { width: 100px; height: 100px; border-radius: 8px; }
+    .share-row { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; flex: 1; }
+    .share-label { font-size: 0.82rem; color: var(--muted); margin-right: 4px; }
+    .share-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px; height: 40px;
+      border-radius: 10px;
+      border: 1px solid var(--card-border);
+      background: rgba(255,255,255,0.05);
+      cursor: pointer;
+      transition: background 0.2s, transform 0.15s;
+      color: var(--text);
+    }
+    .share-btn:hover { background: rgba(255,255,255,0.1); transform: translateY(-1px); }
+    .share-whatsapp:hover { background: rgba(37,211,102,0.15); border-color: rgba(37,211,102,0.4); color: var(--wa-green); }
+
+    /* ── Toast ── */
+    .toast {
+      position: fixed;
+      bottom: 90px;
+      right: 24px;
+      background: rgba(0,0,0,0.85);
+      color: #fff;
+      padding: 10px 18px;
+      border-radius: 10px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      z-index: 10000;
+      animation: fadeSlideUp 0.3s ease;
+      backdrop-filter: blur(8px);
+    }
+
+    /* ── WhatsApp Float ── */
+    .whatsapp-float {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      width: 60px;
+      height: 60px;
+      background: var(--wa-green);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 24px rgba(37,211,102,0.45);
+      z-index: 9999;
+      animation: pulse 2.4s infinite;
+      transition: transform 0.2s;
+    }
+    .whatsapp-float:hover {
+      transform: scale(1.1);
+      text-decoration: none;
+    }
+    .whatsapp-float svg { width: 30px; height: 30px; fill: #fff; }
+
+    /* ── Trust bar ── */
+    .trust-bar {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 14px 0;
+      font-size: 0.75rem;
+      color: rgba(166,176,207,0.5);
+      flex-wrap: wrap;
+    }
+    .trust-sep { opacity: 0.4; }
+
+    /* ── Footer ── */
+    .preview-footer {
+      border-top: 1px solid rgba(255,255,255,0.08);
+      padding: 24px 0 32px;
+      margin-top: 16px;
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+    .footer-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 16px;
+      padding: 18px;
+    }
+    .footer-card h3 { font-size: 0.95rem; margin-bottom: 6px; }
+    .footer-card p { color: var(--muted); font-size: 0.85rem; margin-bottom: 12px; }
+    .footer-card form { display: flex; flex-direction: column; gap: 8px; }
+    .footer-card input[type=email] {
+      padding: 9px 12px;
+      border-radius: 10px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.05);
+      color: var(--text);
+      font-size: 0.9rem;
+      width: 100%;
+    }
+    .footer-card input[type=email]::placeholder { color: var(--muted); }
+    .footer-card button {
+      padding: 9px 16px;
+      border-radius: 10px;
+      border: none;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 0.88rem;
+      transition: 180ms ease;
+    }
+    .btn-claim { background: var(--accent); color: #07111f; }
+    .btn-claim:hover { opacity: 0.88; }
+    .btn-optout {
+      background: transparent;
+      border: 1px solid rgba(255,255,255,0.15);
+      color: var(--muted);
+    }
+    .btn-optout:hover { border-color: rgba(255,255,255,0.3); }
+    .footer-note {
+      text-align: center;
+      padding: 16px 0 8px;
+      font-size: 0.78rem;
+      color: rgba(166,176,207,0.5);
+    }
+    .footer-note a { color: rgba(166,176,207,0.6); }
+    .success { color: #86efac; font-size: 0.85rem; padding: 8px 0; }
+    @media (max-width: 600px) { .footer-grid { grid-template-columns: 1fr; } }
+
+    /* ── Footer badge CTAs ── */
+    .cta-btn {
+      display: inline-block;
+      padding: 12px 26px;
+      background: var(--accent);
+      color: #07111f;
+      font-weight: 700;
+      border-radius: 999px;
+      text-decoration: none;
+      margin-bottom: 10px;
+      transition: opacity 0.2s, transform 0.15s;
+    }
+    .cta-btn:hover { opacity: 0.88; transform: translateY(-1px); text-decoration: none; }
+  </style>
+</head>
+<body>
+
+
+<header class="hero" style="background:linear-gradient(180deg,#7dd3fc22,transparent);">
+  <div class="container">
+    <img src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=800" alt="Tech Meetup Berlin" class="hero-img" />
+    <div class="reveal">
+      <span class="badge">March Meetup — AI &amp; Startups</span>
+    </div>
+    <h1 class="hero-title reveal reveal-delay-1">Tech Meetup Berlin</h1>
+    <p class="hero-desc reveal reveal-delay-2">Monthly gathering of Berlin tech scene. Keynote by industry leaders, networking, pizza &amp; beer.</p>
+    <div class="reveal reveal-delay-3">
+      <a href="#" class="cta-btn">Join waitlist →</a>
+    </div>
+  </div>
+</header>
+<main class="container">
+  
+
+  
+  <section class="reveal">
+    <h2 class="section-title">🎤 Speakers</h2>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:14px;">
+      
+      <div style="text-align:center;padding:18px;background:var(--card-bg);border:1px solid var(--card-border);border-radius:16px;">
+        <div style="width:64px;height:64px;border-radius:50%;background:rgba(255,255,255,0.08);margin:0 auto 10px;font-size:2rem;display:flex;align-items:center;justify-content:center;">🎤</div>
+        <strong style="display:block;font-size:0.9rem;">Dr. Sarah Chen</strong>
+        <small style="color:var(--muted);font-size:0.78rem;">AI Researcher, DeepMind</small>
+      </div>
+      <div style="text-align:center;padding:18px;background:var(--card-bg);border:1px solid var(--card-border);border-radius:16px;">
+        <div style="width:64px;height:64px;border-radius:50%;background:rgba(255,255,255,0.08);margin:0 auto 10px;font-size:2rem;display:flex;align-items:center;justify-content:center;">🎤</div>
+        <strong style="display:block;font-size:0.9rem;">Marcus Weber</strong>
+        <small style="color:var(--muted);font-size:0.78rem;">Founder, BerlinTech VC</small>
+      </div>
+      <div style="text-align:center;padding:18px;background:var(--card-bg);border:1px solid var(--card-border);border-radius:16px;">
+        <div style="width:64px;height:64px;border-radius:50%;background:rgba(255,255,255,0.08);margin:0 auto 10px;font-size:2rem;display:flex;align-items:center;justify-content:center;">🎤</div>
+        <strong style="display:block;font-size:0.9rem;">Lisa Park</strong>
+        <small style="color:var(--muted);font-size:0.78rem;">CTO, StartupBerlin</small>
+      </div>
+    </div>
+  </section>
+
+  
+  <section class="map-section reveal">
+    <h2>📍 Location</h2>
+    <p style="color:var(--muted);margin-bottom:10px;">Betahaus, Röbelstraße 3, 10969 Berlin</p>
+    <p style="color:var(--muted);">🕒 Thursday, March 20, 2025 — 18:00–22:00</p>
+  </section>
+
+  
+  <section class="reveal">
+    <div class="qr-share-row">
+      <div class="qr-section">
+        <p class="qr-label">Scan to share</p>
+        <img src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=https%3A%2F%2Fpeek-preview.pages.dev%2Fexamples%2Ftech-meetup" alt="QR Code" class="qr-img" />
+      </div>
+      <div>
+        <p class="share-label">Share</p>
+        <div class="share-row">
+    
+    <button onclick="copyLink()" class="share-btn share-copy" aria-label="Copy link">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+    </button>
+    <a href="mailto:?subject=Tech%20Meetup%20Berlin%20%E2%80%94%20check%20this%20out!&body=https%253A%252F%252Fpeek-preview.pages.dev%252Fexamples%252Ftech-meetup" class="share-btn share-email" aria-label="Share via Email">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+    </a>
+  </div>
+      </div>
+    </div>
+  </section>
+
+  
+</main>
+<div class="trust-bar">
+    <span>🔒 SSL Secured</span>
+    <span class="trust-sep">·</span>
+    <span>📱 Mobile Friendly</span>
+    <span class="trust-sep">·</span>
+    <span>⚡ Fast Loading</span>
+    <span class="trust-sep">·</span>
+    <span>Updated 2026</span>
+  </div>
+<footer class="preview-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-card">
+        <h3>👋 Claim this page</h3>
+        <p>Want us to host this page and set up your own domain? Upgrade in minutes.</p>
+        <form id="claim-form" onsubmit="submitClaim(event)">
+          <input type="email" name="email" placeholder="your@email.com" required />
+          <button type="submit" class="btn-claim">Claim &amp; upgrade →</button>
+        </form>
+        <div id="claim-success" class="success" style="display:none;">Got it! We'll be in touch within 24 hours.</div>
+      </div>
+      <div class="footer-card">
+        <h3>❌ Remove this page</h3>
+        <p>Don't want this preview? We'll take it down immediately and won't contact you again for this business.</p>
+        <form id="optout-form" onsubmit="submitOptout(event)">
+          <input type="hidden" name="business" value="Tech Meetup Berlin" />
+          <button type="submit" class="btn-optout">Remove my business page</button>
+        </form>
+        <div id="optout-success" class="success" style="display:none;">Page removed. Sorry to see you go.</div>
+      </div>
+    </div>
+    <p class="footer-note">
+      Generated by <strong>Peek</strong> · Preview for <strong>Tech Meetup Berlin</strong>
+      · Built from public business info · <a href="mailto:hello@peek.example">Contact</a>
+    </p>
+  </div>
+</footer>
+<script>
+// ── Gallery carousel ──
+let currentSlide = 0;
+let slideTimer = null;
+function showSlide(n) {
+  const imgs = document.querySelectorAll('.gallery-img');
+  const dots = document.querySelectorAll('.dot');
+  if (!imgs.length) return;
+  imgs.forEach((img, i) => { img.style.display = i === n ? 'block' : 'none'; });
+  dots.forEach((dot, i) => { dot.classList.toggle('active', i === n); });
+  currentSlide = n;
+  resetTimer();
+}
+function nextSlide() {
+  const imgs = document.querySelectorAll('.gallery-img');
+  showSlide((currentSlide + 1) % imgs.length);
+}
+function resetTimer() {
+  clearInterval(slideTimer);
+  slideTimer = setInterval(nextSlide, 4000);
+}
+document.addEventListener('DOMContentLoaded', function() {
+  resetTimer();
+});
+
+// ── Intersection Observer for reveal animations ──
+var revealObserver = new IntersectionObserver(function(entries) {
+  entries.forEach(function(entry) {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      revealObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.12 });
+document.querySelectorAll('.reveal').forEach(function(el) {
+  revealObserver.observe(el);
+});
+
+// ── Copy link ──
+function copyLink() {
+  var url = document.getElementById('qr-img') ? document.location.href : window.location.href;
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(url).then(function() {
+      showToast("Link copied!");
+    });
+  }
+}
+function showToast(msg) {
+  var t = document.createElement('div');
+  t.className = 'toast';
+  t.textContent = msg;
+  document.body.appendChild(t);
+  setTimeout(function() { t.remove(); }, 2500);
+}
+
+// ── Submit handlers ──
+async function submitClaim(e) {
+  e.preventDefault();
+  var form = e.target;
+  var email = form.email.value;
+  var btn = form.querySelector('button');
+  btn.textContent = "Sending...";
+  btn.disabled = true;
+  try {
+    var res = await fetch('/api/claim', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ businessName: "Tech Meetup Berlin", email })
+    });
+    if (res.ok) {
+      form.style.display = 'none';
+      document.getElementById('claim-success').style.display = 'block';
+    } else {
+      btn.textContent = "Error — try again";
+      btn.disabled = false;
+    }
+  } catch {
+    btn.textContent = "Error — try again";
+    btn.disabled = false;
+  }
+}
+async function submitOptout(e) {
+  e.preventDefault();
+  var form = e.target;
+  var btn = form.querySelector('button');
+  btn.textContent = "Removing...";
+  btn.disabled = true;
+  try {
+    var res = await fetch('/api/optout', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ businessName: "Tech Meetup Berlin" })
+    });
+    if (res.ok) {
+      form.style.display = 'none';
+      document.getElementById('optout-success').style.display = 'block';
+    } else {
+      btn.textContent = "Error — try again";
+      btn.disabled = false;
+    }
+  } catch {
+    btn.textContent = "Error — try again";
+    btn.disabled = false;
+  }
+}
+</script>
+</body>
+</html>

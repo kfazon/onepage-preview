@@ -1,0 +1,32 @@
+{
+  "name": "La Bodega Madrid",
+  "tagline": "Tapas & Wine Bar",
+  "description": "Authentic Spanish tapas in the heart of Madrid. Sangria, paella, and the best jamón ibérico.",
+  "address": "Calle Mayor 15, 28013 Madrid",
+  "phone": "+34 912 345 678",
+  "email": "reservas@labodegamadrid.es",
+  "hours": "Daily 12:00–00:00",
+  "whatsapp": "+34612345678",
+  "template": "launch-teaser",
+  "lang": "es",
+  "brandColor": "#e07b53",
+  "pageUrl": "https://peek-preview.pages.dev/examples/bodega-madrid",
+  "images": [
+    "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800",
+    "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800"
+  ],
+  "reviews": [
+    {
+      "name": "Carlos R.",
+      "text": "¡Las mejores tapas de Madrid!",
+      "rating": 5,
+      "source": "Google"
+    },
+    {
+      "name": "María G.",
+      "text": "Authentic atmosphere and delicious wine.",
+      "rating": 5,
+      "source": "TripAdvisor"
+    }
+  ]
+}

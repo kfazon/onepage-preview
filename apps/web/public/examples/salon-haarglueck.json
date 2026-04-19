@@ -1,0 +1,32 @@
+{
+  "name": "Studio Haarglück",
+  "tagline": "Hair Salon",
+  "description": "Modern hair salon in Charlottenburg. Expert colorists and stylists for all hair types.",
+  "address": "Kurfürstendamm 89, 10709 Berlin",
+  "phone": "+49 30 8901 2345",
+  "email": "info@studio-haarglueck.de",
+  "hours": "Tue–Sat 9:00–19:00",
+  "whatsapp": "+493089012345",
+  "template": "launch-teaser",
+  "lang": "de",
+  "brandColor": "#c4a7e7",
+  "pageUrl": "https://peek-preview.pages.dev/examples/salon-haarglueck",
+  "images": [
+    "https://images.unsplash.com/photo-1560066984-138dadb4c035?w=800",
+    "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=800"
+  ],
+  "reviews": [
+    {
+      "name": "Anna M.",
+      "text": "Finally a salon that understands my hair!",
+      "rating": 5,
+      "source": "Google"
+    },
+    {
+      "name": "Julia S.",
+      "text": "Best balayage in Berlin, period.",
+      "rating": 5,
+      "source": "Yelp"
+    }
+  ]
+}

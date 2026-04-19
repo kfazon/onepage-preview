@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Foto Anna Kowalska" />
+  <title>Foto Anna Kowalska</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fraunces:ital,wght@0,700;1,700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #0b1020;
+      --text: #eef2ff;
+      --muted: #a6b0cf;
+      --accent: #b8a9c9;
+      --accent-dark: #a495b5;
+      --card-bg: rgba(255,255,255,0.05);
+      --card-border: rgba(255,255,255,0.10);
+      --wa-green: #25D366;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: Inter, system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+      min-height: 100vh;
+    }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* ── Layout ── */
+    .container { width: min(900px, calc(100% - 32px)); margin: 0 auto; }
+
+    /* ── Animations ── */
+    @keyframes fadeSlideUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(37,211,102,0.5); }
+      50%       { box-shadow: 0 0 0 14px rgba(37,211,102,0); }
+    }
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateX(20px); }
+      to   { opacity: 1; transform: translateX(0); }
+    }
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.55s ease, transform 0.55s ease;
+    }
+    .reveal.visible {
+      animation: fadeSlideUp 0.55s ease forwards;
+    }
+    .reveal-delay-1 { transition-delay: 0.08s; }
+    .reveal-delay-2 { transition-delay: 0.16s; }
+    .reveal-delay-3 { transition-delay: 0.24s; }
+    .reveal-delay-4 { transition-delay: 0.32s; }
+
+    /* ── Badge ── */
+    .badge {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      background: rgba(134,239,172,0.12);
+      color: #86efac;
+      border: 1px solid rgba(134,239,172,0.25);
+    }
+
+    /* ── Hero ── */
+    .hero {
+      padding: 40px 0 32px;
+      text-align: center;
+      background: radial-gradient(circle at top, #b8a9c928, transparent 65%);
+    }
+    .hero-title {
+      font-family: Fraunces, Georgia, serif;
+      font-size: clamp(2.2rem, 6vw, 4rem);
+      letter-spacing: -0.03em;
+      line-height: 1.08;
+      margin: 12px 0;
+    }
+    .hero-desc {
+      max-width: 60ch;
+      margin: 0 auto 24px;
+      font-size: 1.05rem;
+      color: var(--muted);
+    }
+
+    /* ── Gallery ── */
+    .gallery {
+      position: relative;
+      width: 100%;
+      max-width: 540px;
+      margin: 0 auto 28px;
+      border-radius: 20px;
+      overflow: hidden;
+    }
+    .gallery-imgs { position: relative; }
+    .gallery-img {
+      width: 100%;
+      aspect-ratio: 16/9;
+      object-fit: cover;
+      display: block;
+      border-radius: 20px;
+    }
+    .gallery-dots {
+      position: absolute;
+      bottom: 14px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 7px;
+    }
+    .dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.4);
+      border: none;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.2s;
+      padding: 0;
+    }
+    .dot.active {
+      background: #fff;
+      transform: scale(1.3);
+    }
+    .hero-img {
+      width: 100%;
+      max-width: 540px;
+      border-radius: 20px;
+      margin-bottom: 28px;
+      aspect-ratio: 16/9;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* ── Open/Closed Badge ── */
+    .open-badge {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      background: rgba(34,197,94,0.15);
+      color: #22c55e;
+      border: 1px solid rgba(34,197,94,0.3);
+      margin-bottom: 8px;
+    }
+    .closed-badge {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      background: rgba(239,68,68,0.12);
+      color: #f87171;
+      border: 1px solid rgba(239,68,68,0.25);
+      margin-bottom: 8px;
+    }
+    .closed-next { opacity: 0.8; font-weight: 400; }
+
+    /* ── Quick Actions ── */
+    .quick-actions { padding: 0 0 8px; }
+    .qa-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+    }
+    @media (max-width: 500px) { .qa-grid { grid-template-columns: repeat(2, 1fr); } }
+    .qa-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      padding: 16px 8px;
+      border-radius: 16px;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      color: var(--text);
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.15s, border-color 0.2s;
+      text-decoration: none;
+      min-height: 72px;
+      justify-content: center;
+    }
+    .qa-btn:hover {
+      background: rgba(255,255,255,0.09);
+      transform: translateY(-2px);
+      text-decoration: none;
+    }
+    .qa-icon { font-size: 1.5rem; line-height: 1; }
+    .qa-whatsapp { border-color: rgba(37,211,102,0.3); }
+    .qa-whatsapp:hover { background: rgba(37,211,102,0.1); }
+    .qa-book { border-color: rgba(124,156,255,0.3); }
+
+    /* ── Main content ── */
+    main { padding: 40px 0; }
+
+    /* ── Sections ── */
+    .section-title {
+      font-family: Fraunces, Georgia, serif;
+      font-size: clamp(1.4rem, 4vw, 1.8rem);
+      letter-spacing: -0.02em;
+      margin-bottom: 18px;
+    }
+
+    /* ── About ── */
+    .about-section {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 20px;
+      padding: 28px;
+      margin-bottom: 32px;
+    }
+    .about-section h2 { font-size: 1.3rem; margin-bottom: 10px; }
+    .about-section p { color: var(--muted); line-height: 1.75; }
+
+    /* ── Map ── */
+    .map-section {
+      margin-bottom: 32px;
+    }
+    .map-section h2 { font-size: 1.3rem; margin-bottom: 12px; }
+    .map-embed {
+      width: 100%;
+      height: 280px;
+      border-radius: 16px;
+      border: 1px solid var(--card-border);
+      overflow: hidden;
+    }
+    .map-embed iframe { width: 100%; height: 100%; border: none; display: block; }
+
+    /* ── Reviews ── */
+    .reviews-section { margin-bottom: 36px; }
+    .reviews-scroll {
+      display: flex;
+      gap: 16px;
+      overflow-x: auto;
+      padding-bottom: 12px;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(255,255,255,0.15) transparent;
+    }
+    .reviews-scroll::-webkit-scrollbar { height: 4px; }
+    .reviews-scroll::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 2px; }
+    .review-card {
+      flex: 0 0 260px;
+      scroll-snap-align: start;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .review-source {
+      font-size: 0.72rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--accent);
+    }
+    .review-stars { font-size: 0.9rem; color: #fbbf24; letter-spacing: 1px; }
+    .review-text { font-size: 0.88rem; color: var(--text); line-height: 1.55; font-style: italic; }
+    .review-author { font-size: 0.8rem; color: var(--muted); margin-top: auto; }
+    .review-author em { opacity: 0.6; }
+
+    /* ── Contact card ── */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+    @media (max-width: 500px) { .contact-grid { grid-template-columns: 1fr; } }
+    .contact-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 18px;
+    }
+    .contact-card h3 { font-size: 0.95rem; margin-bottom: 6px; display: flex; align-items: center; gap: 6px; }
+    .contact-card p, .contact-card a { color: var(--muted); font-size: 0.88rem; }
+    .contact-card a:hover { color: var(--text); }
+
+    /* ── QR + Share row ── */
+    .qr-share-row {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 18px 22px;
+      margin-bottom: 32px;
+      flex-wrap: wrap;
+    }
+    .qr-section { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+    .qr-label { font-size: 0.75rem; color: var(--muted); }
+    .qr-img { width: 100px; height: 100px; border-radius: 8px; }
+    .share-row { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; flex: 1; }
+    .share-label { font-size: 0.82rem; color: var(--muted); margin-right: 4px; }
+    .share-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px; height: 40px;
+      border-radius: 10px;
+      border: 1px solid var(--card-border);
+      background: rgba(255,255,255,0.05);
+      cursor: pointer;
+      transition: background 0.2s, transform 0.15s;
+      color: var(--text);
+    }
+    .share-btn:hover { background: rgba(255,255,255,0.1); transform: translateY(-1px); }
+    .share-whatsapp:hover { background: rgba(37,211,102,0.15); border-color: rgba(37,211,102,0.4); color: var(--wa-green); }
+
+    /* ── Toast ── */
+    .toast {
+      position: fixed;
+      bottom: 90px;
+      right: 24px;
+      background: rgba(0,0,0,0.85);
+      color: #fff;
+      padding: 10px 18px;
+      border-radius: 10px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      z-index: 10000;
+      animation: fadeSlideUp 0.3s ease;
+      backdrop-filter: blur(8px);
+    }
+
+    /* ── WhatsApp Float ── */
+    .whatsapp-float {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      width: 60px;
+      height: 60px;
+      background: var(--wa-green);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 24px rgba(37,211,102,0.45);
+      z-index: 9999;
+      animation: pulse 2.4s infinite;
+      transition: transform 0.2s;
+    }
+    .whatsapp-float:hover {
+      transform: scale(1.1);
+      text-decoration: none;
+    }
+    .whatsapp-float svg { width: 30px; height: 30px; fill: #fff; }
+
+    /* ── Trust bar ── */
+    .trust-bar {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 14px 0;
+      font-size: 0.75rem;
+      color: rgba(166,176,207,0.5);
+      flex-wrap: wrap;
+    }
+    .trust-sep { opacity: 0.4; }
+
+    /* ── Footer ── */
+    .preview-footer {
+      border-top: 1px solid rgba(255,255,255,0.08);
+      padding: 24px 0 32px;
+      margin-top: 16px;
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+    .footer-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 16px;
+      padding: 18px;
+    }
+    .footer-card h3 { font-size: 0.95rem; margin-bottom: 6px; }
+    .footer-card p { color: var(--muted); font-size: 0.85rem; margin-bottom: 12px; }
+    .footer-card form { display: flex; flex-direction: column; gap: 8px; }
+    .footer-card input[type=email] {
+      padding: 9px 12px;
+      border-radius: 10px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.05);
+      color: var(--text);
+      font-size: 0.9rem;
+      width: 100%;
+    }
+    .footer-card input[type=email]::placeholder { color: var(--muted); }
+    .footer-card button {
+      padding: 9px 16px;
+      border-radius: 10px;
+      border: none;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 0.88rem;
+      transition: 180ms ease;
+    }
+    .btn-claim { background: var(--accent); color: #07111f; }
+    .btn-claim:hover { opacity: 0.88; }
+    .btn-optout {
+      background: transparent;
+      border: 1px solid rgba(255,255,255,0.15);
+      color: var(--muted);
+    }
+    .btn-optout:hover { border-color: rgba(255,255,255,0.3); }
+    .footer-note {
+      text-align: center;
+      padding: 16px 0 8px;
+      font-size: 0.78rem;
+      color: rgba(166,176,207,0.5);
+    }
+    .footer-note a { color: rgba(166,176,207,0.6); }
+    .success { color: #86efac; font-size: 0.85rem; padding: 8px 0; }
+    @media (max-width: 600px) { .footer-grid { grid-template-columns: 1fr; } }
+
+    /* ── Footer badge CTAs ── */
+    .cta-btn {
+      display: inline-block;
+      padding: 12px 26px;
+      background: var(--accent);
+      color: #07111f;
+      font-weight: 700;
+      border-radius: 999px;
+      text-decoration: none;
+      margin-bottom: 10px;
+      transition: opacity 0.2s, transform 0.15s;
+    }
+    .cta-btn:hover { opacity: 0.88; transform: translateY(-1px); text-decoration: none; }
+  </style>
+</head>
+<body>
+<a href="https://wa.me/+48600123456?text=Hi%2C%20I%20saw%20your%20page%20on%20Peek%20%E2%80%94%20I'd%20like%20to%20know%20more" target="_blank" rel="noopener" class="whatsapp-float" aria-label="Chat on WhatsApp">
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+  </a>
+
+<header class="hero">
+  <div class="container">
+    <div class="gallery" id="gallery">
+    <div class="gallery-imgs"><img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=800" alt="Foto Anna Kowalska 1" class="gallery-img" style="display:block;" /><img src="https://images.unsplash.com/photo-1606216794074-735e91aa2c92?w=800" alt="Foto Anna Kowalska 2" class="gallery-img" style="display:none;" /></div>
+    <div class="gallery-dots"><button class="dot active" onclick="showSlide(0)" aria-label="Image 1"></button><button class="dot" onclick="showSlide(1)" aria-label="Image 2"></button></div>
+  </div>
+    <div class="reveal">
+      
+    </div>
+    <h1 class="hero-title reveal reveal-delay-1">Foto Anna Kowalska</h1>
+    <p class="hero-desc reveal reveal-delay-2">Fotografia Ślubna</p>
+    <p class="hero-desc reveal reveal-delay-2" style="font-size:0.95rem;">Award-winning wedding photographer in Warsaw. Capturing authentic moments and emotions.</p>
+    <div class="reveal reveal-delay-3">
+      <a href="#" class="cta-btn">Przejmij i rozbuduj</a>
+    </div>
+  </div>
+</header>
+<main class="container">
+  <section class="quick-actions reveal"><div class="qa-grid"><a href="tel:+48 22 123 45 67" class="qa-btn qa-call">
+      <span class="qa-icon">📞</span><span>Zadzwoń</span>
+    </a><a href="https://wa.me/+48600123456?text=Hi%2C%20I%20saw%20your%20page%20on%20Peek%20%E2%80%94%20I'd%20like%20to%20know%20more" target="_blank" rel="noopener" class="qa-btn qa-whatsapp">
+      <span class="qa-icon">💬</span><span>WhatsApp</span>
+    </a><a href="https://www.google.com/maps/search/?api=1&amp;query=ul.%20Nowy%20%C5%9Awiat%2033%2C%2000-029%20Warszawa" target="_blank" rel="noopener" class="qa-btn qa-directions">
+        <span class="qa-icon">📍</span><span>Dojazd</span>
+      </a><a href="https://wa.me/+48600123456?text=Hi%2C%20I%20saw%20your%20page%20on%20Peek%20%E2%80%94%20I'd%20like%20to%20know%20more" target="_blank" rel="noopener" class="qa-btn qa-book">
+      <span class="qa-icon">📅</span><span>Zarezerwuj</span>
+    </a></div></section>
+
+  
+
+  <section class="reviews-section reveal">
+    <h2 class="section-title">Opinie klientów</h2>
+    <div class="reviews-scroll">
+    <div class="review-card">
+      <span class="review-source">Google</span>
+      <div class="review-stars">★★★★★</div>
+      <p class="review-text">"Najlepsza fotografka ślubna!"</p>
+      <p class="review-author">— Kasia &amp; Piotr</p>
+    </div>
+    <div class="review-card">
+      <span class="review-source">Google</span>
+      <div class="review-stars">★★★★★</div>
+      <p class="review-text">"Profesjonalna obsługa, piękne zdjęcia."</p>
+      <p class="review-author">— Marta W.</p>
+    </div></div>
+  </section>
+
+  
+  <section class="map-section reveal">
+    <h2>📍 Gdzie jesteśmy</h2>
+    <div class="map-embed">
+      <iframe src="https://www.openstreetmap.org/?q=ul.%20Nowy%20%C5%9Awiat%2033%2C%2000-029%20Warszawa&amp;zoom=16&amp;output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="📍 Gdzie jesteśmy"></iframe>
+    </div>
+    <p style="color:var(--muted);margin-top:8px;">🕒 Mon–Fri 10:00–18:00</p>
+    <p style="margin-top:6px;"><a href="https://www.google.com/maps/search/?api=1&amp;query=ul.%20Nowy%20%C5%9Awiat%2033%2C%2000-029%20Warszawa" target="_blank" rel="noopener">Zobacz na mapie →</a></p>
+  </section>
+
+  
+  <section class="reveal">
+    <div class="qr-share-row">
+      <div class="qr-section">
+        <p class="qr-label">Skanuj i udostępniaj</p>
+        <img src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=https%3A%2F%2Fpeek-preview.pages.dev%2Fexamples%2Ffoto-anna" alt="QR Code" class="qr-img" />
+      </div>
+      <div>
+        <p class="share-label">Udostępnij</p>
+        <div class="share-row">
+    <a href="https://wa.me/+48600123456?text=Foto%20Anna%20Kowalska%20%E2%80%94%20check%20this%20out!%20https%253A%252F%252Fpeek-preview.pages.dev%252Fexamples%252Ffoto-anna" target="_blank" rel="noopener" class="share-btn share-whatsapp" aria-label="Share via WhatsApp">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    </a>
+    <button onclick="copyLink()" class="share-btn share-copy" aria-label="Copy link">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+    </button>
+    <a href="mailto:?subject=Foto%20Anna%20Kowalska%20%E2%80%94%20check%20this%20out!&body=https%253A%252F%252Fpeek-preview.pages.dev%252Fexamples%252Ffoto-anna" class="share-btn share-email" aria-label="Share via Email">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+    </a>
+  </div>
+      </div>
+    </div>
+  </section>
+
+  
+  <section class="reveal">
+    <h2 class="section-title">Skontaktuj się z nami</h2>
+    <div class="contact-grid">
+      
+      <div class="contact-card">
+        <h3>📞</h3>
+        <p><a href="tel:+48 22 123 45 67">+48 22 123 45 67</a></p>
+      </div>
+      
+      <div class="contact-card">
+        <h3>✉️</h3>
+        <p><a href="mailto:anna@fotoanna.pl">anna@fotoanna.pl</a></p>
+      </div>
+    </div>
+  </section>
+
+  
+</main>
+<div class="trust-bar">
+    <span>🔒 SSL Zabezpieczone</span>
+    <span class="trust-sep">·</span>
+    <span>📱 Mobilne</span>
+    <span class="trust-sep">·</span>
+    <span>⚡ Szybkie ładowanie</span>
+    <span class="trust-sep">·</span>
+    <span>Updated 2026</span>
+  </div>
+<footer class="preview-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-card">
+        <h3>👋 Przejmij tę stronę</h3>
+        <p>Chcesz, abyśmy hostowali tę stronę i podpięli Twoją domenę? Uruchom ją w kilka minut.</p>
+        <form id="claim-form" onsubmit="submitClaim(event)">
+          <input type="email" name="email" placeholder="twoj@email.pl" required />
+          <button type="submit" class="btn-claim">Przejmij i uruchom →</button>
+        </form>
+        <div id="claim-success" class="success" style="display:none;">Gotowe! Odewiemy się w ciągu 24 godzin.</div>
+      </div>
+      <div class="footer-card">
+        <h3>❌ Usuń tę stronę</h3>
+        <p>Nie chcesz tego podglądu? Usuniemy go od razu i nie będziemy już kontaktować się w sprawie tej firmy.</p>
+        <form id="optout-form" onsubmit="submitOptout(event)">
+          <input type="hidden" name="business" value="Foto Anna Kowalska" />
+          <button type="submit" class="btn-optout">Usuń stronę mojej firmy</button>
+        </form>
+        <div id="optout-success" class="success" style="display:none;">Strona usunięta.</div>
+      </div>
+    </div>
+    <p class="footer-note">
+      Wygenerowano przez <strong>Peek</strong> · Podgląd dla <strong>Foto Anna Kowalska</strong>
+      · Utworzono na podstawie publicznie dostępnych danych firmy · <a href="mailto:hello@peek.example">Kontakt</a>
+    </p>
+  </div>
+</footer>
+<script>
+// ── Gallery carousel ──
+let currentSlide = 0;
+let slideTimer = null;
+function showSlide(n) {
+  const imgs = document.querySelectorAll('.gallery-img');
+  const dots = document.querySelectorAll('.dot');
+  if (!imgs.length) return;
+  imgs.forEach((img, i) => { img.style.display = i === n ? 'block' : 'none'; });
+  dots.forEach((dot, i) => { dot.classList.toggle('active', i === n); });
+  currentSlide = n;
+  resetTimer();
+}
+function nextSlide() {
+  const imgs = document.querySelectorAll('.gallery-img');
+  showSlide((currentSlide + 1) % imgs.length);
+}
+function resetTimer() {
+  clearInterval(slideTimer);
+  slideTimer = setInterval(nextSlide, 4000);
+}
+document.addEventListener('DOMContentLoaded', function() {
+  resetTimer();
+});
+
+// ── Intersection Observer for reveal animations ──
+var revealObserver = new IntersectionObserver(function(entries) {
+  entries.forEach(function(entry) {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      revealObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.12 });
+document.querySelectorAll('.reveal').forEach(function(el) {
+  revealObserver.observe(el);
+});
+
+// ── Copy link ──
+function copyLink() {
+  var url = document.getElementById('qr-img') ? document.location.href : window.location.href;
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(url).then(function() {
+      showToast("Link skopiowany!");
+    });
+  }
+}
+function showToast(msg) {
+  var t = document.createElement('div');
+  t.className = 'toast';
+  t.textContent = msg;
+  document.body.appendChild(t);
+  setTimeout(function() { t.remove(); }, 2500);
+}
+
+// ── Submit handlers ──
+async function submitClaim(e) {
+  e.preventDefault();
+  var form = e.target;
+  var email = form.email.value;
+  var btn = form.querySelector('button');
+  btn.textContent = "Wysyłanie...";
+  btn.disabled = true;
+  try {
+    var res = await fetch('/api/claim', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ businessName: "Foto Anna Kowalska", email })
+    });
+    if (res.ok) {
+      form.style.display = 'none';
+      document.getElementById('claim-success').style.display = 'block';
+    } else {
+      btn.textContent = "Błąd — spróbuj ponownie";
+      btn.disabled = false;
+    }
+  } catch {
+    btn.textContent = "Błąd — spróbuj ponownie";
+    btn.disabled = false;
+  }
+}
+async function submitOptout(e) {
+  e.preventDefault();
+  var form = e.target;
+  var btn = form.querySelector('button');
+  btn.textContent = "Usuwanie...";
+  btn.disabled = true;
+  try {
+    var res = await fetch('/api/optout', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ businessName: "Foto Anna Kowalska" })
+    });
+    if (res.ok) {
+      form.style.display = 'none';
+      document.getElementById('optout-success').style.display = 'block';
+    } else {
+      btn.textContent = "Błąd — spróbuj ponownie";
+      btn.disabled = false;
+    }
+  } catch {
+    btn.textContent = "Błąd — spróbuj ponownie";
+    btn.disabled = false;
+  }
+}
+</script>
+</body>
+</html>

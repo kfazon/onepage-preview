@@ -1,0 +1,32 @@
+{
+  "name": "Foto Anna Kowalska",
+  "tagline": "Fotografia Ślubna",
+  "description": "Award-winning wedding photographer in Warsaw. Capturing authentic moments and emotions.",
+  "address": "ul. Nowy Świat 33, 00-029 Warszawa",
+  "phone": "+48 22 123 45 67",
+  "email": "anna@fotoanna.pl",
+  "hours": "Mon–Fri 10:00–18:00",
+  "whatsapp": "+48600123456",
+  "template": "product-spotlight",
+  "lang": "pl",
+  "brandColor": "#b8a9c9",
+  "pageUrl": "https://peek-preview.pages.dev/examples/foto-anna",
+  "images": [
+    "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=800",
+    "https://images.unsplash.com/photo-1606216794074-735e91aa2c92?w=800"
+  ],
+  "reviews": [
+    {
+      "name": "Kasia & Piotr",
+      "text": "Najlepsza fotografka ślubna!",
+      "rating": 5,
+      "source": "Google"
+    },
+    {
+      "name": "Marta W.",
+      "text": "Profesjonalna obsługa, piękne zdjęcia.",
+      "rating": 5,
+      "source": "Google"
+    }
+  ]
+}

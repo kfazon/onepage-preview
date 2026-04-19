@@ -1,0 +1,28 @@
+{
+  "name": "Tech Meetup Berlin",
+  "tagline": "March Meetup — AI & Startups",
+  "description": "Monthly gathering of Berlin tech scene. Keynote by industry leaders, networking, pizza & beer.",
+  "address": "Betahaus, Röbelstraße 3, 10969 Berlin",
+  "hours": "Thursday, March 20, 2025 — 18:00–22:00",
+  "template": "event-waitlist",
+  "lang": "en",
+  "brandColor": "#7dd3fc",
+  "pageUrl": "https://peek-preview.pages.dev/examples/tech-meetup",
+  "images": [
+    "https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=800"
+  ],
+  "speakers": [
+    {
+      "name": "Dr. Sarah Chen",
+      "role": "AI Researcher, DeepMind"
+    },
+    {
+      "name": "Marcus Weber",
+      "role": "Founder, BerlinTech VC"
+    },
+    {
+      "name": "Lisa Park",
+      "role": "CTO, StartupBerlin"
+    }
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "name": "Café Morgenrot",
+  "tagline": "Specialty Coffee & Brunch",
+  "description": "The best specialty coffee in Prenzlauer Berg. Fresh pastries daily, legendary weekend brunch.",
+  "address": "Kastanienallee 42, 10435 Berlin",
+  "phone": "+49 30 1234 5678",
+  "email": "hallo@cafemorgenrot.de",
+  "hours": "Mon–Fri 7:30–18:00, Sat–Sun 9:00–17:00",
+  "whatsapp": "+493012345678",
+  "template": "launch-teaser",
+  "lang": "de",
+  "brandColor": "#d4a574",
+  "pageUrl": "https://peek-preview.pages.dev/examples/cafe-morgenrot",
+  "images": [
+    "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=800",
+    "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=800",
+    "https://images.unsplash.com/photo-1559925393-8be0ec4767c8?w=800"
+  ],
+  "reviews": [
+    {
+      "name": "Marco K.",
+      "text": "Best coffee in Berlin! The weekend brunch is amazing.",
+      "rating": 5,
+      "source": "Google"
+    },
+    {
+      "name": "Sarah L.",
+      "text": "Cozy atmosphere and great WiFi for working.",
+      "rating": 5,
+      "source": "Yelp"
+    },
+    {
+      "name": "Thomas B.",
+      "text": "My daily stop. Never disappoints.",
+      "rating": 4,
+      "source": "Google"
+    }
+  ]
+}

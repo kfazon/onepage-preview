@@ -1,0 +1,222 @@
+---
+const title = 'Friseur Berlin — Kostenlose One-Page-Vorschau für Friseurbetriebe | Peek';
+const description = 'Friseur in Berlin ohne Website? Peek erstellt automatisch eine kostenlose One-Page-Vorschau mit Öffnungszeiten, Leistungen und Kontakt. Für Friseure, Salons und Barbershops.';
+const previewUrl = 'https://peek-preview.pages.dev/examples/salon-haarglueck';
+---
+
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <title>{title}</title>
+    <style>
+      :root {
+        --bg: #0b1020;
+        --panel: rgba(16, 24, 48, 0.8);
+        --panel-strong: #121a33;
+        --text: #eef2ff;
+        --muted: #a6b0cf;
+        --line: rgba(255,255,255,0.1);
+        --accent: #c4a7e7;
+        --accent-2: #67e8f9;
+        --success: #86efac;
+        --shadow: 0 20px 60px rgba(0,0,0,0.35);
+      }
+      * { box-sizing: border-box; }
+      html { scroll-behavior: smooth; }
+      body {
+        margin: 0;
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, sans-serif;
+        background:
+          radial-gradient(circle at top, rgba(196,167,231,0.18), transparent 25%),
+          radial-gradient(circle at right, rgba(103,232,249,0.12), transparent 20%),
+          var(--bg);
+        color: var(--text);
+      }
+      a { color: inherit; text-decoration: none; }
+      .container { width: min(1120px, calc(100% - 32px)); margin: 0 auto; }
+      .nav { position: sticky; top: 0; backdrop-filter: blur(16px); background: rgba(11,16,32,0.7); border-bottom: 1px solid var(--line); z-index: 10; }
+      .nav-inner { display: flex; align-items: center; justify-content: space-between; padding: 16px 0; gap: 16px; }
+      .brand { font-weight: 800; letter-spacing: 0.02em; }
+      .brand span { color: var(--accent-2); }
+      .nav-links { display: flex; gap: 18px; color: var(--muted); font-size: 0.95rem; }
+      .btn { display: inline-flex; align-items: center; justify-content: center; padding: 14px 20px; border-radius: 999px; border: 1px solid transparent; font-weight: 700; transition: 180ms ease; cursor: pointer; }
+      .btn-primary { background: linear-gradient(135deg, var(--accent), var(--accent-2)); color: #07111f; box-shadow: var(--shadow); }
+      .btn-primary:hover { transform: translateY(-1px); }
+      .btn-secondary { border-color: var(--line); background: rgba(255,255,255,0.02); }
+      .eyebrow { display: inline-flex; gap: 8px; align-items: center; padding: 8px 12px; border: 1px solid rgba(134,239,172,0.25); border-radius: 999px; color: var(--success); background: rgba(134,239,172,0.08); font-size: 0.9rem; margin-bottom: 20px; }
+      .hero { padding: 64px 0 40px; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start; }
+      .hero-text h1 { margin: 0 0 16px; font-size: clamp(2.2rem, 5vw, 3.8rem); line-height: 1.0; letter-spacing: -0.04em; }
+      .hero-text p { margin: 0 0 28px; color: var(--muted); font-size: 1.05rem; line-height: 1.7; max-width: 60ch; }
+      .cta-row { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 32px; }
+      .preview-wrap { background: var(--panel); border: 1px solid var(--line); border-radius: 24px; overflow: hidden; box-shadow: var(--shadow); }
+      .browser-bar { display: flex; align-items: center; gap: 8px; padding: 14px 16px; border-bottom: 1px solid var(--line); }
+      .dot { width: 10px; height: 10px; border-radius: 50%; background: rgba(255,255,255,0.25); }
+      .preview-frame { width: 100%; height: 580px; border: none; display: block; }
+      .features { padding: 36px 0; }
+      .features-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+      .feature-card { background: var(--panel); border: 1px solid var(--line); border-radius: 20px; padding: 22px; }
+      .feature-card h3 { margin: 0 0 8px; font-size: 1rem; }
+      .feature-card p { margin: 0; color: var(--muted); font-size: 0.9rem; line-height: 1.6; }
+      .testimonials { padding: 36px 0; }
+      .section-head { margin-bottom: 24px; }
+      .section-head h2 { margin: 0 0 8px; font-size: clamp(1.6rem, 3vw, 2.2rem); }
+      .section-head p { margin: 0; color: var(--muted); }
+      .testi-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+      .testi-card { background: var(--panel); border: 1px solid var(--line); border-radius: 20px; padding: 22px; }
+      .testi-card .stars { color: #fbbf24; margin-bottom: 8px; }
+      .testi-card p { margin: 0 0 10px; font-style: italic; color: var(--text); font-size: 0.92rem; line-height: 1.6; }
+      .testi-card .author { color: var(--muted); font-size: 0.85rem; }
+      .cta-section { padding: 36px 0; }
+      .cta-box { padding: 36px; border-radius: 24px; border: 1px solid var(--line); background: linear-gradient(135deg, rgba(196,167,231,0.16), rgba(103,232,249,0.12)); text-align: center; }
+      .cta-box h2 { margin: 0 0 12px; font-size: clamp(1.6rem, 3vw, 2.2rem); }
+      .cta-box p { margin: 0 0 24px; color: var(--muted); max-width: 60ch; margin-left: auto; margin-right: auto; }
+      .form-row { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; max-width: 520px; margin: 0 auto; }
+      .form-row input { flex: 1; min-width: 220px; padding: 14px 18px; border-radius: 999px; border: 1px solid rgba(255,255,255,0.15); background: var(--panel-strong); color: var(--text); font-size: 1rem; font-family: inherit; outline: none; transition: border-color 180ms; }
+      .form-row input::placeholder { color: var(--muted); }
+      .form-row input:focus { border-color: var(--accent); }
+      footer { padding: 28px 0 48px; color: var(--muted); font-size: 0.95rem; }
+      @media (max-width: 860px) {
+        .hero, .features-grid, .testi-grid { grid-template-columns: 1fr; }
+        .nav-inner { flex-direction: column; align-items: flex-start; }
+        .nav-links { flex-wrap: wrap; }
+        .preview-frame { height: 400px; }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="nav">
+      <div class="container nav-inner">
+        <a class="brand" href="/de">Peek<span>.</span></a>
+        <nav class="nav-links">
+          <a href="#so-funktionierts">So funktioniert's</a>
+          <a href="#vorschau">Vorschau</a>
+          <a href="#testimonials">Kundenstimmen</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="hero">
+        <div class="hero-text">
+          <div class="eyebrow">Für Friseurbetriebe in Berlin</div>
+          <h1>Ihre Friseur-Website in 60 Sekunden — komplett kostenlos.</h1>
+          <p>
+            Keine Website, kein Problem. Peek erstellt automatisch eine professionelle One-Page-Vorschau
+            für Ihren Friseursalon — mit Öffnungszeiten, Leistungen, Galerie und Kontakt-CTA.
+          </p>
+          <div class="cta-row">
+            <a href="#zugang-anfordern" class="btn btn-primary">Zugang anfordern →</a>
+            <a href="#vorschau" class="btn btn-secondary">Vorschau ansehen</a>
+          </div>
+          <p style="color: var(--muted); font-size: 0.9rem;">
+            ✓ Öffnungszeiten ✓ Standort-Karte ✓ Bewertungen ✓ WhatsApp-Button
+          </p>
+        </div>
+
+        <div class="preview-wrap" id="vorschau">
+          <div class="browser-bar">
+            <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+          </div>
+          <iframe src={previewUrl} class="preview-frame" title="Beispielvorschau Friseur" loading="lazy"></iframe>
+        </div>
+      </section>
+
+      <section id="so-funktionierts" class="features">
+        <div class="section-head">
+          <h2>Warum Friseure auf Peek setzen</h2>
+          <p>Eine professionelle Online-Präsenz muss nicht teuer oder kompliziert sein.</p>
+        </div>
+        <div class="features-grid">
+          <div class="feature-card">
+            <h3>📍 Sofort sichtbar</h3>
+            <p>Ihre Vorschau enthält eine interaktive Karte mit Standort, Öffnungszeiten und Anfahrtsbeschreibung.</p>
+          </div>
+          <div class="feature-card">
+            <h3>💬 WhatsApp-Integration</h3>
+            <p>Kunden können Ihnen direkt über WhatsApp schreiben — ohne Telefonkosten, ohne Wartezeit.</p>
+          </div>
+          <div class="feature-card">
+            <h3>⭐ Social Proof</h3>
+            <p>Bewertungen von Google, Yelp oder TripAdvisor werden automatisch eingebunden.</p>
+          </div>
+          <div class="feature-card">
+            <h3>📱 Mobile optimiert</h3>
+            <p>Jede Peek-Vorschau ist von Grund auf für mobile Geräte optimiert — kein Pinchen, kein Scrollen.</p>
+          </div>
+          <div class="feature-card">
+            <h3>🔒 SSL-gesichert</h3>
+            <p>Alle Vorschauen sind HTTPS-gesichert und laden in unter einer Sekunde.</p>
+          </div>
+          <div class="feature-card">
+            <h3>✂️ Leistungen zeigen</h3>
+            <p>Haarschnitte, Coloration, Bartpflege — Ihre Leistungen übersichtlich auf einer Seite.</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="testimonials" class="testimonials">
+        <div class="section-head">
+          <h2>Kundenstimmen</h2>
+          <p>Was Berliner Friseurbetriebe über Peek sagen.</p>
+        </div>
+        <div class="testi-grid">
+          <div class="testi-card">
+            <div class="stars">★★★★★</div>
+            <p>"Endlich eine einfache Lösung für meinen Salon. Meine Stammkunden finden mich jetzt auch online."</p>
+            <p class="author">— Anna M., Studio Haarglück, Charlottenburg</p>
+          </div>
+          <div class="testi-card">
+            <div class="stars">★★★★★</div>
+            <p>"Die Vorschau war in 2 Minuten fertig. Ich habe sie meinen Kunden im Instagram-Linktree gezeigt."</p>
+            <p class="author">— Jens K., Barbershop Mitte, Berlin</p>
+          </div>
+          <div class="testi-card">
+            <div class="stars">★★★★☆</div>
+            <p>"Einfach, schnell und professionell. Genau das, was ich als Friseur ohne Tech-Kenntnisse brauche."</p>
+            <p class="author">— Lisa R., Friseur Prenzlauer Berg</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="zugang-anfordern" class="cta-section">
+        <div class="cta-box">
+          <h2>Kostenlose Vorschau für Ihr Geschäft</h2>
+          <p>Hinterlassen Sie Ihre E-Mail-Adresse — wir erstellen Ihre persönliche One-Page-Vorschau und melden uns innerhalb von 24 Stunden.</p>
+          <form class="form-row" id="access-form" novalidate>
+            <input type="email" name="email" placeholder="ihre@email.de" required autocomplete="email" aria-label="E-Mail-Adresse" />
+            <button type="submit" class="btn btn-primary">Zugang anfordern</button>
+          </form>
+          <p id="form-success" style="display:none; color: var(--success); margin-top: 14px;">✓ Danke! Wir melden uns innerhalb von 24 Stunden.</p>
+          <p id="form-error" style="display:none; color: #f87171; margin-top: 14px;">Bitte geben Sie eine gültige E-Mail-Adresse ein.</p>
+        </div>
+      </section>
+    </main>
+
+    <footer class="container">
+      Peek — One-Page-Vorschauplattform für Berliner Unternehmen
+      <span style="display:block; margin-top:12px; font-size:0.8rem;"><a href="/impressum">Impressum</a> • <a href="/privacy">Datenschutz</a></span>
+    </footer>
+
+    <script>
+      const form = document.getElementById('access-form');
+      const successEl = document.getElementById('form-success');
+      const errorEl = document.getElementById('form-error');
+      form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        const email = form.email.value.trim();
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+          errorEl.style.display = 'block';
+          successEl.style.display = 'none';
+          return;
+        }
+        errorEl.style.display = 'none';
+        successEl.style.display = 'block';
+        form.reset();
+        console.log('Access requested for:', email);
+      });
+    </script>
+  </body>
+</html>
