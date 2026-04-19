@@ -578,6 +578,25 @@ function basePage({ title, content, manageUrl, brandColor, name, claimUrl, lang 
   const claimAction = claimUrl || `https://peek.example.com/claim?name=${encodedName}`;
   const optoutAction = manageUrl || `https://peek.example.com/optout?name=${encodedName}`;
   const pageUrl = encodeURIComponent(input.pageUrl || 'https://peek.example.com/preview');
+  const pageUrlDecoded = input.pageUrl || 'https://peek.example.com/preview';
+  const firstImage = (input.images && input.images[0]) || '';
+  const description = input.description || input.tagline || '';
+
+  // Urgency banner: only show on peek-preview.pages.dev preview pages (not paid/custom domain)
+  const isPreviewDomain = pageUrlDecoded.includes('peek-preview.pages.dev') || pageUrlDecoded.includes('preview/');
+  const urgencyBanner = isPreviewDomain ? (function() {
+    const banners = {
+      de: 'Für Unternehmen in Deutschland: Eigene Domain ab 149 €/Monat →',
+      es: 'Para negocios en España: Consigue tu propio dominio desde 149 €/mes →',
+      pl: 'Dla firm w Polsce: Własna domena już od 59 zł/mies. →',
+      hr: 'Za tvrtke u Hrvatskoj: vlastita domena od 99 kn/mjesečno →',
+    };
+    const msg = banners[lang] || 'For businesses: Get your own domain from €149/month →';
+    return `<div id="urgency-banner" style="display:none; position:fixed; top:0; left:0; right:0; z-index:9998; background:linear-gradient(90deg,#7c9cff,#67e8f9); color:#07111f; font-size:0.82rem; font-weight:600; padding:10px 20px; text-align:center;">
+      ${esc(msg)} <a href="https://peek-preview.pages.dev/upgrade" style="color:#07111f;font-weight:800;text-decoration:underline;">Upgrade jetzt →</a>
+      <button onclick="dismissUrgency()" style="margin-left:16px;background:none;border:none;cursor:pointer;font-weight:800;opacity:0.7;" aria-label="Dismiss">✕</button>
+    </div>`;
+  })() : '';
 
   return `<!DOCTYPE html>
 <html lang="${esc(lang)}">
@@ -586,6 +605,18 @@ function basePage({ title, content, manageUrl, brandColor, name, claimUrl, lang 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="description" content="${esc(title)}" />
   <title>${esc(title)}</title>
+  <!-- Open Graph / Social -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="${esc(title)}" />
+  <meta property="og:description" content="${esc(description)}" />
+  <meta property="og:url" content="${esc(pageUrlDecoded)}" />
+  <meta property="og:image" content="${esc(firstImage || 'https://peek-preview.pages.dev/og-default.png')}" />
+  <meta property="og:site_name" content="Peek" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="${esc(title)}" />
+  <meta name="twitter:description" content="${esc(description)}" />
+  <meta name="twitter:image" content="${esc(firstImage || '')}" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fraunces:ital,wght@0,700;1,700&display=swap" rel="stylesheet" />
@@ -1031,6 +1062,7 @@ function basePage({ title, content, manageUrl, brandColor, name, claimUrl, lang 
 </head>
 <body>
 ${whatsappFloatBtn(input)}
+${urgencyBanner}
 ${content}
 ${trustBadges(copy)}
 <footer class="preview-footer">
@@ -1059,6 +1091,10 @@ ${trustBadges(copy)}
       ${esc(copy.generatedBy)} <strong>Peek</strong> · ${esc(copy.previewFor)} <strong>${esc(name)}</strong>
       · ${esc(copy.builtFromPublicInfo)} · <a href="mailto:hello@peek.example">${esc(copy.contact)}</a>
     </p>
+    ${isPreviewDomain ? `<div style="text-align:center;padding:12px 0 4px;font-size:0.72rem;color:rgba(166,176,207,0.4);">
+      Made with <a href="https://peek-preview.pages.dev" style="color:rgba(166,176,207,0.5);">Peek</a> ·
+      <a href="https://peek-preview.pages.dev/upgrade" style="color:rgba(166,176,207,0.5);">Get your own page →</a>
+    </div>` : ''}
   </div>
 </footer>
 <script>
@@ -1097,6 +1133,19 @@ var revealObserver = new IntersectionObserver(function(entries) {
 }, { threshold: 0.12 });
 document.querySelectorAll('.reveal').forEach(function(el) {
   revealObserver.observe(el);
+});
+
+// ── Dismiss urgency banner ──
+function dismissUrgency() {
+  var banner = document.getElementById('urgency-banner');
+  if (banner) { banner.style.display = 'none'; }
+  localStorage.setItem('urgency_dismissed', '1');
+}
+document.addEventListener('DOMContentLoaded', function() {
+  var banner = document.getElementById('urgency-banner');
+  if (banner && !localStorage.getItem('urgency_dismissed')) {
+    banner.style.display = 'block';
+  }
 });
 
 // ── Copy link ──

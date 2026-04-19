@@ -1,0 +1,342 @@
+---
+const title = 'Refer a Friend — Peek';
+---
+
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Refer a Friend — Peek" />
+  <meta property="og:description" content="Give €20, Get €20. Share Peek with a business friend and you both get credit toward your next month." />
+  <meta property="og:url" content="https://peek-preview.pages.dev/refer" />
+  <meta property="og:image" content="https://peek-preview.pages.dev/og-default.png" />
+  <meta property="og:site_name" content="Peek" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Refer a Friend — Peek" />
+  <meta name="twitter:description" content="Give €20, Get €20. Share Peek with a business friend and you both get credit toward your next month." />
+  <meta name="twitter:image" content="https://peek-preview.pages.dev/og-default.png" />
+  <title>{title}</title>
+  <style>
+    :root {
+      --bg: #0b1020;
+      --panel: rgba(16, 24, 48, 0.8);
+      --panel-strong: #121a33;
+      --text: #eef2ff;
+      --muted: #a6b0cf;
+      --line: rgba(255,255,255,0.1);
+      --accent: #7c9cff;
+      --accent2: #67e8f9;
+      --success: #86efac;
+      --shadow: 0 20px 60px rgba(0,0,0,0.35);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, sans-serif;
+      background: radial-gradient(circle at top, rgba(124,156,255,0.2), transparent 30%), radial-gradient(circle at 80% 20%, rgba(103,232,249,0.1), transparent 25%), var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+    }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .container { width: min(760px, calc(100% - 32px)); margin: 0 auto; }
+
+    /* NAV */
+    .nav { position: sticky; top: 0; backdrop-filter: blur(20px); background: rgba(11,16,32,0.8); border-bottom: 1px solid var(--line); z-index: 10; }
+    .nav-inner { display: flex; align-items: center; justify-content: space-between; padding: 16px 0; gap: 16px; }
+    .brand { font-weight: 800; font-size: 1.2rem; letter-spacing: 0.02em; }
+    .brand span { color: var(--accent2); }
+    .nav-links { display: flex; gap: 18px; color: var(--muted); font-size: 0.9rem; }
+    .nav-links a { color: var(--muted); }
+    .nav-links a:hover { color: var(--text); text-decoration: none; }
+    .nav-links a.active { color: var(--accent); }
+
+    /* HERO */
+    .hero { padding: 80px 0 60px; text-align: center; }
+    .reward-badge {
+      display: inline-flex; align-items: center; gap: 12px;
+      margin-bottom: 32px;
+    }
+    .reward-pill {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 10px 20px; border-radius: 999px;
+      background: rgba(124,156,255,0.15); border: 1px solid rgba(124,156,255,0.3);
+      color: var(--accent); font-size: 1.1rem; font-weight: 800;
+    }
+    .reward-pill svg { color: var(--success); }
+    .hero h1 {
+      font-size: clamp(2.8rem, 6vw, 4.5rem);
+      letter-spacing: -0.045em; line-height: 0.97;
+      margin-bottom: 16px;
+    }
+    .hero p { color: var(--muted); font-size: 1.1rem; max-width: 52ch; margin: 0 auto 36px; line-height: 1.7; }
+
+    /* STEPS */
+    .steps-section { padding: 0 0 64px; }
+    .steps-header { text-align: center; margin-bottom: 40px; }
+    .steps-header h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); letter-spacing: -0.04em; margin-bottom: 8px; }
+    .steps-header p { color: var(--muted); }
+    .steps-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .step-card {
+      background: var(--panel); border: 1px solid var(--line); border-radius: 20px;
+      padding: 28px 22px; text-align: center; transition: all 220ms ease;
+    }
+    .step-card:hover { transform: translateY(-4px); border-color: rgba(124,156,255,0.3); }
+    .step-num {
+      width: 48px; height: 48px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      color: #07111f; font-weight: 900; font-size: 1.3rem;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 18px;
+    }
+    .step-card h3 { font-size: 1.1rem; margin-bottom: 8px; }
+    .step-card p { color: var(--muted); font-size: 0.88rem; line-height: 1.65; }
+
+    /* REFERRAL LINK */
+    .link-section { padding: 0 0 64px; }
+    .link-card {
+      background: var(--panel-strong); border: 1px solid var(--line);
+      border-radius: 24px; padding: 32px;
+      text-align: center;
+    }
+    .link-card h2 { font-size: 1.6rem; letter-spacing: -0.03em; margin-bottom: 8px; }
+    .link-card p { color: var(--muted); margin-bottom: 24px; font-size: 0.95rem; }
+    .link-row { display: flex; gap: 10px; align-items: stretch; }
+    .link-input {
+      flex: 1; padding: 14px 18px; border-radius: 14px;
+      background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12);
+      color: var(--text); font-size: 0.9rem; font-family: 'SF Mono', 'Fira Code', monospace;
+      outline: none; transition: border-color 180ms;
+    }
+    .link-input:focus { border-color: var(--accent); }
+    .copy-btn {
+      padding: 14px 24px; border-radius: 14px; border: none;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      color: #07111f; font-weight: 700; font-size: 0.9rem;
+      cursor: pointer; transition: all 180ms ease; white-space: nowrap;
+    }
+    .copy-btn:hover { transform: translateY(-1px); }
+    .copy-btn.copied { background: var(--success); }
+
+    /* EARNINGS */
+    .earnings-section { padding: 0 0 64px; }
+    .earnings-header { text-align: center; margin-bottom: 36px; }
+    .earnings-header h2 { font-size: clamp(1.6rem, 4vw, 2.4rem); letter-spacing: -0.04em; margin-bottom: 8px; }
+    .earnings-header p { color: var(--muted); }
+    .scenarios-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .scenario-card {
+      background: var(--panel); border: 1px solid var(--line); border-radius: 18px;
+      padding: 24px; text-align: center; transition: all 220ms ease;
+    }
+    .scenario-card:hover { transform: translateY(-3px); border-color: rgba(124,156,255,0.3); }
+    .scenario-icon { font-size: 2.2rem; margin-bottom: 12px; }
+    .scenario-earnings { font-size: 1.8rem; font-weight: 900; color: var(--success); letter-spacing: -0.03em; margin-bottom: 6px; }
+    .scenario-label { font-size: 0.82rem; color: var(--muted); margin-bottom: 10px; }
+    .scenario-desc { font-size: 0.85rem; color: var(--text); line-height: 1.6; }
+
+    /* FAQ */
+    .faq-section { padding: 0 0 64px; }
+    .faq-header { text-align: center; margin-bottom: 36px; }
+    .faq-header h2 { font-size: clamp(1.6rem, 4vw, 2.4rem); letter-spacing: -0.04em; margin-bottom: 8px; }
+    .faq-header p { color: var(--muted); }
+    .faq-list { display: flex; flex-direction: column; gap: 12px; }
+    .faq-item { background: var(--panel); border: 1px solid var(--line); border-radius: 16px; overflow: hidden; }
+    .faq-q { width: 100%; background: none; border: none; padding: 18px 20px; color: var(--text); font-size: 0.95rem; font-weight: 600; text-align: left; cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 12px; font-family: inherit; transition: background 180ms; }
+    .faq-q:hover { background: rgba(255,255,255,0.03); }
+    .faq-q::after { content: '+'; font-size: 1.4rem; color: var(--accent); font-weight: 300; flex-shrink: 0; transition: transform 200ms; }
+    .faq-item.open .faq-q::after { transform: rotate(45deg); }
+    .faq-a { display: none; padding: 0 20px 18px; color: var(--muted); font-size: 0.9rem; line-height: 1.7; }
+    .faq-item.open .faq-a { display: block; }
+    .faq-item.open .faq-q { color: var(--accent); }
+
+    /* FINAL CTA */
+    .final-cta { padding: 0 0 80px; text-align: center; }
+    .final-cta h2 { font-size: clamp(1.6rem, 4vw, 2.4rem); letter-spacing: -0.04em; margin-bottom: 10px; }
+    .final-cta p { color: var(--muted); margin-bottom: 28px; }
+    .btn { display: inline-flex; align-items: center; justify-content: center; padding: 15px 32px; border-radius: 999px; border: 1px solid transparent; font-weight: 700; font-size: 1rem; transition: 180ms ease; text-decoration: none; }
+    .btn-primary { background: linear-gradient(135deg, var(--accent), var(--accent2)); color: #07111f; box-shadow: 0 8px 32px rgba(124,156,255,0.4); }
+    .btn-primary:hover { transform: translateY(-1px); text-decoration: none; }
+
+    /* FOOTER */
+    footer { padding: 40px 0; text-align: center; color: var(--muted); font-size: 0.85rem; border-top: 1px solid var(--line); }
+    footer a { color: var(--accent); }
+
+    @media (max-width: 700px) {
+      .steps-grid, .scenarios-grid { grid-template-columns: 1fr; }
+      .link-row { flex-direction: column; }
+      .nav-inner { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="nav">
+    <div class="container nav-inner">
+      <a class="brand" href="/">peek<span>.</span></a>
+      <div class="nav-links">
+        <a href="/">Home</a>
+        <a href="/demos">Demos</a>
+        <a href="/upgrade">Upgrade</a>
+        <a href="/refer" class="active">Refer a Friend</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="container">
+
+    <!-- HERO -->
+    <section class="hero">
+      <div class="reward-badge">
+        <div class="reward-pill">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+          Give €20, Get €20
+        </div>
+      </div>
+      <h1>Share Peek with<br/>a business friend.</h1>
+      <p>Every business you refer that goes live on a paid plan gives you €20 in platform credit. They also get €20 off their first month. Everyone wins.</p>
+      <a class="btn btn-primary" href="#your-link">Get your link →</a>
+    </section>
+
+    <!-- HOW IT WORKS -->
+    <section class="steps-section">
+      <div class="steps-header">
+        <h2>How it works</h2>
+        <p>Three steps. That's it.</p>
+      </div>
+      <div class="steps-grid">
+        <div class="step-card">
+          <div class="step-num">1</div>
+          <h3>Share your link</h3>
+          <p>Send your personal referral link to a business owner you know. They can be any business, anywhere in Europe.</p>
+        </div>
+        <div class="step-card">
+          <div class="step-num">2</div>
+          <h3>They go paid</h3>
+          <p>When they upgrade to Go Live or Growth and pay their first month, the referral is confirmed.</p>
+        </div>
+        <div class="step-card">
+          <div class="step-num">3</div>
+          <h3>You both get €20</h3>
+          <p>We credit €20 to your account. They get €20 off their first invoice. You can use credits for any Peek plan.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- YOUR LINK -->
+    <section class="link-section" id="your-link">
+      <div class="link-card">
+        <h2>Your referral link</h2>
+        <p>Share this link with business friends — when they go paid, you both earn €20.</p>
+        <div class="link-row">
+          <input class="link-input" type="text" id="ref-link" value="https://peek-preview.pages.dev/ref/yourname" readonly />
+          <button class="copy-btn" id="copy-btn" onclick="copyLink()">Copy link</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- EARNINGS SCENARIOS -->
+    <section class="earnings-section">
+      <div class="earnings-header">
+        <h2>What you can earn</h2>
+        <p>Refer a few businesses and your Peek subscription basically pays for itself.</p>
+      </div>
+      <div class="scenarios-grid">
+        <div class="scenario-card">
+          <div class="scenario-icon">🍽️</div>
+          <div class="scenario-earnings">+€20</div>
+          <div class="scenario-label">1 referral</div>
+          <p class="scenario-desc">A restaurant near you goes live on Go Live. You get €20 — almost covers a month.</p>
+        </div>
+        <div class="scenario-card">
+          <div class="scenario-icon">🏋️</div>
+          <div class="scenario-earnings">+€60</div>
+          <div class="scenario-label">3 referrals</div>
+          <p class="scenario-desc">Three businesses in your network go paid. That's €60 credit — 40% off your annual plan.</p>
+        </div>
+        <div class="scenario-card">
+          <div class="scenario-icon">🏢</div>
+          <div class="scenario-earnings">+€200</div>
+          <div class="scenario-label">10 referrals</div>
+          <p class="scenario-desc">Ten businesses go paid — maybe a coworking group or business network. €200 credit — free for over a year.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="faq-section">
+      <div class="faq-header">
+        <h2>Questions & Answers</h2>
+        <p>Everything you need to know about the program.</p>
+      </div>
+      <div class="faq-list">
+        <div class="faq-item" id="faq-0">
+          <button class="faq-q" onclick="toggleFaq(0)">How does the referral credit work?</button>
+          <div class="faq-a">When someone signs up via your link and pays their first month on Go Live (€149) or Growth (€299), we credit €20 to your account. Credits can be applied to any future invoice — for yourself or for referrals you bring on.</div>
+        </div>
+        <div class="faq-item" id="faq-1">
+          <button class="faq-q" onclick="toggleFaq(1)">Is there a limit on how many referrals I can make?</button>
+          <div class="faq-a">No limit. Refer as many businesses as you want. Each confirmed paid referral earns you €20 in credit — there is no cap on the program.</div>
+        </div>
+        <div class="faq-item" id="faq-2">
+          <button class="faq-q" onclick="toggleFaq(2)">When do I get paid?</button>
+          <div class="faq-a">Credits are applied to your account immediately after the referral's first payment clears. There's no minimum payout or waiting period — credits appear on your next invoice.</div>
+        </div>
+        <div class="faq-item" id="faq-3">
+          <button class="faq-q" onclick="toggleFaq(3)">What does my friend get?</button>
+          <div class="faq-a">They get €20 off their first invoice automatically when they sign up via your link and upgrade to a paid plan.</div>
+        </div>
+        <div class="faq-item" id="faq-4">
+          <button class="faq-q" onclick="toggleFaq(4)">Who can I refer?</button>
+          <div class="faq-a">Any business owner — friend, client, colleague, neighbor. They just need to be a real business somewhere in Europe and they need to upgrade to a paid plan for the referral to count.</div>
+        </div>
+        <div class="faq-item" id="faq-5">
+          <button class="faq-q" onclick="toggleFaq(5)">What if a referral asks for a refund — does my credit get reversed?</button>
+          <div class="faq-a">If a referred customer requests a refund within 30 days of their first payment, we reserve the right to reclaim the referral credit. After 30 days, credits are final.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FINAL CTA -->
+    <section class="final-cta">
+      <h2>Start referring today</h2>
+      <p>No limit, no minimum, no bureaucracy.</p>
+      <a class="btn btn-primary" href="#your-link">Get your link →</a>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>Built by <a href="/">Peek</a> · <a href="/impressum">Impressum</a> · <a href="/privacy">Privacy</a></p>
+    </div>
+  </footer>
+
+  <script>
+    function copyLink() {
+      var input = document.getElementById('ref-link');
+      var btn = document.getElementById('copy-btn');
+      navigator.clipboard.writeText(input.value).then(function() {
+        btn.textContent = 'Copied!';
+        btn.classList.add('copied');
+        setTimeout(function() {
+          btn.textContent = 'Copy link';
+          btn.classList.remove('copied');
+        }, 2000);
+      });
+    }
+
+    function toggleFaq(index) {
+      var items = document.querySelectorAll('.faq-item');
+      items.forEach(function(item, i) {
+        if (i === index) {
+          item.classList.toggle('open');
+        } else {
+          item.classList.remove('open');
+        }
+      });
+    }
+  </script>
+
+</body>
+</html>

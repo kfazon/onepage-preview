@@ -1,0 +1,415 @@
+---
+const title = 'Upgrade — Go Live with Peek';
+const plans = [
+  {
+    tier: 'Preview',
+    price: '0€',
+    period: 'forever',
+    description: "Free proof-of-value page. See what you'd get before you commit.",
+    points: ['Preview URL (peek.page/...)', 'Full page with business info', 'QR code included', '1 revision per month', 'Opt-out anytime, no strings'],
+    cta: 'Keep free',
+    highlight: false,
+  },
+  {
+    tier: 'Go Live',
+    price: '149€',
+    period: 'per month',
+    description: 'The simplest path to a real business presence online.',
+    points: ['Your own custom domain', 'No Peek branding', 'Analytics dashboard', 'Managed contact form', 'Priority email support', 'Unlimited revisions'],
+    cta: 'Go Live now',
+    highlight: true,
+  },
+  {
+    tier: 'Growth',
+    price: '299€',
+    period: 'per month',
+    description: 'For businesses that need discoverability and SEO basics.',
+    points: ['Everything in Go Live', 'Google Business sync', 'SEO meta tags & sitemap', 'Social links widget', 'Priority support (< 4h response)', 'Team access (3 users)'],
+    cta: 'Grow your business',
+    highlight: false,
+  },
+];
+
+const features = [
+  { icon: '🌐', title: 'Your own domain', desc: 'Connect cafemorgenrot.de instead of peek.page/cafemorgenrot. Takes 5 minutes — just update one DNS record.' },
+  { icon: '⚡', title: 'Live in minutes', desc: 'No waiting for development. Once you pick a plan, your page goes live on your domain immediately.' },
+  { icon: '📊', title: 'Real analytics', desc: 'See how many people visit, where they come from, and which pages they look at most.' },
+  { icon: '📱', title: 'Mobile-first', desc: 'Every page is built mobile-first. 60%+ of your visitors will be on a phone — we optimize for that.' },
+  { icon: '🔒', title: 'SSL included', desc: 'Your domain comes with a valid SSL certificate. Green padlock, always.' },
+  { icon: '💬', title: 'WhatsApp button', desc: 'One tap to message you — directly from the page. No forms, no waiting, just real conversations.' },
+];
+
+const faqs = [
+  { q: 'How does domain setup work?', a: 'You keep your current domain registrar (where you bought your domain). We give you a single DNS record to update — takes about 5 minutes and most people do it without support. We walk you through it step by step after purchase.' },
+  { q: 'Can I switch plans later?', a: 'Yes, anytime. Upgrade or downgrade from your dashboard. Changes take effect at the next billing cycle.' },
+  { q: 'What happens to my free preview?', a: 'Your free preview stays online at the peek.page URL even if you cancel. You just lose the custom domain, branding removal, and support.' },
+  { q: 'Is there a contract?', a: 'Month-to-month, no minimum term. Cancel anytime from your dashboard — no phone calls, no retention flows.' },
+  { q: 'What payment methods do you accept?', a: 'Credit card (Visa, Mastercard, Amex) via Stripe. SEPA direct debit for EU businesses. All payments are encrypted and PCI-compliant.' },
+];
+
+const testimonials = [
+  { quote: "Setup was shockingly fast. I changed one DNS setting and my page was live on my own domain within 10 minutes. Couldn't believe it.", name: 'Anna M.', role: 'Café Morgenrot, Berlin', stars: 5 },
+  { quote: 'I was paying €80/month for a Wix site I barely understood. This is cleaner, faster, and one-third the price.', name: 'Carlos R.', role: 'Taller López, Madrid', stars: 5 },
+  { quote: 'The WhatsApp button alone has replaced three booking tools. My customers love it — so do I.', name: 'Petra S.', role: 'Studio Form, Zagreb', stars: 5 },
+];
+---
+
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Upgrade — Go Live with Peek" />
+  <meta property="og:description" content="Love your preview? Go live today. Custom domain, no branding, analytics, and support — from €149/month." />
+  <meta property="og:url" content="https://peek-preview.pages.dev/upgrade" />
+  <meta property="og:image" content="https://peek-preview.pages.dev/og-default.png" />
+  <meta property="og:site_name" content="Peek" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Upgrade — Go Live with Peek" />
+  <meta name="twitter:description" content="Love your preview? Go live today. Custom domain, no branding, analytics, and support — from €149/month." />
+  <meta name="twitter:image" content="https://peek-preview.pages.dev/og-default.png" />
+  <title>{title}</title>
+  <style>
+    :root {
+      --bg: #0b1020;
+      --panel: rgba(16, 24, 48, 0.8);
+      --panel-strong: #121a33;
+      --text: #eef2ff;
+      --muted: #a6b0cf;
+      --line: rgba(255,255,255,0.1);
+      --accent: #7c9cff;
+      --accent2: #67e8f9;
+      --success: #86efac;
+      --shadow: 0 20px 60px rgba(0,0,0,0.35);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, sans-serif;
+      background: radial-gradient(circle at top, rgba(124,156,255,0.2), transparent 30%), radial-gradient(circle at 80% 20%, rgba(103,232,249,0.1), transparent 25%), var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+    }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .container { width: min(1100px, calc(100% - 32px)); margin: 0 auto; }
+
+    /* NAV */
+    .nav { position: sticky; top: 0; backdrop-filter: blur(20px); background: rgba(11,16,32,0.8); border-bottom: 1px solid var(--line); z-index: 10; }
+    .nav-inner { display: flex; align-items: center; justify-content: space-between; padding: 16px 0; gap: 16px; }
+    .brand { font-weight: 800; font-size: 1.2rem; letter-spacing: 0.02em; }
+    .brand span { color: var(--accent2); }
+    .nav-links { display: flex; gap: 18px; color: var(--muted); font-size: 0.9rem; }
+    .nav-links a { color: var(--muted); }
+    .nav-links a:hover { color: var(--text); text-decoration: none; }
+    .nav-links a.active { color: var(--accent); }
+    .lang-switcher { display: flex; gap: 6px; margin-left: 16px; padding-left: 16px; border-left: 1px solid var(--line); }
+    .lang-btn { padding: 4px 10px; border-radius: 6px; font-size: 0.8rem; font-weight: 600; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); color: var(--muted); text-decoration: none; transition: 150ms; }
+    .lang-btn:hover { background: rgba(255,255,255,0.1); color: var(--text); }
+    .lang-btn.active { background: rgba(124,156,255,0.15); border-color: rgba(124,156,255,0.3); color: var(--accent); }
+
+    /* HERO */
+    .hero { padding: 80px 0 60px; text-align: center; }
+    .hero-badge { display: inline-flex; align-items: center; gap: 6px; padding: 6px 14px; border-radius: 999px; border: 1px solid rgba(134,239,172,0.3); background: rgba(134,239,172,0.08); color: var(--success); font-size: 0.82rem; font-weight: 700; margin-bottom: 24px; }
+    h1 { font-size: clamp(2.4rem, 5vw, 4rem); letter-spacing: -0.04em; line-height: 0.98; margin-bottom: 18px; }
+    .hero p { color: var(--muted); font-size: 1.1rem; max-width: 56ch; margin: 0 auto 32px; line-height: 1.7; }
+
+    /* PRICING TABLE */
+    .pricing-section { padding: 0 0 80px; }
+    .pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; align-items: start; }
+    .plan-card {
+      background: var(--panel); border: 1px solid var(--line); border-radius: 24px;
+      padding: 28px; transition: all 250ms ease; position: relative;
+    }
+    .plan-card:hover { transform: translateY(-4px); box-shadow: 0 20px 60px rgba(0,0,0,0.35); }
+    .plan-card.highlight {
+      border-color: rgba(124,156,255,0.4);
+      background: rgba(124,156,255,0.08);
+    }
+    .plan-card.highlight::before {
+      content: 'Most popular';
+      position: absolute; top: -1px; left: 50%; transform: translateX(-50%);
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      color: #07111f; font-size: 0.72rem; font-weight: 800;
+      padding: 5px 18px; border-radius: 0 0 12px 12px;
+      letter-spacing: 0.05em; text-transform: uppercase;
+    }
+    .plan-tier { font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); margin-bottom: 8px; }
+    .plan-price { font-size: 2.4rem; font-weight: 900; letter-spacing: -0.04em; line-height: 1; margin-bottom: 4px; }
+    .plan-price span { font-size: 0.9rem; font-weight: 400; color: var(--muted); }
+    .plan-desc { color: var(--muted); font-size: 0.88rem; margin-bottom: 20px; line-height: 1.6; }
+    .plan-divider { height: 1px; background: var(--line); margin: 20px 0; }
+    .plan-features { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .plan-features li { display: flex; align-items: flex-start; gap: 10px; font-size: 0.9rem; color: var(--muted); }
+    .plan-features li::before { content: '✓'; color: var(--success); font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+    .plan-cta { display: block; width: 100%; text-align: center; margin-top: 24px; padding: 13px; border-radius: 999px; font-weight: 700; font-size: 0.95rem; transition: all 180ms ease; }
+    .plan-cta-primary { background: linear-gradient(135deg, var(--accent), var(--accent2)); color: #07111f; box-shadow: 0 8px 28px rgba(124,156,255,0.3); }
+    .plan-cta-primary:hover { transform: translateY(-1px); text-decoration: none; }
+    .plan-cta-ghost { background: rgba(255,255,255,0.05); border: 1px solid var(--line); color: var(--muted); }
+    .plan-cta-ghost:hover { background: rgba(255,255,255,0.1); text-decoration: none; }
+
+    /* FEATURES */
+    .features-section { padding: 80px 0; }
+    .section-header { text-align: center; margin-bottom: 48px; }
+    .section-eyebrow { display: inline-flex; align-items: center; gap: 6px; font-size: 0.8rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); margin-bottom: 12px; }
+    h2 { font-size: clamp(1.8rem, 4vw, 2.8rem); letter-spacing: -0.04em; line-height: 1.05; margin-bottom: 12px; }
+    .section-sub { color: var(--muted); max-width: 60ch; margin: 0 auto; line-height: 1.7; }
+    .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 18px; }
+    .feat-card { padding: 24px; background: var(--panel); border: 1px solid var(--line); border-radius: 20px; transition: all 220ms ease; }
+    .feat-card:hover { border-color: rgba(124,156,255,0.3); transform: translateY(-3px); }
+    .feat-icon { font-size: 1.8rem; margin-bottom: 14px; }
+    .feat-card h3 { font-size: 1rem; margin-bottom: 6px; }
+    .feat-card p { color: var(--muted); font-size: 0.88rem; line-height: 1.65; }
+
+    /* DNS STEPS */
+    .dns-section { padding: 80px 0; }
+    .dns-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; }
+    .dns-steps { display: flex; flex-direction: column; gap: 20px; }
+    .dns-step { display: flex; gap: 16px; align-items: flex-start; }
+    .step-num { width: 36px; height: 36px; border-radius: 50%; background: rgba(124,156,255,0.2); border: 1px solid rgba(124,156,255,0.3); color: var(--accent); font-weight: 800; font-size: 0.9rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .step-content h4 { font-size: 1rem; margin-bottom: 4px; }
+    .step-content p { color: var(--muted); font-size: 0.88rem; line-height: 1.6; }
+    .dns-code { background: var(--panel-strong); border: 1px solid var(--line); border-radius: 16px; padding: 24px; font-family: 'SF Mono', 'Fira Code', monospace; font-size: 0.85rem; color: var(--accent2); }
+    .dns-code p { margin-bottom: 10px; color: var(--muted); }
+    .dns-code strong { color: var(--text); }
+
+    /* TESTIMONIALS */
+    .testimonials-section { padding: 80px 0; }
+    .testimonials-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .testimonial-card { padding: 28px; background: var(--panel); border: 1px solid var(--line); border-radius: 20px; transition: all 220ms ease; }
+    .testimonial-card:hover { border-color: rgba(124,156,255,0.25); transform: translateY(-3px); }
+    .testimonial-stars { color: #fde68a; font-size: 1rem; letter-spacing: 3px; margin-bottom: 14px; }
+    .testimonial-quote { font-size: 0.92rem; line-height: 1.7; color: var(--text); font-style: italic; margin-bottom: 18px; }
+    .testimonial-author { display: flex; align-items: center; gap: 10px; }
+    .author-avatar { width: 36px; height: 36px; border-radius: 50%; background: linear-gradient(135deg, var(--accent), var(--accent2)); display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 0.8rem; color: #07111f; flex-shrink: 0; }
+    .author-name { font-weight: 700; font-size: 0.88rem; }
+    .author-role { color: var(--muted); font-size: 0.8rem; }
+
+    /* FAQ */
+    .faq-section { padding: 80px 0; }
+    .faq-list { max-width: 720px; margin: 0 auto; display: flex; flex-direction: column; gap: 12px; }
+    .faq-item { background: var(--panel); border: 1px solid var(--line); border-radius: 16px; overflow: hidden; }
+    .faq-q { width: 100%; background: none; border: none; padding: 18px 20px; color: var(--text); font-size: 0.95rem; font-weight: 600; text-align: left; cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 12px; font-family: inherit; transition: background 180ms; }
+    .faq-q:hover { background: rgba(255,255,255,0.03); }
+    .faq-q::after { content: '+'; font-size: 1.4rem; color: var(--accent); font-weight: 300; flex-shrink: 0; transition: transform 200ms; }
+    .faq-item.open .faq-q::after { transform: rotate(45deg); }
+    .faq-a { display: none; padding: 0 20px 18px; color: var(--muted); font-size: 0.9rem; line-height: 1.7; }
+    .faq-item.open .faq-a { display: block; }
+    .faq-item.open .faq-q { color: var(--accent); }
+
+    /* FINAL CTA */
+    .final-cta { padding: 80px 0; text-align: center; background: linear-gradient(135deg, rgba(124,156,255,0.16), rgba(103,232,249,0.1)); border-top: 1px solid rgba(255,255,255,0.08); border-bottom: 1px solid rgba(255,255,255,0.08); }
+    .final-cta h2 { font-size: clamp(1.8rem, 4vw, 2.8rem); letter-spacing: -0.04em; margin-bottom: 12px; }
+    .final-cta p { color: var(--muted); font-size: 1.05rem; margin-bottom: 28px; max-width: 52ch; margin-left: auto; margin-right: auto; }
+    .btn { display: inline-flex; align-items: center; justify-content: center; padding: 15px 32px; border-radius: 999px; border: 1px solid transparent; font-weight: 700; font-size: 1rem; transition: 180ms ease; text-decoration: none; }
+    .btn-primary { background: linear-gradient(135deg, var(--accent), var(--accent2)); color: #07111f; box-shadow: 0 8px 32px rgba(124,156,255,0.4); }
+    .btn-primary:hover { transform: translateY(-1px); text-decoration: none; }
+    .btn-ghost { background: rgba(255,255,255,0.05); border-color: var(--line); color: var(--text); }
+    .btn-ghost:hover { background: rgba(255,255,255,0.1); text-decoration: none; }
+    .cta-note { margin-top: 16px; font-size: 0.85rem; color: var(--muted); }
+
+    /* FOOTER */
+    footer { padding: 40px 0; text-align: center; color: var(--muted); font-size: 0.85rem; border-top: 1px solid var(--line); }
+    footer a { color: var(--accent); }
+
+    @media (max-width: 900px) {
+      .pricing-grid, .testimonials-grid, .dns-grid { grid-template-columns: 1fr; }
+      .nav-inner { flex-direction: column; align-items: flex-start; }
+      .lang-switcher { margin-left: 0; padding-left: 0; border-left: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="nav">
+    <div class="container nav-inner">
+      <a class="brand" href="/">peek<span>.</span></a>
+      <div class="nav-links">
+        <a href="/">Home</a>
+        <a href="/demos">Demos</a>
+        <a href="/vs">vs Competitors</a>
+        <a href="/upgrade" class="active">Upgrade</a>
+        <a href="/refer">Refer a Friend</a>
+      </div>
+      <div class="lang-switcher">
+        <a class="lang-btn" href="/">EN</a>
+        <a class="lang-btn" href="/de/">DE</a>
+        <a class="lang-btn" href="/es/">ES</a>
+        <a class="lang-btn" href="/pl/">PL</a>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+    <!-- HERO -->
+    <section class="hero container">
+      <div class="hero-badge">One-time claim · No contracts · Cancel anytime</div>
+      <h1>Love your preview?<br/>Go live today.</h1>
+      <p>Your free preview is live. Your own domain and zero Peek branding are one step away. Simple plans, no surprises.</p>
+      <a class="btn btn-primary" href="#pricing">See pricing →</a>
+    </section>
+
+    <!-- PRICING -->
+    <section class="pricing-section container" id="pricing">
+      <div class="section-header">
+        <div class="section-eyebrow">✦ Simple pricing</div>
+        <h2>Pick your plan</h2>
+        <p class="section-sub">Month-to-month, no contracts. Upgrade or cancel from your dashboard — no phone calls, no retention flows.</p>
+      </div>
+      <div class="pricing-grid">
+        {plans.map((plan) => (
+          <div class:list={["plan-card", plan.highlight && "highlight"]}>
+            <div class="plan-tier">{plan.tier}</div>
+            <div class="plan-price">{plan.price} <span>/ {plan.period}</span></div>
+            <p class="plan-desc">{plan.description}</p>
+            <div class="plan-divider"></div>
+            <ul class="plan-features">
+              {plan.points.map((p) => <li>{p}</li>)}
+            </ul>
+            <a class:list={["plan-cta", plan.highlight ? "plan-cta-primary" : "plan-cta-ghost"]} href="/upgrade">
+              {plan.cta}
+            </a>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- WHAT YOU GET -->
+    <section class="features-section">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-eyebrow">✦ Everything included</div>
+          <h2>What you get with Go Live</h2>
+          <p class="section-sub">Every paid plan includes the features that actually matter for a local business — not a list of checkboxes.</p>
+        </div>
+        <div class="features-grid">
+          {features.map((f) => (
+            <div class="feat-card">
+              <div class="feat-icon">{f.icon}</div>
+              <h3>{f.title}</h3>
+              <p>{f.desc}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- DNS SETUP -->
+    <section class="dns-section">
+      <div class="container">
+        <div class="dns-grid">
+          <div>
+            <div class="section-eyebrow">✦ Domain setup</div>
+            <h2>Your domain, up in 5 minutes</h2>
+            <p class="section-sub" style="margin-bottom:32px">You don't need to move your domain or change registrars. Just add one DNS record.</p>
+            <div class="dns-steps">
+              <div class="dns-step">
+                <div class="step-num">1</div>
+                <div class="step-content">
+                  <h4>Pick your domain</h4>
+                  <p>Point your existing domain (e.g. cafemorgenrot.de) to Peek by adding a CNAME record in your registrar's DNS settings.</p>
+                </div>
+              </div>
+              <div class="dns-step">
+                <div class="step-num">2</div>
+                <div class="step-content">
+                  <h4>We verify it</h4>
+                  <p>Once the DNS propagates (usually 5–30 minutes, rarely up to 48h), we detect your domain and activate SSL automatically.</p>
+                </div>
+              </div>
+              <div class="dns-step">
+                <div class="step-num">3</div>
+                <div class="step-content">
+                  <h4>You're live</h4>
+                  <p>Your page is now accessible at yourdomain.com — with a valid SSL certificate and no Peek branding.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="dns-code">
+            <p>Add this in your DNS settings:</p>
+            <p><strong>Type:</strong> CNAME</p>
+            <p><strong>Name:</strong> www</p>
+            <p><strong>Value:</strong> cname.peek.pages.dev</p>
+            <p style="margin-top:14px; font-size:0.82rem;">Most registrars have a simple form — no technical knowledge needed.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TESTIMONIALS -->
+    <section class="testimonials-section">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-eyebrow">✦ Real stories</div>
+          <h2>What businesses say</h2>
+        </div>
+        <div class="testimonials-grid">
+          {testimonials.map((t) => (
+            <div class="testimonial-card">
+              <div class="testimonial-stars">{'★'.repeat(t.stars)}</div>
+              <p class="testimonial-quote">"{t.quote}"</p>
+              <div class="testimonial-author">
+                <div class="author-avatar">{t.name.split(' ').map(n => n[0]).join('')}</div>
+                <div>
+                  <div class="author-name">{t.name}</div>
+                  <div class="author-role">{t.role}</div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="faq-section">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-eyebrow">✦ Questions</div>
+          <h2>Frequently asked</h2>
+        </div>
+        <div class="faq-list">
+          {faqs.map((faq, i) => (
+            <div class="faq-item" id={`faq-${i}`}>
+              <button class="faq-q" onclick="toggleFaq({i})">{faq.q}</button>
+              <div class="faq-a">{faq.a}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- FINAL CTA -->
+    <section class="final-cta">
+      <div class="container">
+        <div class="section-eyebrow" style="justify-content:center">✦ Start today</div>
+        <h2>Your page is waiting</h2>
+        <p>No credit card needed for the free preview. When you're ready to go live on your own domain, pick a plan above.</p>
+        <a class="btn btn-primary" href="#pricing">See pricing →</a>
+        <p class="cta-note">Month-to-month · No contracts · Cancel anytime</p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>Built by <a href="/">Peek</a> · <a href="/impressum">Impressum</a> · <a href="/privacy">Privacy</a></p>
+    </div>
+  </footer>
+
+  <script>
+    function toggleFaq(index) {
+      var items = document.querySelectorAll('.faq-item');
+      items.forEach(function(item, i) {
+        if (i === index) {
+          item.classList.toggle('open');
+        } else {
+          item.classList.remove('open');
+        }
+      });
+    }
+  </script>
+
+</body>
+</html>
