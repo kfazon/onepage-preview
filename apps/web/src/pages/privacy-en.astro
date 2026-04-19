@@ -1,0 +1,137 @@
+---
+const title = 'Privacy Policy — Peek';
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Peek Privacy Policy — data protection statement in accordance with GDPR." />
+    <title>{title}</title>
+    <style>
+      :root {
+        --bg: #0b1020;
+        --panel: rgba(16, 24, 48, 0.8);
+        --text: #eef2ff;
+        --muted: #a6b0cf;
+        --line: rgba(255,255,255,0.1);
+        --accent: #7c9cff;
+        --accent-2: #67e8f9;
+        --shadow: 0 20px 60px rgba(0,0,0,0.35);
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        background: radial-gradient(circle at top, rgba(124,156,255,0.18), transparent 25%), radial-gradient(circle at right, rgba(103,232,249,0.12), transparent 20%), var(--bg);
+        color: var(--text);
+        min-height: 100vh;
+      }
+      a { color: var(--accent); }
+      .container { width: min(800px, calc(100% - 32px)); margin: 0 auto; padding: 48px 0 80px; }
+      .brand { font-weight: 800; letter-spacing: 0.02em; font-size: 1.4rem; margin-bottom: 40px; display: block; }
+      .brand span { color: var(--accent-2); }
+      h1 { font-size: 2rem; margin: 0 0 32px; }
+      h2 { font-size: 1.2rem; color: var(--accent-2); margin: 36px 0 12px; text-transform: uppercase; letter-spacing: 0.06em; font-weight: 700; }
+      p, li { color: var(--muted); line-height: 1.8; margin: 8px 0; }
+      ul { padding-left: 20px; }
+      .card { background: var(--panel); border: 1px solid var(--line); border-radius: 20px; padding: 28px; margin: 20px 0; }
+      .meta { font-size: 0.85rem; color: var(--muted); margin-top: 48px; border-top: 1px solid var(--line); padding-top: 24px; }
+      .lang-toggle { margin-bottom: 32px; display: flex; gap: 8px; }
+      .lang-btn { padding: 6px 14px; border-radius: 6px; font-size: 0.85rem; font-weight: 600; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); color: var(--muted); text-decoration: none; cursor: pointer; }
+      .lang-btn:hover { background: rgba(255,255,255,0.1); color: var(--text); }
+      .lang-btn.active { background: rgba(124,156,255,0.15); border-color: rgba(124,156,255,0.3); color: var(--accent); }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <a class="brand" href="/">Peek<span>.</span></a>
+
+      <div class="lang-toggle">
+        <a class="lang-btn" href="/privacy">DE</a>
+        <a class="lang-btn active" href="/privacy-en">EN</a>
+      </div>
+
+      <h1>Privacy Policy</h1>
+
+      <h2>1. Controller</h2>
+      <div class="card">
+        <p><strong>Peek Platform GmbH</strong></p>
+        <p>Musterstraße 12<br />10115 Berlin<br />Germany</p>
+        <p>Email: <a href="mailto:hello@peek.example">hello@peek.example</a></p>
+      </div>
+
+      <h2>2. Data Collection and Processing</h2>
+      <p>
+        We collect personal data only when you provide it to us through a contact request, newsletter subscription, or use of our services.
+        Processing is carried out on the basis of Art. 6(1)(b) GDPR (contract performance) and Art. 6(1)(f) GDPR (legitimate interest).
+      </p>
+      <p>Data we process includes:</p>
+      <ul>
+        <li>Contact details (name, email address, phone number)</li>
+        <li>Business data sourced from publicly available information (e.g., Google Maps, OpenStreetMap, public registries)</li>
+        <li>Usage data (IP address, browser type, access timestamps)</li>
+        <li>Preview data generated as part of our one-page preview services</li>
+      </ul>
+
+      <h2>3. Purpose of Processing</h2>
+      <p>We process your data for the following purposes:</p>
+      <ul>
+        <li>Provision and operation of Peek services</li>
+        <li>Creation and delivery of one-page business previews</li>
+        <li>Communication for support and service requests</li>
+        <li>Improvement of our services and user experience</li>
+        <li>Compliance with legal obligations</li>
+      </ul>
+
+      <h2>4. Data Sharing</h2>
+      <p>
+        We do not share your data with third parties without your explicit consent, unless required for the provision of our services
+        (e.g., hosting providers) or required by law. All processors are contractually bound to process your data only on our instructions.
+      </p>
+
+      <h2>5. Data Retention</h2>
+      <p>
+        Personal data is retained only as long as necessary for the provision of our services or as required by legal retention obligations.
+        Business correspondence is retained for a minimum of 3 years.
+      </p>
+
+      <h2>6. Your Rights</h2>
+      <p>You have the following rights with respect to us:</p>
+      <ul>
+        <li>Right of access to your data stored with us (Art. 15 GDPR)</li>
+        <li>Right to rectification of inaccurate data (Art. 16 GDPR)</li>
+        <li>Right to erasure, where no legal retention obligations conflict (Art. 17 GDPR)</li>
+        <li>Right to restriction of processing (Art. 18 GDPR)</li>
+        <li>Right to data portability (Art. 20 GDPR)</li>
+        <li>Right to object to processing (Art. 21 GDPR)</li>
+        <li>Right to lodge a complaint with a supervisory authority (Art. 77 GDPR)</li>
+      </ul>
+      <p>To exercise your rights, contact: <a href="mailto:hello@peek.example">hello@peek.example</a></p>
+
+      <h2>7. Cookies and Tracking</h2>
+      <p>
+        Our website uses only technically necessary cookies required for the operation of the site (e.g., session cookies).
+        No marketing or tracking cookies are set without your explicit consent.
+        You can change your cookie preferences at any time via the banner at the bottom of the page.
+      </p>
+
+      <h2>8. Security</h2>
+      <p>
+        We implement technical and organisational measures to protect your data against unauthorized access, loss, or misuse.
+        These include TLS encryption, regular security updates, and access controls.
+      </p>
+
+      <h2>9. Changes to this Privacy Policy</h2>
+      <p>
+        We reserve the right to update this Privacy Policy as needed, particularly when our services change or legal requirements evolve.
+        The current version is always available on this page.
+      </p>
+
+      <div class="meta">
+        <p>Last updated: April 2025</p>
+        <p><a href="/">← Back to homepage</a> &nbsp;|&nbsp; <a href="/impressum">Impressum</a></p>
+      </div>
+    </div>
+  </body>
+</html>

@@ -139,6 +139,25 @@ const pricing = [
       .highlight::after { content: 'Empfohlen'; position: absolute; top: 14px; right: -44px; background: var(--accent-2); color: #041018; padding: 6px 42px; transform: rotate(35deg); font-size: 0.8rem; font-weight: 800; }
       .banner { padding: 22px; border-radius: 24px; border: 1px solid var(--line); background: linear-gradient(135deg, rgba(124,156,255,0.16), rgba(103,232,249,0.12)); display: flex; align-items: center; justify-content: space-between; gap: 20px; }
       footer { padding: 28px 0 48px; color: var(--muted); font-size: 0.95rem; }
+      .preview-form-wrap { max-width: 480px; }
+      .preview-form { display: flex; gap: 12px; flex-wrap: wrap; }
+      .preview-form input {
+        flex: 1;
+        min-width: 220px;
+        padding: 14px 18px;
+        border-radius: 999px;
+        border: 1px solid rgba(255,255,255,0.15);
+        background: var(--panel-strong);
+        color: var(--text);
+        font-size: 1rem;
+        font-family: inherit;
+        outline: none;
+        transition: border-color 180ms;
+      }
+      .preview-form input::placeholder { color: var(--muted); }
+      .preview-form input:focus { border-color: var(--accent); }
+      .preview-form button { white-space: nowrap; }
+      .preview-form-wrap { margin-top: 24px; }
 
       @media (max-width: 920px) {
         .hero, .preview-grid, .grid-3, .grid-pricing, .stats { grid-template-columns: 1fr; }
@@ -267,6 +286,29 @@ const pricing = [
         </div>
       </section>
 
+      <section id="preview-request">
+        <div class="section-head">
+          <h2>Jetzt eigene Vorschau anfragen</h2>
+          <p>Hinterlassen Sie Ihre E-Mail-Adresse — wir melden uns innerhalb von 24 Stunden mit Ihrer persönlichen Vorschau.</p>
+        </div>
+        <div class="preview-form-wrap">
+          <form class="preview-form" id="preview-form" novalidate>
+            <input
+              type="email"
+              name="email"
+              id="email-input"
+              placeholder="ihre@email.de"
+              required
+              autocomplete="email"
+              aria-label="E-Mail-Adresse"
+            />
+            <button type="submit" class="btn btn-primary">Vorschau anfragen</button>
+          </form>
+          <p id="form-success" style="display:none; color: var(--success); margin-top: 12px;">✓ Danke! Wir melden uns innerhalb von 24 Stunden.</p>
+          <p id="form-error" style="display:none; color: #f87171; margin-top: 12px;">Bitte geben Sie eine gültige E-Mail-Adresse ein.</p>
+        </div>
+      </section>
+
       <section>
         <div class="banner">
           <div>
@@ -282,6 +324,47 @@ const pricing = [
 
     <footer class="container">
       Peek • One-Page-Vorschauplattform für kleine Unternehmen • Erst Preview, dann Go Live.
+      <span style="display:block; margin-top:12px; font-size:0.8rem;"><a href="/impressum">Impressum</a> • <a href="/privacy">Datenschutz</a></span>
     </footer>
+
+    <div id="cookie-banner" style="display:none; position:fixed; bottom:0; left:0; right:0; background:var(--panel-strong); border-top:1px solid var(--line); padding:16px 24px; z-index:100; font-size:0.9rem; color:var(--muted);">
+      <div style="display:flex; align-items:center; justify-content:space-between; gap:16px; max-width:1120px; margin:0 auto;">
+        <span>Wir verwenden nur technisch notwendige Cookies. <a href="/privacy" style="color:var(--accent);">Mehr erfahren</a></span>
+        <button id="accept-cookies" style="padding:8px 18px; border-radius:999px; background:linear-gradient(135deg, var(--accent), var(--accent-2)); color:#07111f; border:none; font-weight:700; cursor:pointer; font-size:0.85rem;">Akzeptieren</button>
+      </div>
+    </div>
+
+    <script>
+      const form = document.getElementById('preview-form');
+      const successEl = document.getElementById('form-success');
+      const errorEl = document.getElementById('form-error');
+
+      form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        const emailInput = document.getElementById('email-input');
+        const email = emailInput.value.trim();
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        if (!emailRegex.test(email)) {
+          errorEl.style.display = 'block';
+          successEl.style.display = 'none';
+          return;
+        }
+
+        errorEl.style.display = 'none';
+        successEl.style.display = 'block';
+        emailInput.value = '';
+        console.log('Preview requested for:', email);
+      });
+
+      // Cookie banner
+      var cb = document.getElementById('cookie-banner');
+      var btn = document.getElementById('accept-cookies');
+      if (!localStorage.getItem('cookies_accepted')) { cb.style.display = 'block'; }
+      btn.addEventListener('click', function() {
+        localStorage.setItem('cookies_accepted', '1');
+        cb.style.display = 'none';
+      });
+    </script>
   </body>
 </html>

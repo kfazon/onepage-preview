@@ -48,13 +48,13 @@ const pricing = [
   },
   {
     tier: 'Go Live',
-    price: '99 €/mes',
+    price: '149 €/mes',
     description: 'El camino más simple hacia una web real',
     points: ['Dominio propio', 'Sin branding de preview', 'Analytics', 'Formulario de contacto gestionado']
   },
   {
     tier: 'Growth',
-    price: '199 €/mes',
+    price: '299 €/mes',
     description: 'Para negocios que necesitan más visibilidad',
     points: ['SEO básico', 'Sincronización con Google Business', 'Enlaces sociales', 'Cambios con prioridad']
   }
@@ -264,6 +264,24 @@ const pricing = [
 
     <footer class="container">
       Peek • Plataforma de vistas previas de una página para pequeños negocios • Primero preview, luego Go Live.
+      <span style="display:block; margin-top:12px; font-size:0.8rem;"><a href="/impressum">Impressum</a> • <a href="/privacy">Privacidad</a></span>
     </footer>
+
+    <div id="cookie-banner" style="display:none; position:fixed; bottom:0; left:0; right:0; background:rgba(18,26,51,0.98); border-top:1px solid var(--line); padding:16px 24px; z-index:100; font-size:0.9rem; color:var(--muted);">
+      <div style="display:flex; align-items:center; justify-content:space-between; gap:16px; max-width:1120px; margin:0 auto;">
+        <span>Usamos solo cookies técnicamente necesarias. <a href="/privacy" style="color:var(--accent);">Más información</a></span>
+        <button id="accept-cookies" style="padding:8px 18px; border-radius:999px; background:linear-gradient(135deg, var(--accent), var(--accent-2)); color:#07111f; border:none; font-weight:700; cursor:pointer; font-size:0.85rem;">Aceptar</button>
+      </div>
+    </div>
+
+    <script>
+      var cb = document.getElementById('cookie-banner');
+      var btn = document.getElementById('accept-cookies');
+      if (!localStorage.getItem('cookies_accepted')) { cb.style.display = 'block'; }
+      btn && btn.addEventListener('click', function() {
+        localStorage.setItem('cookies_accepted', '1');
+        cb.style.display = 'none';
+      });
+    </script>
   </body>
 </html>

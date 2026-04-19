@@ -1,0 +1,142 @@
+---
+const title = 'Privacy Policy — Peek';
+---
+
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Privacy Policy der Peek Platform GmbH — Datenschutzerklärung gemäß DSGVO." />
+    <title>{title}</title>
+    <style>
+      :root {
+        --bg: #0b1020;
+        --panel: rgba(16, 24, 48, 0.8);
+        --text: #eef2ff;
+        --muted: #a6b0cf;
+        --line: rgba(255,255,255,0.1);
+        --accent: #7c9cff;
+        --accent-2: #67e8f9;
+        --shadow: 0 20px 60px rgba(0,0,0,0.35);
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        background: radial-gradient(circle at top, rgba(124,156,255,0.18), transparent 25%), radial-gradient(circle at right, rgba(103,232,249,0.12), transparent 20%), var(--bg);
+        color: var(--text);
+        min-height: 100vh;
+      }
+      a { color: var(--accent); }
+      .container { width: min(800px, calc(100% - 32px)); margin: 0 auto; padding: 48px 0 80px; }
+      .brand { font-weight: 800; letter-spacing: 0.02em; font-size: 1.4rem; margin-bottom: 40px; display: block; }
+      .brand span { color: var(--accent-2); }
+      h1 { font-size: 2rem; margin: 0 0 32px; }
+      h2 { font-size: 1.2rem; color: var(--accent-2); margin: 36px 0 12px; text-transform: uppercase; letter-spacing: 0.06em; font-weight: 700; }
+      p, li { color: var(--muted); line-height: 1.8; margin: 8px 0; }
+      ul { padding-left: 20px; }
+      .card { background: var(--panel); border: 1px solid var(--line); border-radius: 20px; padding: 28px; margin: 20px 0; }
+      .meta { font-size: 0.85rem; color: var(--muted); margin-top: 48px; border-top: 1px solid var(--line); padding-top: 24px; }
+      .lang-toggle { margin-bottom: 32px; display: flex; gap: 8px; }
+      .lang-btn { padding: 6px 14px; border-radius: 6px; font-size: 0.85rem; font-weight: 600; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); color: var(--muted); text-decoration: none; cursor: pointer; }
+      .lang-btn:hover { background: rgba(255,255,255,0.1); color: var(--text); }
+      .lang-btn.active { background: rgba(124,156,255,0.15); border-color: rgba(124,156,255,0.3); color: var(--accent); }
+      .lang-version { display: none; }
+      .lang-version.active { display: block; }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <a class="brand" href="/">Peek<span>.</span></a>
+
+      <div class="lang-toggle">
+        <a class="lang-btn active" href="/privacy">DE</a>
+        <a class="lang-btn" href="/privacy-en">EN</a>
+      </div>
+
+      <h1>Datenschutzerklärung</h1>
+
+      <div id="de-version" class="lang-version active">
+        <h2>1. Verantwortlicher</h2>
+        <div class="card">
+          <p><strong>Peek Platform GmbH</strong></p>
+          <p>Musterstraße 12<br />10115 Berlin<br />Deutschland</p>
+          <p>E-Mail: <a href="mailto:hello@peek.example">hello@peek.example</a></p>
+        </div>
+
+        <h2>2. Erhebung und Verarbeitung personenbezogener Daten</h2>
+        <p>
+          Wir erheben personenbezogene Daten nur, wenn Sie uns diese im Rahmen einer Kontaktanfrage, Newsletter-Anmeldung oder عند der Nutzung unserer Dienste mitteilen.
+          Die Verarbeitung erfolgt auf Grundlage von Art. 6 Abs. 1 lit. b DSGVO (Vertragserfüllung) und Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse).
+        </p>
+        <p>Zu den verarbeiteten Daten gehören insbesondere:</p>
+        <ul>
+          <li>Kontaktdaten (Name, E-Mail-Adresse, Telefonnummer)</li>
+          <li>Unternehmensdaten, die aus öffentlich zugänglichen Quellen stammen (z. B. Google Maps, OpenStreetMap, öffentliche Register)</li>
+          <li>Nutzungsdaten (IP-Adresse, Browsertyp, Zeitstempel der Zugriffe)</li>
+          <li>Preview-Daten im Rahmen der von uns generierten One-Page-Vorschauen</li>
+        </ul>
+
+        <h2>3. Zweck der Datenverarbeitung</h2>
+        <p>Wir verarbeiten Ihre Daten zu folgenden Zwecken:</p>
+        <ul>
+          <li>Bereitstellung und Betrieb der Peek-Dienste</li>
+          <li>Erstellung und Bereitstellung von One-Page-Previews für Unternehmen</li>
+          <li>Kommunikation im Rahmen von Support- und Serviceanfragen</li>
+          <li>Verbesserung unserer Dienste und Nutzererfahrung</li>
+          <li>Erfüllung rechtlicher Verpflichtungen</li>
+        </ul>
+
+        <h2>4. Weitergabe von Daten</h2>
+        <p>
+          Wir geben Ihre Daten nicht ohne Ihre ausdrückliche Einwilligung an Dritte weiter, es sei denn, dies ist für die Erbringung unserer Dienste erforderlich
+          (z. B. Hosting-Provider) oder wir sind gesetzlich dazu verpflichtet. Alle Auftragsverarbeiter sind vertraglich an uns gebunden und verarbeiten Ihre Daten
+          ausschließlich nach unserer Weisung.
+        </p>
+
+        <h2>5. Speicherdauer</h2>
+        <p>
+          Personenbezogene Daten werden nur so lange gespeichert, wie es für die Erbringung unserer Dienste erforderlich ist oder gesetzliche Aufbewahrungsfristen
+          eine längere Speicherung erfordern. Geschäftskorrespondenz wird für mindestens 3 Jahre aufbewahrt.
+        </p>
+
+        <h2>6. Ihre Rechte</h2>
+        <p>Sie haben gegenüber uns folgende Rechte:</p>
+        <ul>
+          <li>Auskunft über die bei uns gespeicherten Ihre Daten (Art. 15 DSGVO)</li>
+          <li>Berichtigung unrichtiger Daten (Art. 16 DSGVO)</li>
+          <li>Löschung Ihrer Daten, sofern keine gesetzlichen Aufbewahrungspflichten entgegenstehen (Art. 17 DSGVO)</li>
+          <li>Einschränkung der Verarbeitung (Art. 18 DSGVO)</li>
+          <li>Datenübertragbarkeit (Art. 20 DSGVO)</li>
+          <li>Widerspruch gegen die Verarbeitung (Art. 21 DSGVO)</li>
+          <li>Beschwerde bei einer Aufsichtsbehörde (Art. 77 DSGVO)</li>
+        </ul>
+        <p>Um Ihre Rechte geltend zu machen, wenden Sie sich bitte an: <a href="mailto:hello@peek.example">hello@peek.example</a></p>
+
+        <h2>7. Cookies und Tracking</h2>
+        <p>
+          Unsere Website verwendet nur technisch notwendige Cookies, die für den Betrieb der Seite erforderlich sind (z. B. Session-Cookies).
+          Es werden keine Marketing- oder Tracking-Cookies ohne Ihre ausdrückliche Einwilligung gesetzt.
+          Sie können Ihre Cookie-Einwilligung jederzeit unten auf der Seite ändern.
+        </p>
+
+        <h2>8. Sicherheit</h2>
+        <p>
+          Wir setzen technische und organisatorische Maßnahmen ein, um Ihre Daten gegen unbefugten Zugriff, Verlust oder Missbrauch zu schützen.
+          Dazu gehören TLS-Verschlüsselung, regelmäßige Sicherheitsupdates und Zugriffskontrollen.
+        </p>
+
+        <h2>9. Änderungen dieser Datenschutzerklärung</h2>
+        <p>
+          Wir behalten uns vor, diese Datenschutzerklärung bei Bedarf anzupassen, insbesondere bei Änderungen unserer Dienste oder gesetzlicher Anforderungen.
+          Die jeweils aktuelle Version finden Sie stets auf dieser Seite.
+        </p>
+      </div>
+
+      <div class="meta">
+        <p>Zuletzt aktualisiert: April 2025</p>
+        <p><a href="/">← Zurück zur Startseite</a> &nbsp;|&nbsp; <a href="/impressum">Impressum</a></p>
+      </div>
+    </div>
+  </body>
+</html>

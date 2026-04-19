@@ -2,9 +2,6 @@
  * POST /api/claim
  * Body: { businessName, email }
  * Returns: { ok }
- *
- * Cloudflare: reads PREVIEWS KV from platform.env
- * Local dev: uses in-memory fallback
  */
 import { createStore } from '@onepage/generator/store';
 
@@ -23,12 +20,16 @@ export async function POST({ request, platform }) {
     return json({ ok: false, error: 'businessName and email are required' }, 400);
   }
 
-  // Basic email validation
   if (!email.includes('@') || !email.includes('.')) {
     return json({ ok: false, error: 'invalid email' }, 400);
   }
 
-  const store = createStore(platform?.env?.PREVIEWS);
+  // Pass both KV binding and env vars for KV REST API
+  const env = {
+    KV_REST_BASE: platform?.env?.KV_REST_BASE,
+    KV_REST_TOKEN: platform?.env?.KV_REST_TOKEN,
+  };
+  const store = createStore(platform?.env?.PREVIEWS, env);
   await store.addClaim(businessName, email);
   return json({ ok: true, message: 'Page claimed successfully' });
 }

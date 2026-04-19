@@ -68,3 +68,18 @@ gh secret set CLOUDFLARE_ACCOUNT_ID --body "your-account-id"
 - DE: https://peek-preview.pages.dev/de/
 - ES: https://peek-preview.pages.dev/es/
 - PL: https://peek-preview.pages.dev/pl/
+
+## Operational ownership
+Preview platform maintainers own product correctness and deploy safety; Maestro coordinates execution, prioritization, and reporting.
+
+## Documentation baseline
+This repository follows the minimum operational docs baseline under `docs/`:
+- `ACCESS.md`
+- `SECRETS.md`
+- `RUNBOOK.md`
+- `VALIDATION.md`
+- `METRICS.md`
+- `RUN_LOG.md`
+- `DECISIONS.md`
+
+Process discipline: every meaningful change/run should leave a trace in `RUN_LOG.md`, and non-trivial tradeoff decisions should be recorded in `DECISIONS.md`.
