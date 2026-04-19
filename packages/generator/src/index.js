@@ -2,24 +2,31 @@
  * Generator: Given a business data object, produce a complete one-page HTML preview.
  *
  * @param {Object} input
- * @param {string} input.name
- * @param {string} [input.tagline]
- * @param {string} [input.description]
- * @param {string} [input.address]
- * @param {string} [input.phone]
- * @param {string} [input.email]
- * @param {string} [input.website]
+ * @param {string}  input.name
+ * @param {string}  [input.tagline]
+ * @param {string}  [input.description]
+ * @param {string}  [input.address]
+ * @param {string}  [input.phone]
+ * @param {string}  [input.whatsapp]       — WhatsApp number (overrides phone if set)
+ * @param {string}  [input.email]
+ * @param {string}  [input.website]
  * @param {string[]} [input.images]
- * @param {string} [input.hours]
- * @param {string} [input.mapUrl]
- * @param {string} [input.social]
- * @param {string} [input.template]  — 'launch-teaser' | 'product-spotlight' | 'event-waitlist'
- * @param {string} [input.claimUrl]   — URL to claim/upgrade this preview
- * @param {string} [input.manageUrl]  — URL to opt-out / manage this preview
- * @param {string} [input.brandColor] — hex accent color (default: #7c9cff)
- * @param {string} [input.lang]       — de | en | es | pl | it | fr | hr
+ * @param {string}  [input.hours]          — e.g. "Mon-Fri 8-18, Sat-Sun 9-16"
+ * @param {string}  [input.mapUrl]
+ * @param {string}  [input.social]
+ * @param {string}  [input.template]       — 'launch-teaser' | 'product-spotlight' | 'event-waitlist'
+ * @param {string}  [input.claimUrl]
+ * @param {string}  [input.manageUrl]
+ * @param {string}  [input.brandColor]
+ * @param {string}  [input.lang]           — de | en | es | pl | it | fr | hr
+ * @param {string}  [input.bookingUrl]     — booking/reservation link
+ * @param {Object[]} [input.reviews]       — [{name, text, rating, source}]
+ * @param {string}  [input.lat]            — latitude for OpenStreetMap embed
+ * @param {string}  [input.lon]            — longitude for OpenStreetMap embed
  */
 const DEFAULT_LANG = 'en';
+
+// ─── COPY ────────────────────────────────────────────────────────────────────
 
 const COPY = {
   en: {
@@ -53,7 +60,26 @@ const COPY = {
     eventBadge: 'Event',
     eventCta: 'Join waitlist →',
     agenda: '📋 Agenda',
-    speakers: '🎤 Speakers'
+    speakers: '🎤 Speakers',
+    // NEW
+    openNow: '🟢 Open Now',
+    closed: '🔴 Closed',
+    opensAt: 'Opens {day} at {time}',
+    call: 'Call',
+    whatsapp: 'WhatsApp',
+    directions: 'Directions',
+    book: 'Book / Reserve',
+    reviews: 'What people say',
+    scanToShare: 'Scan to share',
+    share: 'Share',
+    copied: 'Link copied!',
+    gallery: 'Gallery',
+    aboutUs: 'About us',
+    trustSsl: 'SSL Secured',
+    trustMobile: 'Mobile Friendly',
+    trustFast: 'Fast Loading',
+    exampleReview: '(Example)',
+    bookNow: 'Book now →',
   },
   de: {
     claimCardTitle: '👋 Diese Seite übernehmen',
@@ -86,7 +112,25 @@ const COPY = {
     eventBadge: 'Event',
     eventCta: 'Zur Warteliste →',
     agenda: '📋 Agenda',
-    speakers: '🎤 Speaker'
+    speakers: '🎤 Speaker',
+    openNow: '🟢 Geöffnet',
+    closed: '🔴 Geschlossen',
+    opensAt: 'Öffnet {day} um {time}',
+    call: 'Anrufen',
+    whatsapp: 'WhatsApp',
+    directions: 'Route',
+    book: 'Buchen / Reservieren',
+    reviews: 'Kundenstimmen',
+    scanToShare: 'Teilen per QR',
+    share: 'Teilen',
+    copied: 'Link kopiert!',
+    gallery: 'Galerie',
+    aboutUs: 'Über uns',
+    trustSsl: 'SSL Gesichert',
+    trustMobile: 'Mobilfreundlich',
+    trustFast: 'Schnell geladen',
+    exampleReview: '(Beispiel)',
+    bookNow: 'Jetzt buchen →',
   },
   hr: {
     claimCardTitle: '👋 Preuzmi ovu stranicu',
@@ -119,7 +163,25 @@ const COPY = {
     eventBadge: 'Događaj',
     eventCta: 'Pridruži se listi →',
     agenda: '📋 Agenda',
-    speakers: '🎤 Predavači'
+    speakers: '🎤 Predavači',
+    openNow: '🟢 Otvoreno',
+    closed: '🔴 Zatvoreno',
+    opensAt: 'Otvara {day} u {time}',
+    call: 'Nazovi',
+    whatsapp: 'WhatsApp',
+    directions: 'Smjer',
+    book: 'Rezerviraj',
+    reviews: 'Što ljudi kažu',
+    scanToShare: 'Skeniraj za dijeljenje',
+    share: 'Podijeli',
+    copied: 'Link kopiran!',
+    gallery: 'Galerija',
+    aboutUs: 'O nama',
+    trustSsl: 'SSL Zaštićeno',
+    trustMobile: 'Prilagođeno mobitelu',
+    trustFast: 'Brzo učitavanje',
+    exampleReview: '(Primjer)',
+    bookNow: 'Rezerviraj →',
   },
   es: {
     claimCardTitle: '👋 Reclama esta página',
@@ -152,7 +214,25 @@ const COPY = {
     eventBadge: 'Evento',
     eventCta: 'Unirme a la lista →',
     agenda: '📋 Agenda',
-    speakers: '🎤 Ponentes'
+    speakers: '🎤 Ponentes',
+    openNow: '🟢 Abierto',
+    closed: '🔴 Cerrado',
+    opensAt: 'Abre el {day} a las {time}',
+    call: 'Llamar',
+    whatsapp: 'WhatsApp',
+    directions: 'Cómo llegar',
+    book: 'Reservar',
+    reviews: 'Lo que dicen',
+    scanToShare: 'Escanea para compartir',
+    share: 'Compartir',
+    copied: '¡Enlace copiado!',
+    gallery: 'Galería',
+    aboutUs: 'Sobre nosotros',
+    trustSsl: 'SSL Seguro',
+    trustMobile: 'Móvil',
+    trustFast: 'Carga rápida',
+    exampleReview: '(Ejemplo)',
+    bookNow: 'Reservar →',
   },
   pl: {
     claimCardTitle: '👋 Przejmij tę stronę',
@@ -185,9 +265,35 @@ const COPY = {
     eventBadge: 'Wydarzenie',
     eventCta: 'Dołącz do listy →',
     agenda: '📋 Agenda',
-    speakers: '🎤 Prelegenci'
-  }
+    speakers: '🎤 Prelegenci',
+    openNow: '🟢 Otwarte',
+    closed: '🔴 Zamknięte',
+    opensAt: 'Otwiera {day} o {time}',
+    call: 'Zadzwoń',
+    whatsapp: 'WhatsApp',
+    directions: 'Dojazd',
+    book: 'Zarezerwuj',
+    reviews: 'Opinie klientów',
+    scanToShare: 'Skanuj i udostępniaj',
+    share: 'Udostępnij',
+    copied: 'Link skopiowany!',
+    gallery: 'Galeria',
+    aboutUs: 'O nas',
+    trustSsl: 'SSL Zabezpieczone',
+    trustMobile: 'Mobilne',
+    trustFast: 'Szybkie ładowanie',
+    exampleReview: '(Przykład)',
+    bookNow: 'Zarezerwuj →',
+  },
 };
+
+const EXAMPLE_REVIEWS = [
+  { name: 'Marco K.', text: 'Best coffee in Berlin! The atmosphere is incredible and the staff is super friendly.', rating: 5, source: 'Google' },
+  { name: 'Sarah L.', text: 'Absolutely love this place. Will definitely come back soon!', rating: 5, source: 'TripAdvisor' },
+  { name: 'Jan D.', text: 'Great service and amazing quality. Highly recommended!', rating: 4, source: 'Google' },
+];
+
+// ─── EXPORT ──────────────────────────────────────────────────────────────────
 
 export function generatePreview(input = {}) {
   const template = input.template || 'launch-teaser';
@@ -209,11 +315,13 @@ export function generatePreview(input = {}) {
     html: render({ ...input, lang, copy, _generatedAt: generatedAt }),
     meta: {
       generatedAt,
-      version: '0.1.0',
+      version: '0.2.0',
       lang,
     },
   };
 }
+
+// ─── HELPERS ─────────────────────────────────────────────────────────────────
 
 function esc(str) {
   if (!str) return '';
@@ -230,7 +338,7 @@ function resolveLang(lang) {
 }
 
 function getCopy(lang) {
-  return COPY[resolveLang(lang)];
+  return COPY[resolveLang(lang)] || COPY[DEFAULT_LANG];
 }
 
 function brand(input) {
@@ -252,11 +360,225 @@ function adjustBrightness(hex, percent) {
   return '#' + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
 }
 
-function basePage({ title, bodyStyles, content, manageUrl, brandColor, name, claimUrl, lang = DEFAULT_LANG, copy = getCopy(lang) }) {
-  const b = brand({ brandColor });
+/** Format phone number for WhatsApp wa.me links */
+function fmtWhatsApp(phone) {
+  if (!phone) return null;
+  return String(phone).replace(/[^\d+]/g, '').replace(/^00/, '+');
+}
+
+/** Determine WhatsApp number: explicit whatsapp field > phone field */
+function getWhatsAppNumber(input) {
+  const num = input.whatsapp || input.phone;
+  return fmtWhatsApp(num);
+}
+
+/** Parse hours string like "Mon-Fri 8-18, Sat-Sun 9-16" → open/closed status */
+function parseHoursStatus(hoursStr) {
+  if (!hoursStr) return null;
+  const now = new Date();
+  const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+  const today = dayNames[now.getDay()];
+  const currentMinutes = now.getHours() * 60 + now.getMinutes();
+
+  // Match patterns like "Mon-Fri 8-18" or "Mon 9-17" or "Sat-Sun 9-16"
+  const rangeRegex = /([A-Za-z]+)-([A-Za-z]+)\s+(\d{1,2}):?(\d{0,2})\s*-\s*(\d{1,2}):?(\d{0,2})/g;
+  let match;
+  while ((match = rangeRegex.exec(hoursStr)) !== null) {
+    const [, dayStart, dayEnd, startH, startM, endH, endM] = match;
+    const sm = parseInt(startM || '0');
+    const em = parseInt(endM || '0');
+    const start = parseInt(startH) * 60 + sm;
+    const end = parseInt(endH) * 60 + em;
+
+    const dayMap = { Sun: 0, Mon: 1, Tue: 2, Wed: 3, Thu: 4, Fri: 5, Sat: 6 };
+    const dStart = dayMap[dayStart.charAt(0).toUpperCase() + dayStart.slice(1).toLowerCase()];
+    const dEnd = dayMap[dayEnd.charAt(0).toUpperCase() + dayEnd.slice(1).toLowerCase()];
+    if (dStart === undefined || dEnd === undefined) continue;
+
+    const todayIdx = now.getDay();
+    let inRange = false;
+    if (dStart <= dEnd) {
+      inRange = todayIdx >= dStart && todayIdx <= dEnd;
+    } else {
+      inRange = todayIdx >= dStart || todayIdx <= dEnd;
+    }
+
+    if (inRange) {
+      if (currentMinutes >= start && currentMinutes < end) {
+        return { open: true };
+      } else if (currentMinutes < start) {
+        const nextDay = dayNames[(todayIdx + 1) % 7];
+        return { open: false, nextDay, nextTime: `${startH}:${String(sm).padStart(2, '0')}` };
+      } else {
+        // Past closing — find next opening day
+        for (let i = 1; i <= 7; i++) {
+          const checkDay = (todayIdx + i) % 7;
+          const checkName = dayNames[checkDay];
+          // Simple heuristic: next day in the week that has hours
+          return { open: false, nextDay: checkName, nextTime: `${startH}:${String(sm).padStart(2, '0')}` };
+        }
+      }
+    }
+  }
+  return null;
+}
+
+function starRating(rating) {
+  const full = Math.max(0, Math.min(5, Math.round(rating || 0)));
+  return '★'.repeat(full) + '☆'.repeat(5 - full);
+}
+
+function mapEmbedUrl(input) {
+  if (input.lat && input.lon) {
+    return `https://www.openstreetmap.org/?mlat=${esc(input.lat)}&mlon=${esc(input.lon)}&zoom=16&output=embed`;
+  }
+  if (input.address) {
+    return `https://www.openstreetmap.org/?q=${encodeURIComponent(input.address)}&zoom=16&output=embed`;
+  }
+  return null;
+}
+
+function mapsLink(input) {
+  if (input.mapUrl) return input.mapUrl;
+  if (input.address) return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(input.address)}`;
+  return null;
+}
+
+function galleryHTML(images, name) {
+  if (!images || images.length === 0) return '';
+  if (images.length === 1) {
+    return `<img src="${esc(images[0])}" alt="${esc(name)}" class="hero-img" />`;
+  }
+  const imgs = images.map((src, i) => `<img src="${esc(src)}" alt="${esc(name)} ${i + 1}" class="gallery-img" style="display:${i === 0 ? 'block' : 'none'};" />`).join('');
+  const dots = images.map((_, i) => `<button class="dot${i === 0 ? ' active' : ''}" onclick="showSlide(${i})" aria-label="Image ${i + 1}"></button>`).join('');
+  return `<div class="gallery" id="gallery">
+    <div class="gallery-imgs">${imgs}</div>
+    <div class="gallery-dots">${dots}</div>
+  </div>`;
+}
+
+function quickActionsHTML(input, copy) {
+  const items = [];
+  const waNum = getWhatsAppNumber(input);
+  const waMsg = encodeURIComponent('Hi, I saw your page on Peek — I\'d like to know more');
+
+  if (input.phone) {
+    items.push(`<a href="tel:${esc(input.phone)}" class="qa-btn qa-call">
+      <span class="qa-icon">📞</span><span>${esc(copy.call)}</span>
+    </a>`);
+  }
+  if (waNum) {
+    items.push(`<a href="https://wa.me/${esc(waNum)}?text=${waMsg}" target="_blank" rel="noopener" class="qa-btn qa-whatsapp">
+      <span class="qa-icon">💬</span><span>${esc(copy.whatsapp)}</span>
+    </a>`);
+  }
+  if (input.address) {
+    const maps = mapsLink(input);
+    if (maps) {
+      items.push(`<a href="${esc(maps)}" target="_blank" rel="noopener" class="qa-btn qa-directions">
+        <span class="qa-icon">📍</span><span>${esc(copy.directions)}</span>
+      </a>`);
+    }
+  }
+  if (input.bookingUrl) {
+    items.push(`<a href="${esc(input.bookingUrl)}" target="_blank" rel="noopener" class="qa-btn qa-book">
+      <span class="qa-icon">📅</span><span>${esc(copy.book)}</span>
+    </a>`);
+  } else if (waNum) {
+    items.push(`<a href="https://wa.me/${esc(waNum)}?text=${waMsg}" target="_blank" rel="noopener" class="qa-btn qa-book">
+      <span class="qa-icon">📅</span><span>${esc(copy.book)}</span>
+    </a>`);
+  }
+
+  if (items.length === 0) return '';
+  return `<section class="quick-actions reveal"><div class="qa-grid">${items.join('')}</div></section>`;
+}
+
+function reviewsHTML(input, copy) {
+  const reviews = (input.reviews && input.reviews.length > 0) ? input.reviews : EXAMPLE_REVIEWS;
+  const isExample = !input.reviews || input.reviews.length === 0;
+  const cards = reviews.map(r => `
+    <div class="review-card">
+      ${r.source ? `<span class="review-source">${esc(r.source)}</span>` : ''}
+      <div class="review-stars">${esc(starRating(r.rating))}</div>
+      <p class="review-text">"${esc(r.text)}"</p>
+      <p class="review-author">— ${esc(r.name)}${isExample ? ` <em>${esc(copy.exampleReview)}</em>` : ''}</p>
+    </div>`).join('');
+  return `<section class="reviews-section reveal">
+    <h2 class="section-title">${esc(copy.reviews)}</h2>
+    <div class="reviews-scroll">${cards}</div>
+  </section>`;
+}
+
+function openNowBadge(hours, copy) {
+  if (!hours) return '';
+  const status = parseHoursStatus(hours);
+  if (!status) return '';
+  if (status.open) {
+    return `<span class="open-badge">${esc(copy.openNow)}</span>`;
+  } else {
+    const msg = copy.opensAt.replace('{day}', status.nextDay).replace('{time}', status.nextTime);
+    return `<span class="closed-badge">${esc(copy.closed)} <span class="closed-next">— ${esc(msg)}</span></span>`;
+  }
+}
+
+function whatsappFloatBtn(input) {
+  const waNum = getWhatsAppNumber(input);
+  if (!waNum) return '';
+  const waMsg = encodeURIComponent('Hi, I saw your page on Peek — I\'d like to know more');
+  return `<a href="https://wa.me/${esc(waNum)}?text=${waMsg}" target="_blank" rel="noopener" class="whatsapp-float" aria-label="Chat on WhatsApp">
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+  </a>`;
+}
+
+function qrCodeSection(input) {
+  const pageUrl = input.pageUrl || window.location.href;
+  const encodedUrl = encodeURIComponent(input._pageUrl || 'YOUR_PAGE_URL');
+  return `<div class="qr-section">
+    <p class="qr-label">${esc(COPY.en.scanToShare)}</p>
+    <img src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=${encodedUrl}" alt="QR Code" class="qr-img" id="qr-img" />
+  </div>`;
+}
+
+function shareButtonsHTML(input, copy) {
+  const pageUrl = input._pageUrl || '';
+  const shareText = encodeURIComponent(`${input.name} — check this out!`);
+  const shareUrl = encodeURIComponent(pageUrl);
+  const waNum = getWhatsAppNumber(input);
+  return `<div class="share-row">
+    ${waNum ? `<a href="https://wa.me/${esc(waNum)}?text=${shareText}%20${shareUrl}" target="_blank" rel="noopener" class="share-btn share-whatsapp" aria-label="Share via WhatsApp">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    </a>` : ''}
+    <button onclick="copyLink()" class="share-btn share-copy" aria-label="Copy link">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+    </button>
+    <a href="mailto:?subject=${shareText}&body=${shareUrl}" class="share-btn share-email" aria-label="Share via Email">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+    </a>
+  </div>`;
+}
+
+function trustBadges(copy) {
+  return `<div class="trust-bar">
+    <span>🔒 ${esc(copy.trustSsl)}</span>
+    <span class="trust-sep">·</span>
+    <span>📱 ${esc(copy.trustMobile)}</span>
+    <span class="trust-sep">·</span>
+    <span>⚡ ${esc(copy.trustFast)}</span>
+    <span class="trust-sep">·</span>
+    <span>Updated 2026</span>
+  </div>`;
+}
+
+// ─── BASE PAGE ───────────────────────────────────────────────────────────────
+
+function basePage({ title, content, manageUrl, brandColor, name, claimUrl, lang = DEFAULT_LANG, copy = getCopy(lang), input = {} }) {
+  const b = brand(input);
   const encodedName = encodeURIComponent(name);
   const claimAction = claimUrl || `https://peek.example.com/claim?name=${encodedName}`;
   const optoutAction = manageUrl || `https://peek.example.com/optout?name=${encodedName}`;
+  const pageUrl = encodeURIComponent(input.pageUrl || 'https://peek.example.com/preview');
+
   return `<!DOCTYPE html>
 <html lang="${esc(lang)}">
 <head>
@@ -264,6 +586,9 @@ function basePage({ title, bodyStyles, content, manageUrl, brandColor, name, cla
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="description" content="${esc(title)}" />
   <title>${esc(title)}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fraunces:ital,wght@0,700;1,700&display=swap" rel="stylesheet" />
   <style>
     :root {
       --bg: ${b.bg};
@@ -271,16 +596,52 @@ function basePage({ title, bodyStyles, content, manageUrl, brandColor, name, cla
       --muted: ${b.muted};
       --accent: ${b.primary};
       --accent-dark: ${b.primaryDark};
+      --card-bg: rgba(255,255,255,0.05);
+      --card-border: rgba(255,255,255,0.10);
+      --wa-green: #25D366;
     }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
     body {
       font-family: Inter, system-ui, -apple-system, sans-serif;
       background: var(--bg);
       color: var(--text);
       line-height: 1.65;
+      min-height: 100vh;
     }
-    a { color: var(--accent); }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* ── Layout ── */
     .container { width: min(900px, calc(100% - 32px)); margin: 0 auto; }
+
+    /* ── Animations ── */
+    @keyframes fadeSlideUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(37,211,102,0.5); }
+      50%       { box-shadow: 0 0 0 14px rgba(37,211,102,0); }
+    }
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateX(20px); }
+      to   { opacity: 1; transform: translateX(0); }
+    }
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.55s ease, transform 0.55s ease;
+    }
+    .reveal.visible {
+      animation: fadeSlideUp 0.55s ease forwards;
+    }
+    .reveal-delay-1 { transition-delay: 0.08s; }
+    .reveal-delay-2 { transition-delay: 0.16s; }
+    .reveal-delay-3 { transition-delay: 0.24s; }
+    .reveal-delay-4 { transition-delay: 0.32s; }
+
+    /* ── Badge ── */
     .badge {
       display: inline-block;
       padding: 4px 12px;
@@ -291,10 +652,316 @@ function basePage({ title, bodyStyles, content, manageUrl, brandColor, name, cla
       color: #86efac;
       border: 1px solid rgba(134,239,172,0.25);
     }
+
+    /* ── Hero ── */
+    .hero {
+      padding: 40px 0 32px;
+      text-align: center;
+      background: radial-gradient(circle at top, ${b.primary}28, transparent 65%);
+    }
+    .hero-title {
+      font-family: Fraunces, Georgia, serif;
+      font-size: clamp(2.2rem, 6vw, 4rem);
+      letter-spacing: -0.03em;
+      line-height: 1.08;
+      margin: 12px 0;
+    }
+    .hero-desc {
+      max-width: 60ch;
+      margin: 0 auto 24px;
+      font-size: 1.05rem;
+      color: var(--muted);
+    }
+
+    /* ── Gallery ── */
+    .gallery {
+      position: relative;
+      width: 100%;
+      max-width: 540px;
+      margin: 0 auto 28px;
+      border-radius: 20px;
+      overflow: hidden;
+    }
+    .gallery-imgs { position: relative; }
+    .gallery-img {
+      width: 100%;
+      aspect-ratio: 16/9;
+      object-fit: cover;
+      display: block;
+      border-radius: 20px;
+    }
+    .gallery-dots {
+      position: absolute;
+      bottom: 14px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 7px;
+    }
+    .dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.4);
+      border: none;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.2s;
+      padding: 0;
+    }
+    .dot.active {
+      background: #fff;
+      transform: scale(1.3);
+    }
+    .hero-img {
+      width: 100%;
+      max-width: 540px;
+      border-radius: 20px;
+      margin-bottom: 28px;
+      aspect-ratio: 16/9;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* ── Open/Closed Badge ── */
+    .open-badge {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      background: rgba(34,197,94,0.15);
+      color: #22c55e;
+      border: 1px solid rgba(34,197,94,0.3);
+      margin-bottom: 8px;
+    }
+    .closed-badge {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      background: rgba(239,68,68,0.12);
+      color: #f87171;
+      border: 1px solid rgba(239,68,68,0.25);
+      margin-bottom: 8px;
+    }
+    .closed-next { opacity: 0.8; font-weight: 400; }
+
+    /* ── Quick Actions ── */
+    .quick-actions { padding: 0 0 8px; }
+    .qa-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+    }
+    @media (max-width: 500px) { .qa-grid { grid-template-columns: repeat(2, 1fr); } }
+    .qa-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      padding: 16px 8px;
+      border-radius: 16px;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      color: var(--text);
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.15s, border-color 0.2s;
+      text-decoration: none;
+      min-height: 72px;
+      justify-content: center;
+    }
+    .qa-btn:hover {
+      background: rgba(255,255,255,0.09);
+      transform: translateY(-2px);
+      text-decoration: none;
+    }
+    .qa-icon { font-size: 1.5rem; line-height: 1; }
+    .qa-whatsapp { border-color: rgba(37,211,102,0.3); }
+    .qa-whatsapp:hover { background: rgba(37,211,102,0.1); }
+    .qa-book { border-color: rgba(124,156,255,0.3); }
+
+    /* ── Main content ── */
+    main { padding: 40px 0; }
+
+    /* ── Sections ── */
+    .section-title {
+      font-family: Fraunces, Georgia, serif;
+      font-size: clamp(1.4rem, 4vw, 1.8rem);
+      letter-spacing: -0.02em;
+      margin-bottom: 18px;
+    }
+
+    /* ── About ── */
+    .about-section {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 20px;
+      padding: 28px;
+      margin-bottom: 32px;
+    }
+    .about-section h2 { font-size: 1.3rem; margin-bottom: 10px; }
+    .about-section p { color: var(--muted); line-height: 1.75; }
+
+    /* ── Map ── */
+    .map-section {
+      margin-bottom: 32px;
+    }
+    .map-section h2 { font-size: 1.3rem; margin-bottom: 12px; }
+    .map-embed {
+      width: 100%;
+      height: 280px;
+      border-radius: 16px;
+      border: 1px solid var(--card-border);
+      overflow: hidden;
+    }
+    .map-embed iframe { width: 100%; height: 100%; border: none; display: block; }
+
+    /* ── Reviews ── */
+    .reviews-section { margin-bottom: 36px; }
+    .reviews-scroll {
+      display: flex;
+      gap: 16px;
+      overflow-x: auto;
+      padding-bottom: 12px;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(255,255,255,0.15) transparent;
+    }
+    .reviews-scroll::-webkit-scrollbar { height: 4px; }
+    .reviews-scroll::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 2px; }
+    .review-card {
+      flex: 0 0 260px;
+      scroll-snap-align: start;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .review-source {
+      font-size: 0.72rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--accent);
+    }
+    .review-stars { font-size: 0.9rem; color: #fbbf24; letter-spacing: 1px; }
+    .review-text { font-size: 0.88rem; color: var(--text); line-height: 1.55; font-style: italic; }
+    .review-author { font-size: 0.8rem; color: var(--muted); margin-top: auto; }
+    .review-author em { opacity: 0.6; }
+
+    /* ── Contact card ── */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+    @media (max-width: 500px) { .contact-grid { grid-template-columns: 1fr; } }
+    .contact-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 18px;
+    }
+    .contact-card h3 { font-size: 0.95rem; margin-bottom: 6px; display: flex; align-items: center; gap: 6px; }
+    .contact-card p, .contact-card a { color: var(--muted); font-size: 0.88rem; }
+    .contact-card a:hover { color: var(--text); }
+
+    /* ── QR + Share row ── */
+    .qr-share-row {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 18px 22px;
+      margin-bottom: 32px;
+      flex-wrap: wrap;
+    }
+    .qr-section { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+    .qr-label { font-size: 0.75rem; color: var(--muted); }
+    .qr-img { width: 100px; height: 100px; border-radius: 8px; }
+    .share-row { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; flex: 1; }
+    .share-label { font-size: 0.82rem; color: var(--muted); margin-right: 4px; }
+    .share-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px; height: 40px;
+      border-radius: 10px;
+      border: 1px solid var(--card-border);
+      background: rgba(255,255,255,0.05);
+      cursor: pointer;
+      transition: background 0.2s, transform 0.15s;
+      color: var(--text);
+    }
+    .share-btn:hover { background: rgba(255,255,255,0.1); transform: translateY(-1px); }
+    .share-whatsapp:hover { background: rgba(37,211,102,0.15); border-color: rgba(37,211,102,0.4); color: var(--wa-green); }
+
+    /* ── Toast ── */
+    .toast {
+      position: fixed;
+      bottom: 90px;
+      right: 24px;
+      background: rgba(0,0,0,0.85);
+      color: #fff;
+      padding: 10px 18px;
+      border-radius: 10px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      z-index: 10000;
+      animation: fadeSlideUp 0.3s ease;
+      backdrop-filter: blur(8px);
+    }
+
+    /* ── WhatsApp Float ── */
+    .whatsapp-float {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      width: 60px;
+      height: 60px;
+      background: var(--wa-green);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 24px rgba(37,211,102,0.45);
+      z-index: 9999;
+      animation: pulse 2.4s infinite;
+      transition: transform 0.2s;
+    }
+    .whatsapp-float:hover {
+      transform: scale(1.1);
+      text-decoration: none;
+    }
+    .whatsapp-float svg { width: 30px; height: 30px; fill: #fff; }
+
+    /* ── Trust bar ── */
+    .trust-bar {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 14px 0;
+      font-size: 0.75rem;
+      color: rgba(166,176,207,0.5);
+      flex-wrap: wrap;
+    }
+    .trust-sep { opacity: 0.4; }
+
+    /* ── Footer ── */
     .preview-footer {
       border-top: 1px solid rgba(255,255,255,0.08);
       padding: 24px 0 32px;
-      margin-top: 32px;
+      margin-top: 16px;
     }
     .footer-grid {
       display: grid;
@@ -329,10 +996,7 @@ function basePage({ title, bodyStyles, content, manageUrl, brandColor, name, cla
       font-size: 0.88rem;
       transition: 180ms ease;
     }
-    .btn-claim {
-      background: var(--accent);
-      color: #07111f;
-    }
+    .btn-claim { background: var(--accent); color: #07111f; }
     .btn-claim:hover { opacity: 0.88; }
     .btn-optout {
       background: transparent;
@@ -349,11 +1013,26 @@ function basePage({ title, bodyStyles, content, manageUrl, brandColor, name, cla
     .footer-note a { color: rgba(166,176,207,0.6); }
     .success { color: #86efac; font-size: 0.85rem; padding: 8px 0; }
     @media (max-width: 600px) { .footer-grid { grid-template-columns: 1fr; } }
-    ${bodyStyles || ''}
+
+    /* ── Footer badge CTAs ── */
+    .cta-btn {
+      display: inline-block;
+      padding: 12px 26px;
+      background: var(--accent);
+      color: #07111f;
+      font-weight: 700;
+      border-radius: 999px;
+      text-decoration: none;
+      margin-bottom: 10px;
+      transition: opacity 0.2s, transform 0.15s;
+    }
+    .cta-btn:hover { opacity: 0.88; transform: translateY(-1px); text-decoration: none; }
   </style>
 </head>
 <body>
+${whatsappFloatBtn(input)}
 ${content}
+${trustBadges(copy)}
 <footer class="preview-footer">
   <div class="container">
     <div class="footer-grid">
@@ -383,15 +1062,70 @@ ${content}
   </div>
 </footer>
 <script>
+// ── Gallery carousel ──
+let currentSlide = 0;
+let slideTimer = null;
+function showSlide(n) {
+  const imgs = document.querySelectorAll('.gallery-img');
+  const dots = document.querySelectorAll('.dot');
+  if (!imgs.length) return;
+  imgs.forEach((img, i) => { img.style.display = i === n ? 'block' : 'none'; });
+  dots.forEach((dot, i) => { dot.classList.toggle('active', i === n); });
+  currentSlide = n;
+  resetTimer();
+}
+function nextSlide() {
+  const imgs = document.querySelectorAll('.gallery-img');
+  showSlide((currentSlide + 1) % imgs.length);
+}
+function resetTimer() {
+  clearInterval(slideTimer);
+  slideTimer = setInterval(nextSlide, 4000);
+}
+document.addEventListener('DOMContentLoaded', function() {
+  resetTimer();
+});
+
+// ── Intersection Observer for reveal animations ──
+var revealObserver = new IntersectionObserver(function(entries) {
+  entries.forEach(function(entry) {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      revealObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.12 });
+document.querySelectorAll('.reveal').forEach(function(el) {
+  revealObserver.observe(el);
+});
+
+// ── Copy link ──
+function copyLink() {
+  var url = document.getElementById('qr-img') ? document.location.href : window.location.href;
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(url).then(function() {
+      showToast(${JSON.stringify(copy.copied)});
+    });
+  }
+}
+function showToast(msg) {
+  var t = document.createElement('div');
+  t.className = 'toast';
+  t.textContent = msg;
+  document.body.appendChild(t);
+  setTimeout(function() { t.remove(); }, 2500);
+}
+
+// ── Submit handlers ──
 async function submitClaim(e) {
   e.preventDefault();
-  const form = e.target;
-  const email = form.email.value;
-  const btn = form.querySelector('button');
+  var form = e.target;
+  var email = form.email.value;
+  var btn = form.querySelector('button');
   btn.textContent = ${JSON.stringify(copy.sending)};
   btn.disabled = true;
   try {
-    const res = await fetch('/api/claim', {
+    var res = await fetch('/api/claim', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ businessName: ${JSON.stringify(name)}, email })
@@ -410,12 +1144,12 @@ async function submitClaim(e) {
 }
 async function submitOptout(e) {
   e.preventDefault();
-  const form = e.target;
-  const btn = form.querySelector('button');
+  var form = e.target;
+  var btn = form.querySelector('button');
   btn.textContent = ${JSON.stringify(copy.removing)};
   btn.disabled = true;
   try {
-    const res = await fetch('/api/optout', {
+    var res = await fetch('/api/optout', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ businessName: ${JSON.stringify(name)} })
@@ -441,111 +1175,282 @@ async function submitOptout(e) {
 
 function renderLaunchTeaser(input) {
   const b = brand(input);
-  const copy = input.copy || getCopy(input.lang);
+  const copy = input.copy;
+  const images = input.images || [];
+  const heroImg = galleryHTML(images, input.name);
+  const statusBadge = openNowBadge(input.hours, copy);
+  const mapUrl = mapEmbedUrl(input);
+  const mapsHref = mapsLink(input);
+  const reviews = (input.reviews && input.reviews.length > 0) ? input.reviews : (input.reviews === null ? [] : EXAMPLE_REVIEWS);
+  const hasReviews = reviews.length > 0;
+  const pageUrl = encodeURIComponent(input.pageUrl || '');
+
   const content = `
-<header style="padding:32px 0 24px; text-align:center; background: radial-gradient(circle at top, ${b.primary}22, transparent 60%);">
+<header class="hero">
   <div class="container">
-    ${input.images && input.images[0] ? `<img src="${esc(input.images[0])}" alt="${esc(input.name)}" style="width:100%;max-width:480px;border-radius:16px;margin-bottom:24px;" />` : ''}
-    ${input.tagline ? `<span class="badge">${esc(input.tagline)}</span>` : ''}
-    <h1 style="font-size:clamp(2rem,5vw,3.5rem);letter-spacing:-0.03em;margin:12px 0;line-height:1.1;">${esc(input.name)}</h1>
-    ${input.description ? `<p style="max-width:60ch;margin:0 auto 20px;font-size:1.05rem;color:var(--muted);">${esc(input.description)}</p>` : ''}
-    <a href="${esc(input.claimUrl || '#')}" style="display:inline-block;padding:14px 28px;background:var(--accent);color:#07111f;font-weight:700;border-radius:999px;text-decoration:none;margin-bottom:12px;">${esc(copy.launchCta)}</a>
-    ${input.hours ? `<p style="color:var(--muted);font-size:0.9rem;">${esc(input.hours)}</p>` : ''}
+    ${heroImg}
+    <div class="reveal">
+      ${input.tagline ? `<span class="badge">${esc(input.tagline)}</span>` : ''}
+      ${statusBadge ? `<br />` : ''}
+      ${statusBadge ? statusBadge + `<br />` : ''}
+    </div>
+    <h1 class="hero-title reveal reveal-delay-1">${esc(input.name)}</h1>
+    ${input.description ? `<p class="hero-desc reveal reveal-delay-2">${esc(input.description)}</p>` : ''}
+    <div class="reveal reveal-delay-3">
+      <a href="${esc(input.claimUrl || '#')}" class="cta-btn">${esc(copy.launchCta)}</a>
+      ${input.hours ? `<p style="color:var(--muted);font-size:0.9rem;margin-top:6px;">🕒 ${esc(input.hours)}</p>` : ''}
+    </div>
   </div>
 </header>
-<main class="container" style="padding:40px 0;">
-  ${input.address ? `<section style="margin-bottom:32px;"><h2 style="font-size:1.3rem;margin-bottom:8px;">${esc(copy.location)}</h2><p style="color:var(--muted);">${esc(input.address)}</p>${input.mapUrl ? `<a href="${esc(input.mapUrl)}" target="_blank" rel="noopener">${esc(copy.viewOnMap)}</a>` : ''}</section>` : ''}
-  ${input.phone || input.email ? `<section style="margin-bottom:32px;"><h2 style="font-size:1.3rem;margin-bottom:8px;">${esc(copy.contactSection)}</h2>${input.phone ? `<p>${esc(copy.phone)}: <a href="tel:${esc(input.phone)}">${esc(input.phone)}</a></p>` : ''}${input.email ? `<p>${esc(copy.email)}: <a href="mailto:${esc(input.email)}">${esc(input.email)}</a></p>` : ''}</section>` : ''}
-  ${input.social ? `<section style="margin-bottom:32px;"><h2 style="font-size:1.3rem;margin-bottom:8px;">${esc(copy.online)}</h2><p><a href="${esc(input.social)}" target="_blank" rel="noopener">${esc(input.social)}</a></p></section>` : ''}
+<main class="container">
+  ${quickActionsHTML(input, copy)}
+
+  ${input.description && input.description.length > 120 ? `
+  <section class="about-section reveal">
+    <h2>${esc(copy.aboutUs)}</h2>
+    <p>${esc(input.description)}</p>
+  </section>` : ''}
+
+  ${hasReviews ? reviewsHTML({ ...input, reviews }, copy) : ''}
+
+  ${mapUrl ? `
+  <section class="map-section reveal">
+    <h2>${esc(copy.location)}</h2>
+    <div class="map-embed">
+      <iframe src="${esc(mapUrl)}" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="${esc(copy.location)}"></iframe>
+    </div>
+    ${mapsHref ? `<p style="margin-top:8px;"><a href="${esc(mapsHref)}" target="_blank" rel="noopener">${esc(copy.viewOnMap)}</a></p>` : ''}
+  </section>` : ''}
+
+  ${pageUrl ? `
+  <section class="reveal">
+    <div class="qr-share-row">
+      <div class="qr-section">
+        <p class="qr-label">${esc(copy.scanToShare)}</p>
+        <img src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=${esc(pageUrl)}" alt="QR Code" class="qr-img" />
+      </div>
+      <div>
+        <p class="share-label">${esc(copy.share)}</p>
+        ${shareButtonsHTML({ ...input, _pageUrl: pageUrl }, copy)}
+      </div>
+    </div>
+  </section>` : ''}
+
+  ${(input.phone || input.email) ? `
+  <section class="reveal">
+    <h2 class="section-title">${esc(copy.contactSection)}</h2>
+    <div class="contact-grid">
+      ${input.phone ? `
+      <div class="contact-card">
+        <h3>📞</h3>
+        <p><a href="tel:${esc(input.phone)}">${esc(input.phone)}</a></p>
+      </div>` : ''}
+      ${input.email ? `
+      <div class="contact-card">
+        <h3>✉️</h3>
+        <p><a href="mailto:${esc(input.email)}">${esc(input.email)}</a></p>
+      </div>` : ''}
+    </div>
+  </section>` : ''}
+
+  ${input.social ? `
+  <section class="reveal">
+    <h2 class="section-title">${esc(copy.online)}</h2>
+    <div class="contact-card">
+      <p><a href="${esc(input.social)}" target="_blank" rel="noopener">${esc(input.social)}</a></p>
+    </div>
+  </section>` : ''}
 </main>`;
-  return basePage({ ...input, title: input.name, content });
+
+  return basePage({ ...input, title: input.name, content, input });
 }
 
 // ─── TEMPLATE: PRODUCT SPOTLIGHT ─────────────────────────────────────────────
 
 function renderProductSpotlight(input) {
   const b = brand(input);
-  const copy = input.copy || getCopy(input.lang);
+  const copy = input.copy;
+  const images = input.images || [];
+  const heroImg = galleryHTML(images, input.name);
+  const statusBadge = openNowBadge(input.hours, copy);
+  const mapUrl = mapEmbedUrl(input);
+  const mapsHref = mapsLink(input);
+  const reviews = (input.reviews && input.reviews.length > 0) ? input.reviews : (input.reviews === null ? [] : EXAMPLE_REVIEWS);
+  const hasReviews = reviews.length > 0;
+  const pageUrl = encodeURIComponent(input.pageUrl || '');
+
   const content = `
-<header style="padding:40px 0 32px;text-align:center;background:radial-gradient(circle at top,${b.primary}22,transparent 60%);">
+<header class="hero">
   <div class="container">
-    ${input.images && input.images[0] ? `<img src="${esc(input.images[0])}" alt="${esc(input.name)}" style="width:100%;max-width:520px;border-radius:20px;margin-bottom:24px;" />` : ''}
-    <h1 style="font-size:clamp(2rem,5vw,3.5rem);letter-spacing:-0.03em;margin-bottom:12px;">${esc(input.name)}</h1>
-    ${input.tagline ? `<p style="color:var(--muted);font-size:1.1rem;max-width:55ch;margin:0 auto 20px;">${esc(input.tagline)}</p>` : ''}
-    ${input.description ? `<p style="color:var(--muted);max-width:65ch;margin:0 auto 24px;">${esc(input.description)}</p>` : ''}
-    <a href="${esc(input.claimUrl || '#')}" style="display:inline-block;padding:14px 28px;background:var(--accent);color:#07111f;font-weight:700;border-radius:999px;text-decoration:none;margin-bottom:8px;">${esc(copy.productCta)}</a>
+    ${heroImg}
+    <div class="reveal">
+      ${statusBadge ? statusBadge + `<br />` : ''}
+    </div>
+    <h1 class="hero-title reveal reveal-delay-1">${esc(input.name)}</h1>
+    ${input.tagline ? `<p class="hero-desc reveal reveal-delay-2">${esc(input.tagline)}</p>` : ''}
+    ${input.description ? `<p class="hero-desc reveal reveal-delay-2" style="font-size:0.95rem;">${esc(input.description)}</p>` : ''}
+    <div class="reveal reveal-delay-3">
+      <a href="${esc(input.claimUrl || '#')}" class="cta-btn">${esc(copy.productCta)}</a>
+    </div>
   </div>
 </header>
-<main class="container" style="padding:48px 0;">
-  ${input.services || input.features ? `
-  <section style="margin-bottom:40px;">
-    <h2 style="font-size:1.5rem;margin-bottom:16px;text-align:center;">${esc(copy.whatWeOffer)}</h2>
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;">
-      ${(input.services || input.features || []).map(s => `<div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:18px;">
+<main class="container">
+  ${quickActionsHTML(input, copy)}
+
+  ${(input.services || input.features) && (input.services || input.features).length > 0 ? `
+  <section class="reveal">
+    <h2 class="section-title">${esc(copy.whatWeOffer)}</h2>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px;">
+      ${(input.services || input.features || []).map((s, i) => `
+      <div class="review-card reveal reveal-delay-${(i % 4) + 1}">
         <strong>${esc(typeof s === 'string' ? s : (s.name || ''))}</strong>
-        ${typeof s === 'object' && s.description ? `<p style="color:var(--muted);font-size:0.9rem;margin-top:6px;">${esc(s.description)}</p>` : ''}
+        ${typeof s === 'object' && s.description ? `<p style="color:var(--muted);font-size:0.88rem;margin-top:6px;">${esc(s.description)}</p>` : ''}
       </div>`).join('')}
     </div>
   </section>` : ''}
-  ${input.address ? `<section style="margin-bottom:32px;padding:24px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:20px;">
-    <h2 style="font-size:1.2rem;margin-bottom:8px;">${esc(copy.findUs)}</h2>
-    <p style="color:var(--muted);">${esc(input.address)}</p>
-    ${input.hours ? `<p style="color:var(--muted);margin-top:6px;">${esc(input.hours)}</p>` : ''}
-    ${input.mapUrl ? `<a href="${esc(input.mapUrl)}" target="_blank" rel="noopener" style="display:inline-block;margin-top:10px;">${esc(copy.viewOnMap)}</a>` : ''}
+
+  ${hasReviews ? reviewsHTML({ ...input, reviews }, copy) : ''}
+
+  ${mapUrl ? `
+  <section class="map-section reveal">
+    <h2>${esc(copy.findUs)}</h2>
+    <div class="map-embed">
+      <iframe src="${esc(mapUrl)}" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="${esc(copy.findUs)}"></iframe>
+    </div>
+    ${input.hours ? `<p style="color:var(--muted);margin-top:8px;">🕒 ${esc(input.hours)}</p>` : ''}
+    ${mapsHref ? `<p style="margin-top:6px;"><a href="${esc(mapsHref)}" target="_blank" rel="noopener">${esc(copy.viewOnMap)}</a></p>` : ''}
   </section>` : ''}
-  ${input.phone || input.email ? `<section style="margin-bottom:32px;">
-    <h2 style="font-size:1.2rem;margin-bottom:8px;">${esc(copy.contactUs)}</h2>
-    ${input.phone ? `<p>${esc(copy.phone)}: <a href="tel:${esc(input.phone)}">${esc(input.phone)}</a></p>` : ''}
-    ${input.email ? `<p>${esc(copy.email)}: <a href="mailto:${esc(input.email)}">${esc(input.email)}</a></p>` : ''}
+
+  ${pageUrl ? `
+  <section class="reveal">
+    <div class="qr-share-row">
+      <div class="qr-section">
+        <p class="qr-label">${esc(copy.scanToShare)}</p>
+        <img src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=${esc(pageUrl)}" alt="QR Code" class="qr-img" />
+      </div>
+      <div>
+        <p class="share-label">${esc(copy.share)}</p>
+        ${shareButtonsHTML({ ...input, _pageUrl: pageUrl }, copy)}
+      </div>
+    </div>
+  </section>` : ''}
+
+  ${input.phone || input.email ? `
+  <section class="reveal">
+    <h2 class="section-title">${esc(copy.contactUs)}</h2>
+    <div class="contact-grid">
+      ${input.phone ? `
+      <div class="contact-card">
+        <h3>📞</h3>
+        <p><a href="tel:${esc(input.phone)}">${esc(input.phone)}</a></p>
+      </div>` : ''}
+      ${input.email ? `
+      <div class="contact-card">
+        <h3>✉️</h3>
+        <p><a href="mailto:${esc(input.email)}">${esc(input.email)}</a></p>
+      </div>` : ''}
+    </div>
+  </section>` : ''}
+
+  ${input.social ? `
+  <section class="reveal">
+    <h2 class="section-title">${esc(copy.online)}</h2>
+    <div class="contact-card">
+      <p><a href="${esc(input.social)}" target="_blank" rel="noopener">${esc(input.social)}</a></p>
+    </div>
   </section>` : ''}
 </main>`;
-  return basePage({ ...input, title: input.name, content });
+
+  return basePage({ ...input, title: input.name, content, input });
 }
 
 // ─── TEMPLATE: EVENT WAITLIST ───────────────────────────────────────────────
 
 function renderEventWaitlist(input) {
   const b = brand(input);
-  const copy = input.copy || getCopy(input.lang);
+  const copy = input.copy;
+  const images = input.images || [];
+  const heroImg = galleryHTML(images, input.name);
+  const pageUrl = encodeURIComponent(input.pageUrl || '');
+
   const content = `
-<header style="padding:48px 0 40px;text-align:center;background:linear-gradient(180deg,${b.primary}20,transparent);">
+<header class="hero" style="background:linear-gradient(180deg,${b.primary}22,transparent);">
   <div class="container">
-    ${input.images && input.images[0] ? `<img src="${esc(input.images[0])}" alt="${esc(input.name)}" style="width:100%;max-width:560px;border-radius:20px;margin-bottom:28px;" />` : ''}
-    <span class="badge">${esc(input.tagline || copy.eventBadge)}</span>
-    <h1 style="font-size:clamp(2rem,5vw,4rem);letter-spacing:-0.04em;margin:14px 0 10px;line-height:1.05;">${esc(input.name)}</h1>
-    ${input.description ? `<p style="color:var(--muted);max-width:60ch;margin:0 auto 24px;font-size:1.05rem;">${esc(input.description)}</p>` : ''}
-    <a href="${esc(input.claimUrl || '#')}" style="display:inline-block;padding:14px 32px;background:var(--accent);color:#07111f;font-weight:700;border-radius:999px;text-decoration:none;font-size:1.05rem;">${esc(copy.eventCta)}</a>
+    ${heroImg}
+    <div class="reveal">
+      <span class="badge">${esc(input.tagline || copy.eventBadge)}</span>
+    </div>
+    <h1 class="hero-title reveal reveal-delay-1">${esc(input.name)}</h1>
+    ${input.description ? `<p class="hero-desc reveal reveal-delay-2">${esc(input.description)}</p>` : ''}
+    <div class="reveal reveal-delay-3">
+      <a href="${esc(input.claimUrl || '#')}" class="cta-btn">${esc(copy.eventCta)}</a>
+    </div>
   </div>
 </header>
-<main class="container" style="padding:48px 0;">
-  ${input.agenda ? `<section style="margin-bottom:40px;">
-    <h2 style="font-size:1.4rem;margin-bottom:16px;">${esc(copy.agenda)}</h2>
-    <div style="display:flex;flex-direction:column;gap:12px;">
-      ${(input.agenda || []).map(item => `<div style="display:flex;gap:12px;padding:14px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:12px;">
-        ${item.time ? `<span style="color:var(--accent);font-weight:600;white-space:nowrap;">${esc(item.time)}</span>` : ''}
-        <span>${esc(item.title || item)}</span>
+<main class="container">
+  ${input.agenda && input.agenda.length > 0 ? `
+  <section class="reveal">
+    <h2 class="section-title">${esc(copy.agenda)}</h2>
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      ${(input.agenda || []).map(item => `
+      <div style="display:flex;gap:12px;padding:14px;background:var(--card-bg);border:1px solid var(--card-border);border-radius:12px;align-items:center;">
+        ${item.time ? `<span style="color:var(--accent);font-weight:600;white-space:nowrap;min-width:60px;">${esc(item.time)}</span>` : ''}
+        <span>${esc(typeof item === 'string' ? item : (item.title || ''))}</span>
       </div>`).join('')}
     </div>
   </section>` : ''}
-  ${input.speakers ? `<section style="margin-bottom:40px;">
-    <h2 style="font-size:1.4rem;margin-bottom:16px;">${esc(copy.speakers)}</h2>
-    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:14px;">
-      ${(input.speakers || []).map(s => `<div style="text-align:center;padding:16px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:16px;">
-        ${s.photo ? `<img src="${esc(s.photo)}" alt="${esc(s.name)}" style="width:64px;height:64px;border-radius:50%;object-fit:cover;margin-bottom:10px;" />` : ''}
-        <strong style="display:block;">${esc(s.name || '')}</strong>
-        ${s.role ? `<small style="color:var(--muted);">${esc(s.role)}</small>` : ''}
+
+  ${input.speakers && input.speakers.length > 0 ? `
+  <section class="reveal">
+    <h2 class="section-title">${esc(copy.speakers)}</h2>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:14px;">
+      ${(input.speakers || []).map(s => `
+      <div style="text-align:center;padding:18px;background:var(--card-bg);border:1px solid var(--card-border);border-radius:16px;">
+        ${s.photo ? `<img src="${esc(s.photo)}" alt="${esc(s.name || '')}" style="width:64px;height:64px;border-radius:50%;object-fit:cover;margin-bottom:10px;" />` : '<div style="width:64px;height:64px;border-radius:50%;background:rgba(255,255,255,0.08);margin:0 auto 10px;font-size:2rem;display:flex;align-items:center;justify-content:center;">🎤</div>'}
+        <strong style="display:block;font-size:0.9rem;">${esc(s.name || '')}</strong>
+        ${s.role ? `<small style="color:var(--muted);font-size:0.78rem;">${esc(s.role)}</small>` : ''}
       </div>`).join('')}
     </div>
   </section>` : ''}
-  ${input.address ? `<section style="margin-bottom:32px;padding:20px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:16px;">
-    <p style="font-size:1.1rem;">${esc(copy.location)} <strong>${esc(input.address)}</strong></p>
-    ${input.mapUrl ? `<a href="${esc(input.mapUrl)}" target="_blank" rel="noopener" style="display:inline-block;margin-top:8px;">${esc(copy.viewOnMap)}</a>` : ''}
+
+  ${input.address ? `
+  <section class="map-section reveal">
+    <h2>${esc(copy.location)}</h2>
+    <p style="color:var(--muted);margin-bottom:10px;">${esc(input.address)}</p>
+    ${input.hours ? `<p style="color:var(--muted);">🕒 ${esc(input.hours)}</p>` : ''}
   </section>` : ''}
-  ${input.hours ? `<p style="color:var(--muted);margin-bottom:24px;">🕒 ${esc(input.hours)}</p>` : ''}
-  ${input.phone || input.email ? `<section>
-    <p>${input.phone ? `${esc(copy.phone)}: <a href="tel:${esc(input.phone)}">${esc(input.phone)}</a>` : ''}</p>
-    ${input.email ? `<p>${esc(copy.email)}: <a href="mailto:${esc(input.email)}">${esc(input.email)}</a></p>` : ''}
+
+  ${pageUrl ? `
+  <section class="reveal">
+    <div class="qr-share-row">
+      <div class="qr-section">
+        <p class="qr-label">${esc(copy.scanToShare)}</p>
+        <img src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=${esc(pageUrl)}" alt="QR Code" class="qr-img" />
+      </div>
+      <div>
+        <p class="share-label">${esc(copy.share)}</p>
+        ${shareButtonsHTML({ ...input, _pageUrl: pageUrl }, copy)}
+      </div>
+    </div>
+  </section>` : ''}
+
+  ${input.phone || input.email ? `
+  <section class="reveal">
+    <h2 class="section-title">${esc(copy.contactSection)}</h2>
+    <div class="contact-grid">
+      ${input.phone ? `
+      <div class="contact-card">
+        <h3>📞</h3>
+        <p><a href="tel:${esc(input.phone)}">${esc(input.phone)}</a></p>
+      </div>` : ''}
+      ${input.email ? `
+      <div class="contact-card">
+        <h3>✉️</h3>
+        <p><a href="mailto:${esc(input.email)}">${esc(input.email)}</a></p>
+      </div>` : ''}
+    </div>
   </section>` : ''}
 </main>`;
-  return basePage({ ...input, title: input.name, content });
+
+  return basePage({ ...input, title: input.name, content, input });
 }
