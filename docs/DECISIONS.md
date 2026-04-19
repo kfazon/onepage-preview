@@ -1,6 +1,19 @@
 # DECISIONS.md — OnePage Preview Platform
 
-## 2026-03-28 — EU-first market strategy, not Croatia-first
+## 2026-04-19 — Updated legal compliance strategy after deep research
+- Germany UWG §7(3): B2B cold email ALLOWED for company domains (GmbH, AG, UG, OHG, KG) — NO prior consent needed
+- Germany UWG §7(3) EXCEPTION DOES NOT apply to: sole traders (Gewerbetreibende, Einzelunternehmer) — they are treated as individuals under DSGVO → need prior consent
+- Austria TKG §174: NO cold email allowed (even B2B) — strict opt-in required, must check RTR Robinson list
+- Spain + Poland: GDPR legitimate interest applies → B2B cold email OK with opt-out in every email
+- Decision: DE market = INBOUND ONLY (LinkedIn warm + landing page opt-in) + company-domain emails only
+- Decision: ES + PL = Cold email OK to company domains, with GDPR-compliant footer
+- Evidence: UWG §7(3), TKG §174, GDPR Art. 6(1)(f), Austrian BMF official statement
+
+## 2026-04-19 — Google Business Profile websites discontinued (March 2024)
+- Google killed free GBP websites in March 2024
+- This creates massive gap — millions of DE/ES/PL businesses that had free Google sites now have nothing
+- Decision: Position Peek as "the new Google Business Profile website" — our key market opportunity
+- Marketing angle: "You used to have a free website from Google. Now you can get a free preview from Peek."
 - Decision: Lead with DE + ES + PL markets, not HR. Croatia is secondary due to low purchasing power.
 - Rationale: Njemačka platežna moć 3-4x HR, tržište 25x veće. Cijena od €149/mj u DE = "jeftino", u HR = "skupo".
 - Kristijan's company handles billing/infrastructure.
